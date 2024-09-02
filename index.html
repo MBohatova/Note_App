@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  <script defer src="app.js"></script>
+  <title>Note App</title>
+</head>
+<body>
+  <header class="header">
+    <h1 class="header__headline">
+      Notes
+    </h1>
+    <div class="header__buttonsBox">
+      <button class="header__searchButton"></button>
+      <button class="header__infoButton"></button>
+    </div>
+
+    <!--Кнопки для редагування (разом із текстовою формою)-->
+    <!-- <div class="header__editorButtonBox">
+      <button class="header__backButton"></button>
+      <div class="header__buttonsWrapper">
+        <button class="header__visibilityButton"></button>
+        <button class="header__saveButton"></button>
+      </div>
+    </div> -->
+
+    <!--Пошуковий рядок до сторінки пошуку-->
+    <!-- <div class="header__searchBarBox">
+      <input 
+        type="search" 
+        class="header__searchBar"
+        placeholder="Search by the keyword..."
+      >
+      <button class="header__closeButton"></button>
+    </div> -->
+  </header>
+
+  <main class="main">
+    <div class="main__emptyContent">
+      <div class="main__emptyPageImg"></div>
+      <p class="main__paragraph">
+        Create your first note!
+      </p>
+    </div>
+
+    <!--Контент для сторінки "Не знайдено"-->
+    <!-- <div class="main__notFoundContent">
+      <div class="main__notFoundImg"></div>
+      <p class="main__paragraphNotFound">
+        File not found. Try searching again.
+      </p>
+    </div> -->
+
+    <div class="main__buttonBox">
+      <button class="main__createButton"></button>
+    </div>
+
+    <!--Текстова форма для нотатки-->
+    <!-- <form class="main__form">
+      <input 
+        type="text" 
+        class="main__formTitle"
+        placeholder="Title"
+      >
+
+      <textarea class="main__formText" placeholder="Type something..."></textarea>
+    </form> -->
+  </main>
+</body>
+</html>
