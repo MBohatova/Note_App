@@ -5,6 +5,7 @@
 }
 
 body {
+  position: relative;
   background-color: #252525;
 }
 
@@ -14,28 +15,40 @@ body {
   display: flex;
   align-items: center;
   gap: 128px;
-  margin: 47px auto auto auto;
+  margin: 47px auto 40px auto;
 }
-.header__headline {
+.header__wrapper {
+  width: 365px;
+  display: flex;
+  gap: 128px;
+}
+.header__wrapper .header__headline {
   font-size: 43px;
   font-weight: 600;
   line-height: 58.65px;
   text-align: left;
   color: white;
 }
-.header__buttonsBox {
+.header__wrapper .header__buttonsBox {
   display: flex;
   gap: 21px;
 }
-.header__buttonsBox .header__searchButton, .header__buttonsBox .header__infoButton {
+.header__wrapper .header__buttonsBox .header__searchButton, .header__wrapper .header__buttonsBox .header__infoButton {
   height: 50px;
   width: 50px;
   border-radius: 15px;
   background: #3b3b3b url(./images/search.svg) no-repeat center;
   border: none;
+  transition: 0.3s;
 }
-.header__buttonsBox .header__infoButton {
+.header__wrapper .header__buttonsBox .header__searchButton:hover, .header__wrapper .header__buttonsBox .header__infoButton:hover {
+  transform: scale(1.2);
+}
+.header__wrapper .header__buttonsBox .header__infoButton {
   background: #3b3b3b url(./images/info_outline.svg) no-repeat center;
+}
+.header__wrapper .header__buttonsBox .header__infoButton:hover {
+  transform: scale(1.2);
 }
 .header__searchBarBox {
   right: 1px;
@@ -67,40 +80,61 @@ body {
   background: url(./images/close.svg) center;
   border: none;
 }
-.header__editorButtonBox {
+.header__editorButtonBox, .header__rewriteEditor {
+  position: absolute;
+  height: 60px;
   width: 365px;
   display: flex;
-  justify-content: space-between;
+  gap: 197px;
   align-items: center;
+  background-color: #252525;
+  display: none;
 }
-.header__editorButtonBox .header__backButton, .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton, .header__editorButtonBox .header__buttonsWrapper .header__saveButton {
+.header__editorButtonBox .header__backButton, .header__editorButtonBox .header__rewriteEditor .header__rewriteBackButton, .header__editorButtonBox .header__rewriteEditor .header__rewriteSaveButton, .header__rewriteEditor .header__editorButtonBox .header__rewriteBackButton, .header__rewriteEditor .header__editorButtonBox .header__rewriteSaveButton, .header__rewriteEditor .header__backButton, .header__rewriteEditor .header__rewriteBackButton, .header__rewriteEditor .header__rewriteSaveButton, .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton, .header__editorButtonBox .header__buttonsWrapper .header__saveButton, .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
   height: 48px;
   width: 48px;
   background: #3b3b3b url(./images/back.svg) no-repeat center;
   border: none;
   border-radius: 15px;
+  transition: 0.3s;
 }
-.header__editorButtonBox .header__buttonsWrapper {
+.header__editorButtonBox .header__backButton:hover, .header__rewriteEditor .header__backButton:hover, .header__rewriteEditor .header__rewriteBackButton:hover, .header__rewriteEditor .header__rewriteSaveButton:hover, .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton:hover, .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
+  transform: scale(1.2);
+}
+.header__editorButtonBox .header__buttonsWrapper, .header__rewriteEditor .header__buttonsWrapper {
   display: flex;
   gap: 21px;
 }
-.header__editorButtonBox .header__buttonsWrapper .header__visibilityButton, .header__editorButtonBox .header__buttonsWrapper .header__saveButton {
+.header__editorButtonBox .header__buttonsWrapper .header__visibilityButton, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton, .header__editorButtonBox .header__buttonsWrapper .header__saveButton, .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
   background: #3b3b3b url(./images/visibility.svg) no-repeat center;
+  transition: 0.3s;
 }
-.header__editorButtonBox .header__buttonsWrapper .header__saveButton {
+.header__editorButtonBox .header__buttonsWrapper .header__visibilityButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton:hover, .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
+  transform: scale(1.2);
+}
+.header__editorButtonBox .header__buttonsWrapper .header__saveButton, .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
+  background: #3b3b3b url(./images/save.svg) no-repeat center;
+  transition: 0.3s;
+}
+.header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
+  transform: scale(1.2);
+}
+.header__rewriteEditor {
+  justify-content: space-between;
+}
+.header__rewriteEditor .header__rewriteSaveButton {
   background: #3b3b3b url(./images/save.svg) no-repeat center;
 }
 
 .main {
   position: relative;
-  min-height: 650px;
+  height: 100%;
   width: 365px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
   gap: 174px;
-  margin: auto;
+  margin: 0 auto 49px auto;
 }
 .main__emptyContent {
   display: flex;
@@ -120,6 +154,36 @@ body {
   line-height: 27.28px;
   text-align: left;
   color: white;
+}
+.main__notesWrapper {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  display: none;
+}
+.main__notesWrapper .main__note {
+  height: 150px;
+  width: 365px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #eb9513;
+}
+.main__notesWrapper .main__note .main__noteHeadline {
+  width: 300px;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 34.1px;
+  text-align: left;
+  color: black;
+}
+.main__notesWrapper .main__note .main__dateCategory--wrapper {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
 }
 .main__notFoundContent {
   top: 150px;
@@ -158,26 +222,37 @@ body {
   border-radius: 100%;
   border: none;
   box-shadow: -5px 0px 10px 0px rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
 }
-.main__form {
+.main__buttonBox .main__createButton:hover {
+  transform: scale(1.2);
+}
+.main__form, .main__editForm {
+  position: absolute;
+  height: 650px;
+  width: 365px;
   display: flex;
   flex-direction: column;
   gap: 40px;
-  width: 365px;
+  height: 100%;
+  background-color: #252525;
+  display: none;
 }
-.main__form .main__formTitle {
+.main__form .main__formTitle, .main__editForm .main__formTitle, .main__editForm .main__editTitle {
   font-weight: 400;
   font-size: 48px;
   line-height: 65.47px;
   color: white;
   background-color: inherit;
   border: none;
+  outline: none;
 }
-.main__form .main__formTitle::placeholder {
+.main__form .main__formTitle::placeholder, .main__editForm .main__formTitle::placeholder, .main__editForm .main__editTitle::placeholder {
   color: #3b3b3b;
 }
-.main__form .main__formText {
-  height: 100%;
+.main__form .main__formText, .main__editForm .main__formText, .main__editForm .main__editText {
+  resize: vertical;
+  min-height: 500px;
   font-size: 23px;
   font-weight: 400;
   line-height: 31.37px;
@@ -185,7 +260,116 @@ body {
   color: white;
   background-color: inherit;
   border: none;
+  outline: none;
 }
-.main__form .main__formText::placeholder {
+.main__form .main__formText::placeholder, .main__editForm .main__formText::placeholder, .main__editForm .main__editText::placeholder {
   color: #3b3b3b;
+}
+.main__form .main__tagBox, .main__editForm .main__tagBox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.main__form .main__tagBox .main__tagParagraph, .main__editForm .main__tagBox .main__tagParagraph {
+  color: #3b3b3b;
+  font-size: 16px;
+}
+.main__form .main__tagBox .main__buttonBox, .main__editForm .main__tagBox .main__buttonBox {
+  display: flex;
+  justify-content: space-between;
+  height: 25px;
+}
+.main__form .main__tagBox .main__buttonBox .tagButton, .main__editForm .main__tagBox .main__buttonBox .tagButton {
+  width: 55px;
+  height: 25px;
+  border: none;
+  border-radius: 15px;
+}
+.main__form .main__tagBox .main__buttonBox .tagButton:hover, .main__editForm .main__tagBox .main__buttonBox .tagButton:hover {
+  color: white;
+}
+.main__form .main__tagBox .main__buttonBox .healthButton, .main__editForm .main__tagBox .main__buttonBox .healthButton {
+  background-color: #b0d47c;
+}
+.main__form .main__tagBox .main__buttonBox .moneyButton, .main__editForm .main__tagBox .main__buttonBox .moneyButton {
+  background-color: #eb9513;
+}
+.main__form .main__tagBox .main__buttonBox .plansButton, .main__editForm .main__tagBox .main__buttonBox .plansButton {
+  background-color: #5095cf;
+}
+.main__form .main__tagBox .main__buttonBox .hobbyButton, .main__editForm .main__tagBox .main__buttonBox .hobbyButton {
+  background-color: #c14c9c;
+}
+.main__form .main__tagBox .main__buttonBox .goalsButton, .main__editForm .main__tagBox .main__buttonBox .goalsButton {
+  background-color: #f8e473;
+}
+.main__form .main__tagBox .main__buttonBox .workButton, .main__editForm .main__tagBox .main__buttonBox .workButton {
+  background-color: #d56151;
+}
+.main__editForm {
+  z-index: 3;
+}
+.deleteMessageWrapper {
+  height: 100%;
+  width: 365px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  margin: auto;
+  background: url(./images/deleteBG.png);
+  z-index: 3;
+  border-radius: 14px;
+  display: none;
+}
+.deleteMessageWrapper .deleteMessage {
+  height: 236px;
+  width: 330px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: auto;
+  background-color: #252525;
+  border-radius: 20px;
+}
+.deleteMessageWrapper .deleteMessage .deleteInfoIcon {
+  height: 36px;
+  width: 36px;
+}
+.deleteMessageWrapper .deleteMessage .deleteMessageP {
+  width: 252px;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 31.37px;
+  text-align: center;
+  color: white;
+}
+.deleteMessageWrapper .deleteMessage .buttonWrapper {
+  display: flex;
+  width: 262px;
+  justify-content: space-between;
+}
+.deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage {
+  width: 112px;
+  height: 39px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24.55px;
+  text-align: center;
+  color: white;
+  transition: 0.3s;
+}
+.deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage:hover {
+  transform: scale(1.2);
+}
+.deleteMessageWrapper .deleteMessage .buttonWrapper .deleteButton {
+  background-color: #ff0000;
+}
+.deleteMessageWrapper .deleteMessage .buttonWrapper .cancelButton {
+  background-color: #30be71;
 }
