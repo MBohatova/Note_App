@@ -71,12 +71,11 @@ body {
   }
 
   &__searchBarBox {
-    // display: none;
-    // position: absolute;
+    display: none;
+    position: absolute;
     right: 1px;
 
     .header__searchBar {
-      // display: none;
       height: 50px;
       width: 360px;
       border: none;
@@ -87,6 +86,7 @@ body {
       font-size: 20px;
       line-height: 27.28px;
       color: $textWhite;
+      outline: none;
   
       &::placeholder {
         font-weight: 300;
@@ -220,14 +220,29 @@ body {
       align-items: center;
       border-radius: 10px;
       background-color: $money;
-  
-      .main__noteHeadline {
+
+      .main__headlineAndButtonWrapper {
+        display: flex;
         width: 300px;
-        font-size: 25px;
-        font-weight: 400;
-        line-height: 34.1px;
-        text-align: left;
-        color: black;
+        align-items: center;
+
+        .main__noteHeadline {
+          width: 270px;
+          font-size: 25px;
+          font-weight: 400;
+          line-height: 34.1px;
+          text-align: left;
+          color: black;
+        }
+
+        .main__deleteButton {
+          height: 30px;
+          width: 30px;
+          border: none;
+          background: url(./images/delete.svg) no-repeat center;
+          background-size: 30px 30px;
+          mix-blend-mode: soft-light;
+        }
       }
   
       .main__dateCategory--wrapper {

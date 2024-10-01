@@ -11,6 +11,8 @@ let editBackButton = document.querySelector('.header__rewriteBackButton');
 let editSaveButton = document.querySelector('.header__rewriteSaveButton');
 let deleteButton = document.querySelector('.deleteButton');
 let cancelButton = document.querySelector('.cancelButton');
+let main__deleteButton;
+let searchCloseButton = document.querySelector('.header__closeButton');
 // Контейнери
 let startPageContent = document.querySelector('.main__emptyContent');
 let headerWrapper = document.querySelector('.header__wrapper');
@@ -24,6 +26,7 @@ let editForm = document.querySelector('.main__editForm');
 let editHeader = document.querySelector('.header__rewriteEditor');
 let deleteButtonWrapper = document.querySelector('.main__deleteButtonWrapper');
 let deleteMessageWrapper = document.querySelector('.deleteMessageWrapper');
+let searchBarWrapper = document.querySelector('.header__searchBarBox');
 // Масиви, об'єкти
 let noteObj = {};
 let notesArr = [];
@@ -31,6 +34,7 @@ let colors = ['health','money','plans','hobby','goals','work'];
 // Інпути та інші елементи сторінки
 let noteTitle = document.querySelector('.main__formTitle');
 let noteText = document.querySelector('.main__formText');
+let searchText = document.querySelector('.header__searchBar');
 
 let notesFromStorage = localStorage.getItem('notesArr');
 if(notesFromStorage) {
@@ -50,7 +54,6 @@ createBtn.addEventListener('click', function() {
   }
 
   saveButton.addEventListener('click', onSaveButtonHandler);
-
   backButton.addEventListener('click', onBackButtonHandler);
 
   function onBackButtonHandler() {
@@ -97,13 +100,17 @@ function generateNote() {
   for(let note of notesList) {
     notesWrapper.insertAdjacentHTML('afterbegin', 
       `<div id="${note.id}" class="main__note">
-        <h2 class="main__noteHeadline">${note.title}</h2>
+        <div class="main__headlineAndButtonWrapper">
+          <h2 class="main__noteHeadline">${note.title}</h2>
+          <button class="main__deleteButton"></button>
+        </div>
         <div class="main__dateCategory--wrapper">
           <p class="main__noteDate">${note.date}</p>
           <p class="main__noteCategory">${note.tag}</p>
         </div>
       </div>`);
   }
+  main__deleteButton = document.querySelector('.main__deleteButton');
 }
 
 function hideBtns() {
@@ -179,104 +186,70 @@ function onEditBackButtonHandler() {
   editBackButton.removeEventListener('click', onEditBackButtonHandler);
 }
 
-deleteNote();
-
-// function deleteNote() {
-//   let notesFromHTML = document.querySelectorAll('.main__note');
-//   let holdDelay = 5000;
-//   let holdTimeout;
-//   let isHeld = false; 
-
-//   for(let note of notesFromHTML) {
-
-//     note.addEventListener('mousedown', function() {
-//       isHeld = false;
-
-//       holdTimeout = setTimeout(function() {
-//         isHeld = true;
-//       }, holdDelay);
-//     })
-//     note.addEventListener('mouseup', function () {
-//       clearTimeout(holdTimeout);
-//       if(isHeld) {
-//         deleteMessageWrapper.style.display = 'inherit';
-
-//         deleteButton.addEventListener('click', function() {
-//           note.remove();
-
-//           let notesFromStorage = localStorage.getItem('notesArr');
-//           let storageArr = JSON.parse(notesFromStorage);
-//           let noteI = storageArr.findIndex(note => note.id === storageEl.id);
-
-//           if(noteI !== -1) {
-//             storageArr.splice(noteI, 1);
-//           }
-//           localStorage.setItem('notesArr', stringify(storageArr));
-
-//           deleteMessageWrapper.style.display = 'none';
-//         });
-
-//         cancelButton.addEventListener('click', function() {
-//           deleteMessageWrapper.style.display = 'none';
-//         })
-//       }
-//     });
-
-//     note.addEventListener('mouseleave', function () {
-//       clearTimeout(holdTimeout);
-//     });
-//   }
-// }
+main__deleteButton.addEventListener('click', deleteNote);
 
 function deleteNote() {
-  let notesFromHTML = document.querySelectorAll('.main__note');
-  const holdDelay = 300; // Час затримки для активації видалення
-  let holdTimeout;
-  let isHeld = false; 
+  deleteMessageWrapper.style.display = 'flex';
 
-  for (let note of notesFromHTML) {
-    note.addEventListener('mousedown', function() {
-      isHeld = false;
-      holdTimeout = setTimeout(function() {
-        isHeld = true; // Якщо утримували достатньо довго
-      }, holdDelay);
-    });
+  let notesFromHTML = document.querySelector('.main__note');
+  let note = document.querySelector('.main__note');
+  note.remove();
+  
+  deleteButton.removeEventListener('click', onDeleteButtonHandler);
+  cancelButton.removeEventListener('click', onCancelButtonHandler);
 
-    note.addEventListener('mouseup', function() {
-      clearTimeout(holdTimeout);
-      if (isHeld) {
-        deleteMessageWrapper.style.display = 'flex';
+  deleteButton.addEventListener('click', onDeleteButtonHandler);
+  cancelButton.addEventListener('click', onCancelButtonHandler);
 
-        deleteButton.removeEventListener('click', onDeleteButtonHandler);
-        cancelButton.removeEventListener('click', onCancelButtonHandler);
 
-        deleteButton.addEventListener('click', onDeleteButtonHandler);
-        cancelButton.addEventListener('click', onCancelButtonHandler);
+  function onDeleteButtonHandler() {
 
-        function onDeleteButtonHandler() {
-          note.remove(); 
+    let notesFromStorage = localStorage.getItem('notesArr');
+    let storageArr = JSON.parse(notesFromStorage);
+    let noteI = storageArr.findIndex(storedNote => storedNote.id === parseInt(note.id));
 
-          let notesFromStorage = localStorage.getItem('notesArr');
-          let storageArr = JSON.parse(notesFromStorage);
-          let noteI = storageArr.findIndex(storedNote => storedNote.id === parseInt(note.id));
+    if (noteI !== -1) {
+      storageArr.splice(noteI, 1); 
+    }
 
-          if (noteI !== -1) {
-            storageArr.splice(noteI, 1); 
-          }
+    localStorage.setItem('notesArr', JSON.stringify(storageArr));
 
-          localStorage.setItem('notesArr', JSON.stringify(storageArr));
+    if(notesFromHTML.length === 0) {
+      startPageContent.style.display = 'inherit';
+    }
+    deleteMessageWrapper.style.display = 'none';
+  }
 
-          deleteMessageWrapper.style.display = 'none'; 
-        }
+  function onCancelButtonHandler() {
+    deleteMessageWrapper.style.display = 'none'; 
+  }
+}
 
-        function onCancelButtonHandler() {
-          deleteMessageWrapper.style.display = 'none'; 
-        }
-      }
-    });
+searchBtn.addEventListener('click', searching);
 
-    note.addEventListener('mouseleave', function() {
-      clearTimeout(holdTimeout);
-    });
+function searching() {
+  headerWrapper.style.display = 'none';
+  searchBarWrapper.style.display = 'inherit';
+
+  searchCloseButton.addEventListener('click', function() {
+    searchText.value = 'Search by the keyword...';
+  })
+
+  let noteList = document.querySelectorAll('.main__note');
+  let searchWord = searchText.value.toLowerCase();
+
+  let foundNote = null;
+
+  for(let note of noteList) {
+    let headline = note.querySelector('.main__noteHeadline').textContent.toLowerCase(); 
+    if(headline.includes(searchWord)) {
+      foundNote = note;
+      break;
+    }
+  }
+  if(foundNote) {
+    notesWrapper.prepend(foundNote);
+  } else {
+    console.log('---');
   }
 }

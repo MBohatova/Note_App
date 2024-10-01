@@ -51,6 +51,8 @@ body {
   transform: scale(1.2);
 }
 .header__searchBarBox {
+  display: none;
+  position: absolute;
   right: 1px;
 }
 .header__searchBarBox .header__searchBar {
@@ -64,6 +66,7 @@ body {
   font-size: 20px;
   line-height: 27.28px;
   color: rgb(255, 255, 255);
+  outline: none;
 }
 .header__searchBarBox .header__searchBar::-moz-placeholder {
   font-weight: 300;
@@ -178,13 +181,26 @@ body {
   border-radius: 10px;
   background-color: #eb9513;
 }
-.main__notesWrapper .main__note .main__noteHeadline {
+.main__notesWrapper .main__note .main__headlineAndButtonWrapper {
+  display: flex;
   width: 300px;
+  align-items: center;
+}
+.main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__noteHeadline {
+  width: 270px;
   font-size: 25px;
   font-weight: 400;
   line-height: 34.1px;
   text-align: left;
   color: black;
+}
+.main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__deleteButton {
+  height: 30px;
+  width: 30px;
+  border: none;
+  background: url(./images/delete.svg) no-repeat center;
+  background-size: 30px 30px;
+  mix-blend-mode: soft-light;
 }
 .main__notesWrapper .main__note .main__dateCategory--wrapper {
   width: 300px;
