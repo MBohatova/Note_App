@@ -45,7 +45,7 @@ body {
   transform: scale(1.2);
 }
 .header__wrapper .header__buttonsBox .header__infoButton {
-  background: #3b3b3b url(./images/info_outline.svg) no-repeat center;
+  background: #3b3b3b url(./images/visibility.svg) no-repeat center;
 }
 .header__wrapper .header__buttonsBox .header__infoButton:hover {
   transform: scale(1.2);
@@ -61,7 +61,7 @@ body {
   border: none;
   border-radius: 30px;
   background-color: #3b3b3b;
-  padding: 11px 38px;
+  padding: 11px 28px;
   font-weight: 300;
   font-size: 20px;
   line-height: 27.28px;
@@ -76,11 +76,20 @@ body {
 }
 .header__searchBarBox .header__closeButton {
   position: absolute;
-  right: 20px;
+  right: 15px;
   top: 14px;
   height: 24px;
   width: 24px;
   background: url(./images/close.svg) center;
+  border: none;
+}
+.header__searchBarBox .header__searchBarButton {
+  position: absolute;
+  top: 14px;
+  right: 45px;
+  height: 24px;
+  width: 24px;
+  background: url(./images/search.svg) center;
   border: none;
 }
 .header__editorButtonBox, .header__rewriteEditor {

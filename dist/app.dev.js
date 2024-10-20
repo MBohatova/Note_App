@@ -14,7 +14,8 @@ var editSaveButton = document.querySelector('.header__rewriteSaveButton');
 var deleteButton = document.querySelector('.deleteButton');
 var cancelButton = document.querySelector('.cancelButton');
 var main__deleteButton;
-var searchCloseButton = document.querySelector('.header__closeButton'); // Контейнери
+var searchCloseButton = document.querySelector('.header__closeButton');
+var searchBarButton = document.querySelector('.header__searchBarButton'); // Контейнери
 
 var startPageContent = document.querySelector('.main__emptyContent');
 var headerWrapper = document.querySelector('.header__wrapper');
@@ -58,6 +59,7 @@ createBtn.addEventListener('click', function () {
       tag.addEventListener('click', function () {
         noteObj.tag = tag.textContent;
       });
+      noteObj.tag = 'Without tag';
     };
 
     for (var _iterator = tagButton[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
@@ -121,31 +123,25 @@ function generateNote() {
   notesWrapper.style.display = 'flex';
   notesWrapper.innerHTML = '';
   var notesList = JSON.parse(localStorage.getItem('notesArr'));
-  var _iteratorNormalCompletion2 = true;
-  var _didIteratorError2 = false;
-  var _iteratorError2 = undefined;
 
-  try {
-    for (var _iterator2 = notesList[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-      var note = _step2.value;
-      notesWrapper.insertAdjacentHTML('afterbegin', "<div id=\"".concat(note.id, "\" class=\"main__note\">\n        <div class=\"main__headlineAndButtonWrapper\">\n          <h2 class=\"main__noteHeadline\">").concat(note.title, "</h2>\n          <button class=\"main__deleteButton\"></button>\n        </div>\n        <div class=\"main__dateCategory--wrapper\">\n          <p class=\"main__noteDate\">").concat(note.date, "</p>\n          <p class=\"main__noteCategory\">").concat(note.tag, "</p>\n        </div>\n      </div>"));
-    }
-  } catch (err) {
-    _didIteratorError2 = true;
-    _iteratorError2 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-        _iterator2["return"]();
-      }
-    } finally {
-      if (_didIteratorError2) {
-        throw _iteratorError2;
-      }
-    }
+  if (!notesList || notesList.length === 0) {
+    startPageContent.style.display = 'inherit';
+    return;
   }
 
-  main__deleteButton = document.querySelector('.main__deleteButton');
+  notesList.forEach(function (note) {
+    notesWrapper.insertAdjacentHTML('afterbegin', "<div id=\"".concat(note.id, "\" class=\"main__note\">\n        <div class=\"main__headlineAndButtonWrapper\">\n          <h2 class=\"main__noteHeadline\">").concat(note.title, "</h2>\n          <button class=\"main__deleteButton\"></button>\n        </div>\n        <div class=\"main__dateCategory--wrapper\">\n          <p class=\"main__noteDate\">").concat(note.date, "</p>\n          <p class=\"main__noteCategory\">").concat(note.tag, "</p>\n        </div>\n      </div>"));
+    main__deleteButton = document.querySelectorAll('.main__deleteButton');
+    main__deleteButton.forEach(function (button) {
+      button.addEventListener('click', function (event) {
+        var noteId = event.target.closest('.main__note').id; // Отримуємо ID нотатки
+
+        deleteNote(event, noteId);
+      });
+    }); // deleteButton.addEventListener('click', function(event) {
+    //   deleteNote(event, note.id);
+    // });
+  });
 }
 
 function hideBtns() {
@@ -162,21 +158,22 @@ editNote();
 
 function editNote() {
   var notesFromLocalSt = JSON.parse(localStorage.getItem('notesArr'));
-  var notesFromHTML = document.querySelectorAll('.main__note');
-  var _iteratorNormalCompletion3 = true;
-  var _didIteratorError3 = false;
-  var _iteratorError3 = undefined;
+  var notesFromHTML = document.querySelectorAll('.main__note'); // !! Переробити на метод find()
+
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
 
   try {
-    for (var _iterator3 = notesFromHTML[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-      var note = _step3.value;
-      var _iteratorNormalCompletion4 = true;
-      var _didIteratorError4 = false;
-      var _iteratorError4 = undefined;
+    for (var _iterator2 = notesFromHTML[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var note = _step2.value;
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
 
       try {
         var _loop2 = function _loop2() {
-          var noteObject = _step4.value;
+          var noteObject = _step3.value;
 
           if (note.id === noteObject.id.toString()) {
             note.addEventListener('click', function () {
@@ -218,35 +215,35 @@ function editNote() {
           }
         };
 
-        for (var _iterator4 = notesFromLocalSt[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+        for (var _iterator3 = notesFromLocalSt[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
           _loop2();
         }
       } catch (err) {
-        _didIteratorError4 = true;
-        _iteratorError4 = err;
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-            _iterator4["return"]();
+          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+            _iterator3["return"]();
           }
         } finally {
-          if (_didIteratorError4) {
-            throw _iteratorError4;
+          if (_didIteratorError3) {
+            throw _iteratorError3;
           }
         }
       }
     }
   } catch (err) {
-    _didIteratorError3 = true;
-    _iteratorError3 = err;
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-        _iterator3["return"]();
+      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+        _iterator2["return"]();
       }
     } finally {
-      if (_didIteratorError3) {
-        throw _iteratorError3;
+      if (_didIteratorError2) {
+        throw _iteratorError2;
       }
     }
   }
@@ -258,13 +255,12 @@ function onEditBackButtonHandler() {
   editBackButton.removeEventListener('click', onEditBackButtonHandler);
 }
 
-main__deleteButton.addEventListener('click', deleteNote);
-
-function deleteNote() {
+function deleteNote(event, noteId) {
+  event.stopPropagation();
   deleteMessageWrapper.style.display = 'flex';
-  var notesFromHTML = document.querySelector('.main__note');
-  var note = document.querySelector('.main__note');
-  note.remove();
+  var noteElement = document.getElementById(noteId); // let notesFromHTML = document.querySelector('.main__note');
+  // let note = document.querySelector('.main__note');
+
   deleteButton.removeEventListener('click', onDeleteButtonHandler);
   cancelButton.removeEventListener('click', onCancelButtonHandler);
   deleteButton.addEventListener('click', onDeleteButtonHandler);
@@ -274,17 +270,21 @@ function deleteNote() {
     var notesFromStorage = localStorage.getItem('notesArr');
     var storageArr = JSON.parse(notesFromStorage);
     var noteI = storageArr.findIndex(function (storedNote) {
-      return storedNote.id === parseInt(note.id);
+      return storedNote.id === parseInt(noteElement.id);
     });
 
     if (noteI !== -1) {
       storageArr.splice(noteI, 1);
+      localStorage.setItem('notesArr', JSON.stringify(storageArr));
     }
 
-    localStorage.setItem('notesArr', JSON.stringify(storageArr));
+    noteElement.remove();
+    notesFromHTML = document.querySelectorAll('.main__note');
 
     if (notesFromHTML.length === 0) {
       startPageContent.style.display = 'inherit';
+    } else {
+      startPageContent.style.display = 'none';
     }
 
     deleteMessageWrapper.style.display = 'none';
@@ -292,52 +292,58 @@ function deleteNote() {
 
   function onCancelButtonHandler() {
     deleteMessageWrapper.style.display = 'none';
+    generateNote();
   }
 }
 
 searchBtn.addEventListener('click', searching);
 
 function searching() {
+  notesWrapper.innerHTML = '';
   headerWrapper.style.display = 'none';
   searchBarWrapper.style.display = 'inherit';
   searchCloseButton.addEventListener('click', function () {
+    if (searchText.value === 'Search by the keyword...') {
+      headerWrapper.style.display = 'inherit';
+      searchBarWrapper.style.display = 'none';
+      generateNote();
+    }
+
     searchText.value = 'Search by the keyword...';
   });
-  var noteList = document.querySelectorAll('.main__note');
-  var searchWord = searchText.value.toLowerCase();
-  var foundNote = null;
-  var _iteratorNormalCompletion5 = true;
-  var _didIteratorError5 = false;
-  var _iteratorError5 = undefined;
+  searchBarButton.addEventListener('click', function () {
+    var searchWord = searchText.value.toLowerCase();
+    var noteList = JSON.parse(localStorage.getItem('notesArr'));
+    var foundNote = null;
+    var _iteratorNormalCompletion4 = true;
+    var _didIteratorError4 = false;
+    var _iteratorError4 = undefined;
 
-  try {
-    for (var _iterator5 = noteList[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-      var note = _step5.value;
-      var headline = note.querySelector('.main__noteHeadline').textContent.toLowerCase();
-
-      if (headline.includes(searchWord)) {
-        foundNote = note;
-        break;
-      }
-    }
-  } catch (err) {
-    _didIteratorError5 = true;
-    _iteratorError5 = err;
-  } finally {
     try {
-      if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-        _iterator5["return"]();
+      for (var _iterator4 = noteList[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+        var note = _step4.value;
+        var headline = note.title.toLowerCase();
+
+        if (headline.includes(searchWord)) {
+          foundNote = note;
+          break;
+        }
       }
+    } catch (err) {
+      _didIteratorError4 = true;
+      _iteratorError4 = err;
     } finally {
-      if (_didIteratorError5) {
-        throw _iteratorError5;
+      try {
+        if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+          _iterator4["return"]();
+        }
+      } finally {
+        if (_didIteratorError4) {
+          throw _iteratorError4;
+        }
       }
     }
-  }
 
-  if (foundNote) {
-    notesWrapper.prepend(foundNote);
-  } else {
-    console.log('---');
-  }
+    notesWrapper.insertAdjacentHTML('afterbegin', "<div id=\"".concat(foundNote.id, "\" class=\"main__note\">\n        <div class=\"main__headlineAndButtonWrapper\">\n          <h2 class=\"main__noteHeadline\">").concat(foundNote.title, "</h2>\n          <button class=\"main__deleteButton\"></button>\n        </div>\n        <div class=\"main__dateCategory--wrapper\">\n          <p class=\"main__noteDate\">").concat(foundNote.date, "</p>\n          <p class=\"main__noteCategory\">").concat(foundNote.tag, "</p>\n        </div>\n      </div>"));
+  });
 }

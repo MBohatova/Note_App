@@ -33,7 +33,7 @@ body {
   display: flex;
   gap: 21px;
 }
-.header__wrapper .header__buttonsBox .header__searchButton, .header__wrapper .header__buttonsBox .header__infoButton {
+.header__wrapper .header__buttonsBox .header__searchButton, .header__wrapper .header__buttonsBox .header__themeButton {
   height: 50px;
   width: 50px;
   border-radius: 15px;
@@ -41,13 +41,13 @@ body {
   border: none;
   transition: 0.3s;
 }
-.header__wrapper .header__buttonsBox .header__searchButton:hover, .header__wrapper .header__buttonsBox .header__infoButton:hover {
+.header__wrapper .header__buttonsBox .header__searchButton:hover, .header__wrapper .header__buttonsBox .header__themeButton:hover {
   transform: scale(1.2);
 }
-.header__wrapper .header__buttonsBox .header__infoButton {
-  background: rgb(59, 59, 59) url(./images/info_outline.svg) no-repeat center;
+.header__wrapper .header__buttonsBox .header__themeButton {
+  background: rgb(59, 59, 59) url(./images/visibility.svg) no-repeat center;
 }
-.header__wrapper .header__buttonsBox .header__infoButton:hover {
+.header__wrapper .header__buttonsBox .header__themeButton:hover {
   transform: scale(1.2);
 }
 .header__searchBarBox {
@@ -61,7 +61,7 @@ body {
   border: none;
   border-radius: 30px;
   background-color: rgb(59, 59, 59);
-  padding: 11px 38px;
+  padding: 11px 28px;
   font-weight: 300;
   font-size: 20px;
   line-height: 27.28px;
@@ -82,11 +82,20 @@ body {
 }
 .header__searchBarBox .header__closeButton {
   position: absolute;
-  right: 20px;
+  right: 15px;
   top: 14px;
   height: 24px;
   width: 24px;
   background: url(./images/close.svg) center;
+  border: none;
+}
+.header__searchBarBox .header__searchBarButton {
+  position: absolute;
+  top: 14px;
+  right: 45px;
+  height: 24px;
+  width: 24px;
+  background: url(./images/search.svg) center;
   border: none;
 }
 .header__editorButtonBox, .header__rewriteEditor {
@@ -179,7 +188,7 @@ body {
   justify-content: space-around;
   align-items: center;
   border-radius: 10px;
-  background-color: #eb9513;
+  background-color: #b3b8bc;
 }
 .main__notesWrapper .main__note .main__headlineAndButtonWrapper {
   display: flex;
@@ -206,6 +215,24 @@ body {
   width: 300px;
   display: flex;
   justify-content: space-between;
+}
+.main__notesWrapper .health {
+  background-color: #b0d47c;
+}
+.main__notesWrapper .money {
+  background-color: #eb9513;
+}
+.main__notesWrapper .plans {
+  background-color: #5095cf;
+}
+.main__notesWrapper .hobby {
+  background-color: #c14c9c;
+}
+.main__notesWrapper .goals {
+  background-color: #f8e473;
+}
+.main__notesWrapper .work {
+  background-color: #d56151;
 }
 .main__notFoundContent {
   top: 150px;
