@@ -9,6 +9,11 @@ body {
   background-color: rgb(37, 37, 37);
 }
 
+.lightTheme {
+  background-color: rgb(250, 250, 211);
+  color: rgb(37, 37, 37);
+}
+
 .header {
   position: relative;
   width: 365px;
@@ -235,16 +240,19 @@ body {
   background-color: #d56151;
 }
 .main__notFoundContent {
-  top: 150px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
   left: 5px;
   width: 370px;
+  display: none;
 }
 .main__notFoundContent .main__notFoundImg {
   width: 370px;
   height: 239.1px;
-  background-image: url(./images/not-found-pic.png);
+  background: url(./images/not-found-pic.png) no-repeat;
   background-size: 370px;
-  background-repeat: no-repeat;
 }
 .main__notFoundContent .main__paragraphNotFound {
   font-size: 20px;

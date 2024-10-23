@@ -17,6 +17,7 @@ let searchBarButton = document.querySelector('.header__searchBarButton');
 // Контейнери
 let body = document.querySelector('body');
 let startPageContent = document.querySelector('.main__emptyContent');
+let notFoundContent = document.querySelector('.main__notFoundContent');
 let headerWrapper = document.querySelector('.header__wrapper');
 let header = document.querySelector('.header');
 let main = document.querySelector('.main');
@@ -32,14 +33,7 @@ let searchBarWrapper = document.querySelector('.header__searchBarBox');
 // Масиви, об'єкти
 let noteObj = {};
 let notesArr = [];
-const colors = {
-  'health': '#4caf50',
-  'money': '#ffeb3b',
-  'plans': '#2196f3',
-  'hobby': '#e91e63',
-  'goals': '#ff5722',
-  'work': '#9c27b0'
-};
+let areas = [body, editForm, editHeader, noteForm, editorHeader];
 let color = '';
 // Інпути та інші елементи сторінки
 let noteTitle = document.querySelector('.main__formTitle');
@@ -57,6 +51,9 @@ if(notesFromStorage) {
 createBtn.addEventListener('click', function() {
   editorHeader.style.display = 'inherit';
   noteForm.style.display = 'inherit';
+  searchText.style.display = 'none';
+  searchBarButton.style.display = 'none';
+  searchCloseButton.style.display = 'none';
 
   for (let tag of tagButton) {
     tag.addEventListener('click', function() {
@@ -69,6 +66,9 @@ createBtn.addEventListener('click', function() {
 
   function onBackButtonHandler() {
     hideBtns();
+    searchText.style.display = 'inherit';
+    searchBarButton.style.display = 'inherit';
+    searchCloseButton.style.display = 'inherit';
     saveButton.removeEventListener('click', onBackButtonHandler);
   }
 })
@@ -263,50 +263,59 @@ function searching() {
   notesWrapper.innerHTML = '';
   headerWrapper.style.display = 'none';
   searchBarWrapper.style.display = 'inherit';
+  let searchCloseState = 0;
 
   searchCloseButton.addEventListener('click', function() {
-    if(searchText.value === 'Search by the keyword...') {
+    if(searchCloseState === 0) {
+      searchText.value = '';
+      notesWrapper.innerHTML = '';
+      searchCloseState = 1;
+    } else if (searchCloseState === 1) {
       headerWrapper.style.display = 'inherit';
       searchBarWrapper.style.display = 'none';
+      searchText.value = 'Search by the keyword...';
+      notesWrapper.innerHTML = '';
+      notFoundContent.style.display = 'none';
       generateNote();
+      searchCloseState = 0;
     }
-
-    searchText.value = 'Search by the keyword...';
   })
 
   searchBarButton.addEventListener('click', function() {
     let searchWord = searchText.value.toLowerCase();
     let noteList = JSON.parse(localStorage.getItem('notesArr'));
+
+    notesWrapper.innerHTML = '';
+
     let foundNote = null;
 
     for(let note of noteList) {
       let headline = note.title.toLowerCase();
       if(headline.includes(searchWord)) {
         foundNote = note;
-        break;
+        let colorTag = note.tag.toLowerCase();
+        notesWrapper.insertAdjacentHTML('afterbegin', 
+          `<div id="${foundNote.id}" class="main__note ${colorTag}">
+            <div class="main__headlineAndButtonWrapper">
+              <h2 class="main__noteHeadline">${foundNote.title}</h2>
+              <button class="main__deleteButton"></button>
+            </div>
+            <div class="main__dateCategory--wrapper">
+              <p class="main__noteDate">${foundNote.date}</p>
+              <p class="main__noteCategory">${foundNote.tag}</p>
+            </div>
+          </div>`);
+          editNote();
+      } else if(!(headline.includes(searchWord))) {
+        notFoundContent.style.display = 'flex';
       }
     }
-    notesWrapper.insertAdjacentHTML('afterbegin', 
-      `<div id="${foundNote.id}" class="main__note">
-        <div class="main__headlineAndButtonWrapper">
-          <h2 class="main__noteHeadline">${foundNote.title}</h2>
-          <button class="main__deleteButton"></button>
-        </div>
-        <div class="main__dateCategory--wrapper">
-          <p class="main__noteDate">${foundNote.date}</p>
-          <p class="main__noteCategory">${foundNote.tag}</p>
-        </div>
-      </div>`);
   })
 }
-
 
 // themeButton.addEventListener('click', changeTheme);
 
 // function changeTheme() {
-//   body.style.backgroundColor = 'rgb(250, 250, 211)';
-//   headerHeadline.style.color = 'rgba(37, 37, 37, 1)';
-//   editForm.style.backgroundColor = 'inherit';
-//   // body.style.backgroundColor = 'rgba(37, 37, 37, 1)';
-//   // headerHeadline.style.color = 'rgba(255, 255, 255, 1)';
+//   areas.forEach((elem) => elem.classList.add('lightTheme'));
 // }
+
