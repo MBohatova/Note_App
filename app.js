@@ -275,7 +275,6 @@ function searching() {
       searchBarWrapper.style.display = 'none';
       searchText.value = 'Search by the keyword...';
       notesWrapper.innerHTML = '';
-      notFoundContent.style.display = 'none';
       generateNote();
       searchCloseState = 0;
     }
@@ -293,6 +292,7 @@ function searching() {
       let headline = note.title.toLowerCase();
       if(headline.includes(searchWord)) {
         foundNote = note;
+
         let colorTag = note.tag.toLowerCase();
         notesWrapper.insertAdjacentHTML('afterbegin', 
           `<div id="${foundNote.id}" class="main__note ${colorTag}">
@@ -306,9 +306,16 @@ function searching() {
             </div>
           </div>`);
           editNote();
-      } else if(!(headline.includes(searchWord))) {
-        notFoundContent.style.display = 'flex';
       }
+    }
+    if(!foundNote) {
+      notesWrapper.insertAdjacentHTML('afterbegin',
+        `<div class="main__notFoundContent">
+            <div class="main__notFoundImg"></div>
+            <p class="main__paragraphNotFound">
+              File not found. Try searching again.
+            </p>
+        </div>`)
     }
   })
 }
