@@ -4,7 +4,6 @@ let themeButton = document.querySelector('.header__themeButton');
 let createBtn = document.querySelector('.main__createButton');
 let saveButton = document.querySelector('.header__saveButton');
 let backButton = document.querySelector('.header__backButton');
-let visibilityButton = document.querySelector('.header__visibilityButton');
 let tagButton = document.querySelectorAll('.tagButton');
 let mainButton = document.querySelector('.main__buttonBox');
 let editBackButton = document.querySelector('.header__rewriteBackButton');
@@ -30,16 +29,18 @@ let editHeader = document.querySelector('.header__rewriteEditor');
 let deleteButtonWrapper = document.querySelector('.main__deleteButtonWrapper');
 let deleteMessageWrapper = document.querySelector('.deleteMessageWrapper');
 let searchBarWrapper = document.querySelector('.header__searchBarBox');
-// Масиви, об'єкти
-let noteObj = {};
-let notesArr = [];
-let areas = [body, editForm, editHeader, noteForm, editorHeader];
-let color = '';
 // Інпути та інші елементи сторінки
 let noteTitle = document.querySelector('.main__formTitle');
 let noteText = document.querySelector('.main__formText');
 let searchText = document.querySelector('.header__searchBar');
 let headerHeadline = document.querySelector('.header__headline');
+let editTitle = document.querySelector('.main__editTitle');
+let editTextArea = document.querySelector('.main__editText')
+// Масиви, об'єкти
+let noteObj = {};
+let notesArr = [];
+let areas = [body, editForm, editHeader, editTitle, editTextArea, noteForm, editorHeader, searchText];
+let color = '';
 
 let notesFromStorage = localStorage.getItem('notesArr');
 if(notesFromStorage) {
@@ -262,7 +263,10 @@ searchBtn.addEventListener('click', searching);
 function searching() {
   notesWrapper.innerHTML = '';
   headerWrapper.style.display = 'none';
-  searchBarWrapper.style.display = 'inherit';
+  searchBarWrapper.style.display = 'flex';
+  searchText.style.display = 'inherit';
+  searchBarButton.style.display = 'inherit';
+  searchCloseButton.style.display = 'inherit';
   let searchCloseState = 0;
 
   searchCloseButton.addEventListener('click', function() {
@@ -323,6 +327,15 @@ function searching() {
 // themeButton.addEventListener('click', changeTheme);
 
 // function changeTheme() {
-//   areas.forEach((elem) => elem.classList.add('lightTheme'));
+//   areas.forEach((elem) => {
+//     let count = 0;
+//     if(count === 0) {
+//       elem.classList.add('lightTheme');
+//       count = 1;
+//     } else if(count === 1) {
+//       elem.classList.add('darkTheme');
+//       count = 0;
+//     }
+//   })
 // }
 

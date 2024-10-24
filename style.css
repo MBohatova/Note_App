@@ -9,11 +9,6 @@ body {
   background-color: rgb(37, 37, 37);
 }
 
-.lightTheme {
-  background-color: rgb(250, 250, 211);
-  color: rgb(37, 37, 37);
-}
-
 .header {
   position: relative;
   width: 365px;
@@ -25,6 +20,7 @@ body {
 .header__wrapper {
   width: 365px;
   display: flex;
+  align-items: center;
   gap: 128px;
 }
 .header__wrapper .header__headline {
@@ -108,14 +104,14 @@ body {
   height: 60px;
   width: 365px;
   display: flex;
-  gap: 197px;
+  justify-content: space-between;
   align-items: center;
   background-color: rgb(37, 37, 37);
   display: none;
 }
 .header__editorButtonBox .header__backButton, .header__editorButtonBox .header__rewriteEditor .header__rewriteBackButton, .header__editorButtonBox .header__rewriteEditor .header__rewriteSaveButton, .header__rewriteEditor .header__editorButtonBox .header__rewriteBackButton, .header__rewriteEditor .header__editorButtonBox .header__rewriteSaveButton, .header__rewriteEditor .header__backButton, .header__rewriteEditor .header__rewriteBackButton, .header__rewriteEditor .header__rewriteSaveButton, .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton, .header__editorButtonBox .header__buttonsWrapper .header__saveButton, .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
-  height: 48px;
-  width: 48px;
+  height: 50px;
+  width: 50px;
   background: rgb(59, 59, 59) url(./images/back.svg) no-repeat center;
   border: none;
   border-radius: 15px;
@@ -131,6 +127,8 @@ body {
 .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton, .header__editorButtonBox .header__buttonsWrapper .header__saveButton, .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
   background: rgb(59, 59, 59) url(./images/visibility.svg) no-repeat center;
   transition: 0.3s;
+  height: 50px;
+  width: 50px;
 }
 .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton:hover, .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
   transform: scale(1.2);
@@ -138,6 +136,8 @@ body {
 .header__editorButtonBox .header__buttonsWrapper .header__saveButton, .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
   background: rgb(59, 59, 59) url(./images/save.svg) no-repeat center;
   transition: 0.3s;
+  height: 50px;
+  width: 50px;
 }
 .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
   transform: scale(1.2);
@@ -145,8 +145,14 @@ body {
 .header__rewriteEditor {
   justify-content: space-between;
 }
+.header__rewriteEditor .header__rewriteBackButton, .header__rewriteEditor .header__rewriteSaveButton {
+  height: 50px;
+  width: 50px;
+}
 .header__rewriteEditor .header__rewriteSaveButton {
   background: rgb(59, 59, 59) url(./images/save.svg) no-repeat center;
+  height: 50px;
+  width: 50px;
 }
 
 .main {
@@ -434,4 +440,14 @@ body {
 }
 .deleteMessageWrapper .deleteMessage .buttonWrapper .cancelButton {
   background-color: rgb(48, 190, 113);
+}
+
+.lightTheme {
+  background-color: rgb(250, 250, 211);
+  color: rgb(37, 37, 37);
+}
+
+.darkTheme {
+  background-color: rgb(37, 37, 37);
+  color: rgb(255, 255, 255);
 }/*# sourceMappingURL=style.css.map */
