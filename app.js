@@ -133,7 +133,7 @@ function generateNote() {
     main__deleteButton = document.querySelectorAll('.main__deleteButton');
     main__deleteButton.forEach(button => {
       button.addEventListener('click', function(event) {
-        let noteId = event.target.closest('.main__note').id; // Отримуємо ID нотатки
+        let noteId = event.target.closest('.main__note').id;
         deleteNote(event, noteId);
       });
     });
@@ -262,27 +262,17 @@ searchBtn.addEventListener('click', searching);
 
 function searching() {
   notesWrapper.innerHTML = '';
-  headerWrapper.style.display = 'none';
   searchBarWrapper.style.display = 'flex';
   searchText.style.display = 'inherit';
   searchBarButton.style.display = 'inherit';
   searchCloseButton.style.display = 'inherit';
-  let searchCloseState = 0;
 
   searchCloseButton.addEventListener('click', function() {
-    if(searchCloseState === 0) {
-      searchText.value = '';
-      notesWrapper.innerHTML = '';
-      searchCloseState = 1;
-    } else if (searchCloseState === 1) {
-      headerWrapper.style.display = 'inherit';
-      searchBarWrapper.style.display = 'none';
-      searchText.value = 'Search by the keyword...';
-      notesWrapper.innerHTML = '';
-      generateNote();
-      searchCloseState = 0;
-    }
-  })
+    searchBarWrapper.style.display = 'none';
+    searchText.value = 'Search by the keyword...';
+    notesWrapper.innerHTML = '';
+    generateNote();
+})
 
   searchBarButton.addEventListener('click', function() {
     let searchWord = searchText.value.toLowerCase();
@@ -310,6 +300,7 @@ function searching() {
             </div>
           </div>`);
           editNote();
+          searchText.value = '';
       }
     }
     if(!foundNote) {

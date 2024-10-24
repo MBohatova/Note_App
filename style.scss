@@ -35,7 +35,7 @@ body {
     width: 365px;
     display: flex;
     align-items: center;
-    gap: 128px;
+    gap: 126px;
 
     .header__headline {
       font-size: 43px;
@@ -77,14 +77,16 @@ body {
     display: none;
     position: absolute;
     right: 1px;
+    background-color: $backgroundBlack;
 
     .header__searchBar {
       height: 50px;
-      width: 360px;
+      width: 365px;
       border: none;
       border-radius: 30px;
       background-color: $buttonsGrey;
       padding: 11px 28px;
+      // margin-top: 47px;
       font-weight: 300;
       font-size: 20px;
       line-height: 27.28px;
