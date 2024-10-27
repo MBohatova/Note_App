@@ -53,7 +53,6 @@ createBtn.addEventListener('click', function() {
   editorHeader.style.display = 'inherit';
   noteForm.style.display = 'inherit';
   searchText.style.display = 'none';
-  searchBarButton.style.display = 'none';
   searchCloseButton.style.display = 'none';
 
   for (let tag of tagButton) {
@@ -68,7 +67,6 @@ createBtn.addEventListener('click', function() {
   function onBackButtonHandler() {
     hideBtns();
     searchText.style.display = 'inherit';
-    searchBarButton.style.display = 'inherit';
     searchCloseButton.style.display = 'inherit';
     saveButton.removeEventListener('click', onBackButtonHandler);
   }
@@ -214,15 +212,12 @@ function onEditBackButtonHandler() {
   editBackButton.removeEventListener('click', onEditBackButtonHandler);
 }
 
-
 function deleteNote(event, noteId) {
   event.stopPropagation();
 
   deleteMessageWrapper.style.display = 'flex';
 
   let noteElement = document.getElementById(noteId);
-  // let notesFromHTML = document.querySelector('.main__note');
-  // let note = document.querySelector('.main__note');
 
   deleteButton.removeEventListener('click', onDeleteButtonHandler);
   cancelButton.removeEventListener('click', onCancelButtonHandler);
@@ -264,55 +259,108 @@ function searching() {
   notesWrapper.innerHTML = '';
   searchBarWrapper.style.display = 'flex';
   searchText.style.display = 'inherit';
-  searchBarButton.style.display = 'inherit';
   searchCloseButton.style.display = 'inherit';
 
   searchCloseButton.addEventListener('click', function() {
     searchBarWrapper.style.display = 'none';
-    searchText.value = 'Search by the keyword...';
+    searchText.value = '';
     notesWrapper.innerHTML = '';
     generateNote();
-})
+  })
 
-  searchBarButton.addEventListener('click', function() {
+  searchText.addEventListener('input', searchingByBar);
+
+  function searchingByBar() {
     let searchWord = searchText.value.toLowerCase();
     let noteList = JSON.parse(localStorage.getItem('notesArr'));
 
     notesWrapper.innerHTML = '';
 
-    let foundNote = null;
+    let foundNotes = noteList.filter(note => 
+      note.title.toLowerCase().includes(searchWord)
+    );
 
-    for(let note of noteList) {
-      let headline = note.title.toLowerCase();
-      if(headline.includes(searchWord)) {
-        foundNote = note;
+    if (foundNotes.length === 0) {
+      notesWrapper.innerHTML = 
+      `<div class="main__notFoundContent">
+          <div class="main__notFoundImg"></div>
+          <p class="main__paragraphNotFound">
+            File not found. Try searching again.
+          </p>
+        </div>`;
+      return;
+    }
 
-        let colorTag = note.tag.toLowerCase();
-        notesWrapper.insertAdjacentHTML('afterbegin', 
-          `<div id="${foundNote.id}" class="main__note ${colorTag}">
-            <div class="main__headlineAndButtonWrapper">
-              <h2 class="main__noteHeadline">${foundNote.title}</h2>
-              <button class="main__deleteButton"></button>
-            </div>
-            <div class="main__dateCategory--wrapper">
-              <p class="main__noteDate">${foundNote.date}</p>
-              <p class="main__noteCategory">${foundNote.tag}</p>
-            </div>
-          </div>`);
-          editNote();
-          searchText.value = '';
-      }
-    }
-    if(!foundNote) {
-      notesWrapper.insertAdjacentHTML('afterbegin',
-        `<div class="main__notFoundContent">
-            <div class="main__notFoundImg"></div>
-            <p class="main__paragraphNotFound">
-              File not found. Try searching again.
-            </p>
-        </div>`)
-    }
-  })
+    foundNotes.forEach(note => {
+      let colorTag = note.tag.toLowerCase();
+      notesWrapper.insertAdjacentHTML('beforeend', 
+        `<div id="${note.id}" class="main__note ${colorTag}">
+          <div class="main__headlineAndButtonWrapper">
+            <h2 class="main__noteHeadline">${note.title}</h2>
+            <button class="main__deleteButton"></button>
+          </div>
+          <div class="main__dateCategory--wrapper">
+            <p class="main__noteDate">${note.date}</p>
+            <p class="main__noteCategory">${note.tag}</p>
+          </div>
+        </div>`
+      );
+    });
+
+  editNote();
+  foundNotes.forEach(note => {
+    document.getElementById(note.id).querySelector('.main__deleteButton')
+      .addEventListener('click', event => deleteNote(event, note.id));
+  });
+  }
+  // searchBarButton.addEventListener('click', function() {
+  //   let searchWord = searchText.value.toLowerCase();
+  //   let noteList = JSON.parse(localStorage.getItem('notesArr'));
+
+  //   notesWrapper.innerHTML = '';
+
+  //   let foundNote = null;
+
+  //   for(let note of noteList) {
+  //     let headline = note.title.toLowerCase();
+  //     if(headline.includes(searchWord)) {
+  //       foundNote = note;
+
+  //       let colorTag = note.tag.toLowerCase();
+  //       notesWrapper.insertAdjacentHTML('afterbegin', 
+  //         `<div id="${foundNote.id}" class="main__note ${colorTag}">
+  //           <div class="main__headlineAndButtonWrapper">
+  //             <h2 class="main__noteHeadline">${foundNote.title}</h2>
+  //             <button class="main__deleteButton"></button>
+  //           </div>
+  //           <div class="main__dateCategory--wrapper">
+  //             <p class="main__noteDate">${foundNote.date}</p>
+  //             <p class="main__noteCategory">${foundNote.tag}</p>
+  //           </div>
+  //         </div>`);
+
+  //         main__deleteButton = document.querySelectorAll('.main__deleteButton');
+  //         main__deleteButton.forEach(button => {
+  //           button.addEventListener('click', function(event) {
+  //             let noteId = event.target.closest('.main__note').id;
+  //             deleteNote(event, noteId);
+  //           });
+  //         });
+          
+  //         editNote();
+  //         searchText.value = '';
+  //     }
+  //   }
+  //   if(!foundNote) {
+  //     notesWrapper.insertAdjacentHTML('afterbegin',
+  //       `<div class="main__notFoundContent">
+  //           <div class="main__notFoundImg"></div>
+  //           <p class="main__paragraphNotFound">
+  //             File not found. Try searching again.
+  //           </p>
+  //       </div>`)
+  //   }
+  // })
 }
 
 // themeButton.addEventListener('click', changeTheme);

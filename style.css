@@ -57,6 +57,12 @@ body {
   right: 1px;
   background-color: rgb(37, 37, 37);
 }
+.header__searchBarBox::-webkit-search-cancel-button {
+  display: none;
+}
+.header__searchBarBox::-ms-clear {
+  display: none;
+}
 .header__searchBarBox .header__searchBar {
   height: 50px;
   width: 365px;
@@ -69,6 +75,12 @@ body {
   line-height: 27.28px;
   color: rgb(255, 255, 255);
   outline: none;
+}
+.header__searchBarBox .header__searchBar::-webkit-search-cancel-button {
+  display: none;
+}
+.header__searchBarBox .header__searchBar::-ms-clear {
+  display: none;
 }
 .header__searchBarBox .header__searchBar::-moz-placeholder {
   font-weight: 300;
@@ -84,7 +96,7 @@ body {
 }
 .header__searchBarBox .header__closeButton {
   position: absolute;
-  right: 15px;
+  right: 20px;
   top: 14px;
   height: 24px;
   width: 24px;
@@ -158,7 +170,7 @@ body {
 
 .main {
   position: relative;
-  height: 100%;
+  min-height: 520px;
   width: 365px;
   display: flex;
   align-items: center;
@@ -269,9 +281,10 @@ body {
   margin-top: 20px;
 }
 .main__buttonBox {
-  position: relative;
+  position: fixed;
   height: 70px;
-  width: 100%;
+  width: 360px;
+  top: 535px;
   display: flex;
   justify-content: end;
 }
@@ -336,43 +349,34 @@ body {
 }
 .main__form .main__tagBox, .main__editForm .main__tagBox {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.main__form .main__tagBox .main__tagParagraph, .main__editForm .main__tagBox .main__tagParagraph {
-  color: rgb(59, 59, 59);
-  font-size: 16px;
-}
-.main__form .main__tagBox .main__buttonBox, .main__editForm .main__tagBox .main__buttonBox {
-  display: flex;
   justify-content: space-between;
   height: 25px;
 }
-.main__form .main__tagBox .main__buttonBox .tagButton, .main__editForm .main__tagBox .main__buttonBox .tagButton {
+.main__form .main__tagBox .tagButton, .main__editForm .main__tagBox .tagButton {
   width: 55px;
   height: 25px;
   border: none;
   border-radius: 15px;
 }
-.main__form .main__tagBox .main__buttonBox .tagButton:hover, .main__editForm .main__tagBox .main__buttonBox .tagButton:hover {
+.main__form .main__tagBox .tagButton:hover, .main__editForm .main__tagBox .tagButton:hover {
   color: rgb(255, 255, 255);
 }
-.main__form .main__tagBox .main__buttonBox .healthButton, .main__editForm .main__tagBox .main__buttonBox .healthButton {
+.main__form .main__tagBox .healthButton, .main__editForm .main__tagBox .healthButton {
   background-color: #b0d47c;
 }
-.main__form .main__tagBox .main__buttonBox .moneyButton, .main__editForm .main__tagBox .main__buttonBox .moneyButton {
+.main__form .main__tagBox .moneyButton, .main__editForm .main__tagBox .moneyButton {
   background-color: #eb9513;
 }
-.main__form .main__tagBox .main__buttonBox .plansButton, .main__editForm .main__tagBox .main__buttonBox .plansButton {
+.main__form .main__tagBox .plansButton, .main__editForm .main__tagBox .plansButton {
   background-color: #5095cf;
 }
-.main__form .main__tagBox .main__buttonBox .hobbyButton, .main__editForm .main__tagBox .main__buttonBox .hobbyButton {
+.main__form .main__tagBox .hobbyButton, .main__editForm .main__tagBox .hobbyButton {
   background-color: #c14c9c;
 }
-.main__form .main__tagBox .main__buttonBox .goalsButton, .main__editForm .main__tagBox .main__buttonBox .goalsButton {
+.main__form .main__tagBox .goalsButton, .main__editForm .main__tagBox .goalsButton {
   background-color: #f8e473;
 }
-.main__form .main__tagBox .main__buttonBox .workButton, .main__editForm .main__tagBox .main__buttonBox .workButton {
+.main__form .main__tagBox .workButton, .main__editForm .main__tagBox .workButton {
   background-color: #d56151;
 }
 .main__editForm {
