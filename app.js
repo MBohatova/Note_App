@@ -12,7 +12,6 @@ let deleteButton = document.querySelector('.deleteButton');
 let cancelButton = document.querySelector('.cancelButton');
 let main__deleteButton;
 let searchCloseButton = document.querySelector('.header__closeButton');
-let searchBarButton = document.querySelector('.header__searchBarButton');
 // Контейнери
 let body = document.querySelector('body');
 let startPageContent = document.querySelector('.main__emptyContent');
@@ -28,6 +27,7 @@ let editForm = document.querySelector('.main__editForm');
 let editHeader = document.querySelector('.header__rewriteEditor');
 let deleteButtonWrapper = document.querySelector('.main__deleteButtonWrapper');
 let deleteMessageWrapper = document.querySelector('.deleteMessageWrapper');
+let deleteMessage = document.querySelector('.deleteMessage');
 let searchBarWrapper = document.querySelector('.header__searchBarBox');
 // Інпути та інші елементи сторінки
 let noteTitle = document.querySelector('.main__formTitle');
@@ -35,11 +35,15 @@ let noteText = document.querySelector('.main__formText');
 let searchText = document.querySelector('.header__searchBar');
 let headerHeadline = document.querySelector('.header__headline');
 let editTitle = document.querySelector('.main__editTitle');
-let editTextArea = document.querySelector('.main__editText')
+let editTextArea = document.querySelector('.main__editText');
+let emptyParagraph = document.querySelector('.main__paragraph');
+let notFoundParagraph = document.querySelector('.main__paragraphNotFound');
 // Масиви, об'єкти
 let noteObj = {};
 let notesArr = [];
-let areas = [body, editForm, editHeader, editTitle, editTextArea, noteForm, editorHeader, searchText];
+let themeArr = [];
+let areas = [body, editForm, editHeader, noteForm, editorHeader];
+let textAreas = [noteTitle, noteText];
 let color = '';
 
 let notesFromStorage = localStorage.getItem('notesArr');
@@ -77,6 +81,7 @@ function onSaveButtonHandler() {
   saveNotesInLocalStorage();
   generateNote();
   clearTextArea();
+  editNote();
 }
 
 function createNote() {
@@ -154,7 +159,6 @@ function editNote() {
   let notesFromLocalSt = JSON.parse(localStorage.getItem('notesArr'));
   let notesFromHTML = document.querySelectorAll('.main__note')
 
-  // !! Переробити на метод find()
   for(let note of notesFromHTML) {
     for(let noteObject of notesFromLocalSt) {
       if(note.id === noteObject.id.toString()) {
@@ -164,17 +168,31 @@ function editNote() {
           editBackButton.addEventListener('click', onEditBackButtonHandler);
           editForm.innerHTML = '';
           editForm.style.display = 'inherit';
-          editForm.insertAdjacentHTML('beforeend',
-            `<input 
-                type="text"
-                class="main__editTitle"
-                value="${noteObject.title}"
-              >
-              <textarea class="main__editText" placeholder="Type something...">${noteObject.text}</textarea>`
-          )
-
-          let editTitle = document.querySelector('.main__editTitle');
-          let editText = document.querySelector('.main__editText');
+          if(themeButton.classList.contains('btnLightTheme')) {
+            editForm.insertAdjacentHTML('beforeend',
+              `<input 
+                  type="text"
+                  class="lightThemeTitles"
+                  id="editTitle"
+                  value="${noteObject.title}"
+                >
+                <textarea id="editText" class="lightThemeTexts" placeholder="Type something...">${noteObject.text}</textarea>`
+            )
+          } 
+          
+          if(themeButton.classList.contains('header__themeButton')) {
+            editForm.insertAdjacentHTML('beforeend',
+              `<input 
+                  type="text"
+                  class="main__editTitle"
+                  id="editTitle"
+                  value="${noteObject.title}"
+                >
+                <textarea id="editText" class="main__editText" placeholder="Type something...">${noteObject.text}</textarea>`
+            )
+          }
+          let editTitle = document.getElementById('editTitle');
+          let editText = document.getElementById('editText');
 
           editSaveButton.addEventListener('click', onEditSaveButtonHandler);
 
@@ -217,6 +235,13 @@ function deleteNote(event, noteId) {
 
   deleteMessageWrapper.style.display = 'flex';
 
+  if(themeButton.className === 'btnLightTheme') {
+    deleteMessage.classList.toggle('deleteMessage');
+    deleteMessage.classList.toggle('deleteMessageLight');
+  } else {
+    deleteMessage.classList.add('deleteMessage');
+  }
+
   let noteElement = document.getElementById(noteId);
 
   deleteButton.removeEventListener('click', onDeleteButtonHandler);
@@ -227,6 +252,7 @@ function deleteNote(event, noteId) {
 
 
   function onDeleteButtonHandler() {
+
     let notesFromStorage = localStorage.getItem('notesArr');
     let storageArr = JSON.parse(notesFromStorage);
     let noteI = storageArr.findIndex(storedNote => storedNote.id === parseInt(noteElement.id));
@@ -263,6 +289,7 @@ function searching() {
 
   searchCloseButton.addEventListener('click', function() {
     searchBarWrapper.style.display = 'none';
+    notFoundContent.style.display = 'none';
     searchText.value = '';
     notesWrapper.innerHTML = '';
     generateNote();
@@ -281,14 +308,12 @@ function searching() {
     );
 
     if (foundNotes.length === 0) {
-      notesWrapper.innerHTML = 
-      `<div class="main__notFoundContent">
-          <div class="main__notFoundImg"></div>
-          <p class="main__paragraphNotFound">
-            File not found. Try searching again.
-          </p>
-        </div>`;
+      notFoundContent.style.display = 'flex';
       return;
+    }
+
+    if(searchText.value === '') {
+      notFoundContent.style.display = 'none';
     }
 
     foundNotes.forEach(note => {
@@ -313,68 +338,124 @@ function searching() {
       .addEventListener('click', event => deleteNote(event, note.id));
   });
   }
-  // searchBarButton.addEventListener('click', function() {
-  //   let searchWord = searchText.value.toLowerCase();
-  //   let noteList = JSON.parse(localStorage.getItem('notesArr'));
-
-  //   notesWrapper.innerHTML = '';
-
-  //   let foundNote = null;
-
-  //   for(let note of noteList) {
-  //     let headline = note.title.toLowerCase();
-  //     if(headline.includes(searchWord)) {
-  //       foundNote = note;
-
-  //       let colorTag = note.tag.toLowerCase();
-  //       notesWrapper.insertAdjacentHTML('afterbegin', 
-  //         `<div id="${foundNote.id}" class="main__note ${colorTag}">
-  //           <div class="main__headlineAndButtonWrapper">
-  //             <h2 class="main__noteHeadline">${foundNote.title}</h2>
-  //             <button class="main__deleteButton"></button>
-  //           </div>
-  //           <div class="main__dateCategory--wrapper">
-  //             <p class="main__noteDate">${foundNote.date}</p>
-  //             <p class="main__noteCategory">${foundNote.tag}</p>
-  //           </div>
-  //         </div>`);
-
-  //         main__deleteButton = document.querySelectorAll('.main__deleteButton');
-  //         main__deleteButton.forEach(button => {
-  //           button.addEventListener('click', function(event) {
-  //             let noteId = event.target.closest('.main__note').id;
-  //             deleteNote(event, noteId);
-  //           });
-  //         });
-          
-  //         editNote();
-  //         searchText.value = '';
-  //     }
-  //   }
-  //   if(!foundNote) {
-  //     notesWrapper.insertAdjacentHTML('afterbegin',
-  //       `<div class="main__notFoundContent">
-  //           <div class="main__notFoundImg"></div>
-  //           <p class="main__paragraphNotFound">
-  //             File not found. Try searching again.
-  //           </p>
-  //       </div>`)
-  //   }
-  // })
 }
 
-// themeButton.addEventListener('click', changeTheme);
+themeButton.addEventListener('click', changeTheme);
 
-// function changeTheme() {
-//   areas.forEach((elem) => {
-//     let count = 0;
-//     if(count === 0) {
-//       elem.classList.add('lightTheme');
-//       count = 1;
-//     } else if(count === 1) {
-//       elem.classList.add('darkTheme');
-//       count = 0;
-//     }
-//   })
-// }
+function changeTheme() {
+  if(themeButton.classList.contains('btnLightTheme')) {
+    themeButton.classList.add('header__themeButton');
 
+    headerHeadline.classList.remove('headHeadlineLight');
+    headerHeadline.classList.add('header__headline');
+
+    emptyParagraph.classList.remove('emptyParagraphLight');
+    emptyParagraph.classList.add('main__paragraph');
+
+    notFoundParagraph.classList.remove('paragraphNotFoundLight');
+    notFoundParagraph.classList.add('main__paragraphNotFound');
+
+    areas.forEach((elem) => elem.classList.remove('lightTheme'));
+
+    noteTitle.classList.remove('lightThemeTitles');
+    noteTitle.classList.add('main__formTitle');
+
+    noteText.classList.remove('lightThemeTexts');
+    noteText.classList.add('main__formText');
+
+    themeButton.classList.remove('btnLightTheme');
+
+    searchBarWrapper.classList.remove('searchBarLightTheme');
+    searchBarWrapper.classList.add('header__searchBarBox');
+
+    searchText.classList.remove('searchBarInputLight');
+    searchText.classList.add('header__searchBar');
+
+    searchCloseButton.classList.remove('closeButtonLight');
+    searchCloseButton.classList.add('header__closeButton');
+
+    localStorage.setItem('theme', 'dark');
+  } else {
+    themeButton.classList.remove('header__themeButton');
+    themeButton.classList.add('btnLightTheme');
+
+    headerHeadline.classList.remove('header__headline');
+    headerHeadline.classList.add('headHeadlineLight');
+
+    emptyParagraph.classList.remove('main__paragraph');
+    emptyParagraph.classList.add('emptyParagraphLight');
+
+    notFoundParagraph.classList.remove('main__paragraphNotFound');
+    notFoundParagraph.classList.add('paragraphNotFoundLight');
+
+    areas.forEach((elem) => elem.classList.add('lightTheme'));
+
+    noteTitle.classList.remove('main__formTitle');
+    noteTitle.classList.add('lightThemeTitles');
+
+    noteText.classList.remove('main__formText');
+    noteText.classList.add('lightThemeTexts');
+
+    searchBarWrapper.classList.remove('header__searchBarBox');
+    searchBarWrapper.classList.add('searchBarLightTheme');
+
+    searchText.classList.remove('header__searchBar');
+    searchText.classList.add('searchBarInputLight');
+
+    searchCloseButton.classList.remove('header__closeButton');
+    searchCloseButton.classList.add('closeButtonLight');
+
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+function initializeTheme() {
+  let savedTheme = localStorage.getItem('theme');
+
+  if(savedTheme === 'light') {
+    themeButton.classList.add('btnLightTheme');
+    themeButton.classList.remove('header__themeButton');
+    headerHeadline.classList.add('headHeadlineLight');
+    headerHeadline.classList.remove('header__headline');
+    emptyParagraph.classList.add('emptyParagraphLight');
+    emptyParagraph.classList.remove('main__paragraph');
+    notFoundParagraph.classList.add('paragraphNotFoundLight');
+    notFoundParagraph.classList.remove('main__paragraphNotFound');
+    areas.forEach((elem) => elem.classList.add('lightTheme'));
+
+    noteTitle.classList.add('lightThemeTitles');
+    noteTitle.classList.remove('main__formTitle');
+    noteText.classList.add('lightThemeTexts');
+    noteText.classList.remove('main__formText');
+
+    searchBarWrapper.classList.add('searchBarLightTheme');
+    searchBarWrapper.classList.remove('header__searchBarBox');
+    searchText.classList.add('searchBarInputLight');
+    searchText.classList.remove('header__searchBar');
+    searchCloseButton.classList.add('closeButtonLight');
+    searchCloseButton.classList.remove('header__closeButton');
+  } else {
+    themeButton.classList.add('header__themeButton');
+    themeButton.classList.remove('btnLightTheme');
+    headerHeadline.classList.add('header__headline');
+    headerHeadline.classList.remove('headHeadlineLight');
+    emptyParagraph.classList.add('main__paragraph');
+    emptyParagraph.classList.remove('emptyParagraphLight');
+    notFoundParagraph.classList.add('main__paragraphNotFound');
+    notFoundParagraph.classList.remove('paragraphNotFoundLight');
+    areas.forEach((elem) => elem.classList.remove('lightTheme'));
+
+    noteTitle.classList.add('main__formTitle');
+    noteTitle.classList.remove('lightThemeTitles');
+    noteText.classList.add('main__formText');
+    noteText.classList.remove('lightThemeTexts');
+
+    searchBarWrapper.classList.add('header__searchBarBox');
+    searchBarWrapper.classList.remove('searchBarLightTheme');
+    searchText.classList.add('header__searchBar');
+    searchText.classList.remove('searchBarInputLight');
+    searchCloseButton.classList.add('header__closeButton');
+    searchCloseButton.classList.remove('closeButtonLight');
+  }
+}
+initializeTheme();
