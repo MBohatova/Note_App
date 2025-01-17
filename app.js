@@ -41,10 +41,6 @@ let notFoundParagraph = document.querySelector('.main__paragraphNotFound');
 // Масиви, об'єкти
 let noteObj = {};
 let notesArr = [];
-let themeArr = [];
-let areas = [body, editForm, editHeader, noteForm, editorHeader];
-let textAreas = [noteTitle, noteText];
-let color = '';
 
 let notesFromStorage = localStorage.getItem('notesArr');
 if(notesFromStorage) {
@@ -157,71 +153,71 @@ editNote();
 
 function editNote() {
   let notesFromLocalSt = JSON.parse(localStorage.getItem('notesArr'));
-  let notesFromHTML = document.querySelectorAll('.main__note')
 
-  for(let note of notesFromHTML) {
-    for(let noteObject of notesFromLocalSt) {
-      if(note.id === noteObject.id.toString()) {
-        note.addEventListener('click', function() {
+  function attachEventListeners() {
+    let notesFromHTML = document.querySelectorAll('.main__note');
+
+    notesFromHTML.forEach(note => {
+      let noteObject = notesFromLocalSt.find(item => item.id.toString() === note.id);
+
+      if (noteObject) {
+        note.removeEventListener('click', openEditForm);
+        note.addEventListener('click', openEditForm);
+
+        function openEditForm() {
           editHeader.style.display = 'inherit';
-
-          editBackButton.addEventListener('click', onEditBackButtonHandler);
-          editForm.innerHTML = '';
           editForm.style.display = 'inherit';
-          if(themeButton.classList.contains('btnLightTheme')) {
-            editForm.insertAdjacentHTML('beforeend',
-              `<input 
-                  type="text"
-                  class="lightThemeTitles"
-                  id="editTitle"
-                  value="${noteObject.title}"
-                >
-                <textarea id="editText" class="lightThemeTexts" placeholder="Type something...">${noteObject.text}</textarea>`
-            )
-          } 
-          
-          if(themeButton.classList.contains('header__themeButton')) {
-            editForm.insertAdjacentHTML('beforeend',
-              `<input 
-                  type="text"
-                  class="main__editTitle"
-                  id="editTitle"
-                  value="${noteObject.title}"
-                >
-                <textarea id="editText" class="main__editText" placeholder="Type something...">${noteObject.text}</textarea>`
-            )
-          }
+          editForm.innerHTML = `
+            <input 
+                type="text"
+                class="main__editTitle"
+                id="editTitle"
+                value="${noteObject.title}"
+            >
+            <textarea id="editText" class="main__editText" placeholder="Type something...">${noteObject.text}</textarea>
+          `;
+
           let editTitle = document.getElementById('editTitle');
           let editText = document.getElementById('editText');
 
-          editSaveButton.addEventListener('click', onEditSaveButtonHandler);
+          editBackButton.removeEventListener('click', closeEditForm);
+          editBackButton.addEventListener('click', closeEditForm);
 
-          function onEditSaveButtonHandler() {
-            editNoteObj();
-            changeNoteVersion();
+          editSaveButton.removeEventListener('click', saveEditedNote);
+          editSaveButton.addEventListener('click', saveEditedNote);
 
-            editHeader.style.display = 'none';
-            editForm.style.display = 'none';
-          }
-
-          function editNoteObj() {
+          function saveEditedNote() {
             noteObject.title = editTitle.value;
             noteObject.text = editText.value;
             noteObject.time = new Date().toLocaleTimeString('uk-UA');
             noteObject.date = new Date().toLocaleDateString('uk-UA');
-          }
 
-          function changeNoteVersion() {
-            let noteIndex = notesFromLocalSt.findIndex(note => note.id === noteObject.id);
+            let noteIndex = notesFromLocalSt.findIndex(item => item.id === noteObject.id);
             if (noteIndex !== -1) {
               notesFromLocalSt[noteIndex] = noteObject;
             }
             localStorage.setItem('notesArr', JSON.stringify(notesFromLocalSt));
+
+            generateNote();
+
+            attachEventListeners();
+
+            closeEditForm();
           }
-        })
+
+          function closeEditForm() {
+            editHeader.style.display = 'none';
+            editForm.style.display = 'none';
+
+            editBackButton.removeEventListener('click', closeEditForm);
+            editSaveButton.removeEventListener('click', saveEditedNote);
+          }
+        }
       }
-    }
+    });
   }
+
+  attachEventListeners();
 }
 
 function onEditBackButtonHandler() {
@@ -234,13 +230,6 @@ function deleteNote(event, noteId) {
   event.stopPropagation();
 
   deleteMessageWrapper.style.display = 'flex';
-
-  if(themeButton.className === 'btnLightTheme') {
-    deleteMessage.classList.toggle('deleteMessage');
-    deleteMessage.classList.toggle('deleteMessageLight');
-  } else {
-    deleteMessage.classList.add('deleteMessage');
-  }
 
   let noteElement = document.getElementById(noteId);
 
@@ -301,11 +290,12 @@ function searching() {
     let searchWord = searchText.value.toLowerCase();
     let noteList = JSON.parse(localStorage.getItem('notesArr'));
 
-    notesWrapper.innerHTML = '';
+    // notesWrapper.innerHTML = '';
 
     let foundNotes = noteList.filter(note => 
       note.title.toLowerCase().includes(searchWord)
     );
+
 
     if (foundNotes.length === 0) {
       notFoundContent.style.display = 'flex';
@@ -340,122 +330,31 @@ function searching() {
   }
 }
 
-themeButton.addEventListener('click', changeTheme);
-
-function changeTheme() {
-  if(themeButton.classList.contains('btnLightTheme')) {
-    themeButton.classList.add('header__themeButton');
-
-    headerHeadline.classList.remove('headHeadlineLight');
-    headerHeadline.classList.add('header__headline');
-
-    emptyParagraph.classList.remove('emptyParagraphLight');
-    emptyParagraph.classList.add('main__paragraph');
-
-    notFoundParagraph.classList.remove('paragraphNotFoundLight');
-    notFoundParagraph.classList.add('main__paragraphNotFound');
-
-    areas.forEach((elem) => elem.classList.remove('lightTheme'));
-
-    noteTitle.classList.remove('lightThemeTitles');
-    noteTitle.classList.add('main__formTitle');
-
-    noteText.classList.remove('lightThemeTexts');
-    noteText.classList.add('main__formText');
-
-    themeButton.classList.remove('btnLightTheme');
-
-    searchBarWrapper.classList.remove('searchBarLightTheme');
-    searchBarWrapper.classList.add('header__searchBarBox');
-
-    searchText.classList.remove('searchBarInputLight');
-    searchText.classList.add('header__searchBar');
-
-    searchCloseButton.classList.remove('closeButtonLight');
-    searchCloseButton.classList.add('header__closeButton');
-
-    localStorage.setItem('theme', 'dark');
-  } else {
-    themeButton.classList.remove('header__themeButton');
-    themeButton.classList.add('btnLightTheme');
-
-    headerHeadline.classList.remove('header__headline');
-    headerHeadline.classList.add('headHeadlineLight');
-
-    emptyParagraph.classList.remove('main__paragraph');
-    emptyParagraph.classList.add('emptyParagraphLight');
-
-    notFoundParagraph.classList.remove('main__paragraphNotFound');
-    notFoundParagraph.classList.add('paragraphNotFoundLight');
-
-    areas.forEach((elem) => elem.classList.add('lightTheme'));
-
-    noteTitle.classList.remove('main__formTitle');
-    noteTitle.classList.add('lightThemeTitles');
-
-    noteText.classList.remove('main__formText');
-    noteText.classList.add('lightThemeTexts');
-
-    searchBarWrapper.classList.remove('header__searchBarBox');
-    searchBarWrapper.classList.add('searchBarLightTheme');
-
-    searchText.classList.remove('header__searchBar');
-    searchText.classList.add('searchBarInputLight');
-
-    searchCloseButton.classList.remove('header__closeButton');
-    searchCloseButton.classList.add('closeButtonLight');
-
-    localStorage.setItem('theme', 'light');
-  }
+function setTheme(theme) {
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
 }
 
-function initializeTheme() {
+document.addEventListener('DOMContentLoaded', function() {
   let savedTheme = localStorage.getItem('theme');
 
-  if(savedTheme === 'light') {
-    themeButton.classList.add('btnLightTheme');
-    themeButton.classList.remove('header__themeButton');
-    headerHeadline.classList.add('headHeadlineLight');
-    headerHeadline.classList.remove('header__headline');
-    emptyParagraph.classList.add('emptyParagraphLight');
-    emptyParagraph.classList.remove('main__paragraph');
-    notFoundParagraph.classList.add('paragraphNotFoundLight');
-    notFoundParagraph.classList.remove('main__paragraphNotFound');
-    areas.forEach((elem) => elem.classList.add('lightTheme'));
-
-    noteTitle.classList.add('lightThemeTitles');
-    noteTitle.classList.remove('main__formTitle');
-    noteText.classList.add('lightThemeTexts');
-    noteText.classList.remove('main__formText');
-
-    searchBarWrapper.classList.add('searchBarLightTheme');
-    searchBarWrapper.classList.remove('header__searchBarBox');
-    searchText.classList.add('searchBarInputLight');
-    searchText.classList.remove('header__searchBar');
-    searchCloseButton.classList.add('closeButtonLight');
-    searchCloseButton.classList.remove('header__closeButton');
-  } else {
-    themeButton.classList.add('header__themeButton');
-    themeButton.classList.remove('btnLightTheme');
-    headerHeadline.classList.add('header__headline');
-    headerHeadline.classList.remove('headHeadlineLight');
-    emptyParagraph.classList.add('main__paragraph');
-    emptyParagraph.classList.remove('emptyParagraphLight');
-    notFoundParagraph.classList.add('main__paragraphNotFound');
-    notFoundParagraph.classList.remove('paragraphNotFoundLight');
-    areas.forEach((elem) => elem.classList.remove('lightTheme'));
-
-    noteTitle.classList.add('main__formTitle');
-    noteTitle.classList.remove('lightThemeTitles');
-    noteText.classList.add('main__formText');
-    noteText.classList.remove('lightThemeTexts');
-
-    searchBarWrapper.classList.add('header__searchBarBox');
-    searchBarWrapper.classList.remove('searchBarLightTheme');
-    searchText.classList.add('header__searchBar');
-    searchText.classList.remove('searchBarInputLight');
-    searchCloseButton.classList.add('header__closeButton');
-    searchCloseButton.classList.remove('closeButtonLight');
+  if(!savedTheme) {
+    savedTheme = 'dark';
   }
-}
-initializeTheme();
+
+  setTheme(savedTheme);
+});
+
+themeButton.addEventListener('click', function() {
+  let currentTheme = document.body.getAttribute('data-theme');
+
+  let newTheme;
+
+  if(currentTheme === 'dark') {
+    newTheme = 'light';
+  } else {
+    newTheme = 'dark';
+  }
+
+  setTheme(newTheme);
+})
