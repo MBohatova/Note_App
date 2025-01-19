@@ -252,13 +252,52 @@ function deleteNote(event, noteId) {
     }
     noteElement.remove();
 
-    notesFromHTML = document.querySelectorAll('.main__note');
+    const searchWord = searchText.value.toLowerCase();
+    let foundNotes = storageArr.filter(note =>
+      note.title.toLowerCase().includes(searchWord)
+    );
 
-    if(notesFromHTML.length === 0) {
+    if (storageArr.length === 0) {
       startPageContent.style.display = 'inherit';
-    } else {
+      notFoundContent.style.display = 'none';
+      notesWrapper.style.display = 'none';
+    } 
+    else if (foundNotes.length === 0) {
       startPageContent.style.display = 'none';
+      notFoundContent.style.display = 'flex';
+      notesWrapper.style.display = 'none';
     }
+     else {
+      startPageContent.style.display = 'none';
+      notFoundContent.style.display = 'none';
+      notesWrapper.style.display = 'flex';
+      notesWrapper.innerHTML = '';
+      foundNotes.forEach(note => {
+        let colorTag = note.tag.toLowerCase();
+        notesWrapper.insertAdjacentHTML(
+          'beforeend',
+          `<div id="${note.id}" class="main__note ${colorTag}">
+            <div class="main__headlineAndButtonWrapper">
+              <h2 class="main__noteHeadline">${note.title}</h2>
+              <button class="main__deleteButton"></button>
+            </div>
+            <div class="main__dateCategory--wrapper">
+              <p class="main__noteDate">${note.date}</p>
+              <p class="main__noteCategory">${note.tag}</p>
+            </div>
+          </div>`
+        );
+      });
+
+      editNote();
+      foundNotes.forEach(note => {
+        document
+          .getElementById(note.id)
+          .querySelector('.main__deleteButton')
+          .addEventListener('click', event => deleteNote(event, note.id));
+      });
+    }
+
     deleteMessageWrapper.style.display = 'none';
   }
 
@@ -288,27 +327,44 @@ function searching() {
 
   function searchingByBar() {
     let searchWord = searchText.value.toLowerCase();
-    let noteList = JSON.parse(localStorage.getItem('notesArr'));
+    let noteList = JSON.parse(localStorage.getItem('notesArr')) || [];
 
-    // notesWrapper.innerHTML = '';
+    notesWrapper.innerHTML = '';
 
     let foundNotes = noteList.filter(note => 
       note.title.toLowerCase().includes(searchWord)
     );
 
-
-    if (foundNotes.length === 0) {
-      notFoundContent.style.display = 'flex';
+    if (searchWord === '') {
+      notFoundContent.style.display = 'none';
+      notesWrapper.innerHTML = '';
+      generateNote();
+      editNote();
       return;
     }
 
-    if(searchText.value === '') {
+    if (noteList.length === 0) {
+      startPageContent.style.display = 'inherit';
       notFoundContent.style.display = 'none';
+      notesWrapper.style.display = 'none';
+      return;
     }
+
+    if (foundNotes.length === 0) {
+      notFoundContent.style.display = 'flex';
+      startPageContent.style.display = 'none';
+      notesWrapper.style.display = 'none';
+      return;
+    }
+
+    notFoundContent.style.display = 'none';
+    startPageContent.style.display = 'none';
+    notesWrapper.style.display = 'flex';
 
     foundNotes.forEach(note => {
       let colorTag = note.tag.toLowerCase();
-      notesWrapper.insertAdjacentHTML('beforeend', 
+      notesWrapper.insertAdjacentHTML(
+        'beforeend',
         `<div id="${note.id}" class="main__note ${colorTag}">
           <div class="main__headlineAndButtonWrapper">
             <h2 class="main__noteHeadline">${note.title}</h2>
@@ -322,11 +378,13 @@ function searching() {
       );
     });
 
-  editNote();
-  foundNotes.forEach(note => {
-    document.getElementById(note.id).querySelector('.main__deleteButton')
-      .addEventListener('click', event => deleteNote(event, note.id));
-  });
+    editNote();
+    foundNotes.forEach(note => {
+      document
+        .getElementById(note.id)
+        .querySelector('.main__deleteButton')
+        .addEventListener('click', event => deleteNote(event, note.id));
+    });
   }
 }
 

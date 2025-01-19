@@ -429,7 +429,7 @@ body[data-theme=dark] .header__wrapper .header__buttonsBox .header__searchButton
 body[data-theme=dark] .header__wrapper .header__buttonsBox .header__themeButton {
   background-color: rgb(59, 59, 59);
   background-image: url(./images/lightThemeSun.svg);
-  background-size: 30px 30px;
+  background-size: 25px 25px;
 }
 body[data-theme=dark] .header__searchBarBox {
   background-color: rgb(37, 37, 37);
