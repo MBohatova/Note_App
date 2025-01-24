@@ -6,20 +6,30 @@
 
 body {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 body .header {
-  position: relative;
-  width: 365px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 370px;
+  height: 106px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 128px;
-  margin: 47px auto 40px auto;
+  margin: 0 auto 0 auto;
+  background-color: inherit;
 }
 body .header__wrapper {
   width: 365px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 126px;
+  margin-top: 10px;
 }
 body .header__wrapper .header__headline {
   font-size: 43px;
@@ -48,10 +58,11 @@ body .header__wrapper .header__buttonsBox .header__themeButton:hover {
   transform: scale(1.2);
 }
 body .header__searchBarBox {
-  display: none;
   position: absolute;
   right: 1px;
+  top: 33px;
   background-color: rgb(37, 37, 37);
+  display: none;
 }
 body .header__searchBarBox::-webkit-search-cancel-button {
   display: none;
@@ -160,7 +171,7 @@ body .header__rewriteEditor .header__rewriteSaveButton {
 body .main {
   position: relative;
   min-height: 520px;
-  width: 365px;
+  width: 370px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -191,10 +202,11 @@ body .main__notesWrapper {
   flex-direction: column;
   gap: 25px;
   display: none;
+  padding-top: 2px;
 }
 body .main__notesWrapper .main__note {
   height: 150px;
-  width: 365px;
+  width: 364px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -206,6 +218,7 @@ body .main__notesWrapper .main__note .main__headlineAndButtonWrapper {
   display: flex;
   width: 300px;
   align-items: center;
+  justify-content: space-between;
 }
 body .main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__noteHeadline {
   width: 270px;
@@ -222,6 +235,7 @@ body .main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__dele
   background: url(./images/delete.svg) no-repeat center;
   background-size: 30px 30px;
   mix-blend-mode: soft-light;
+  padding: 10px 0 50px 50px;
 }
 body .main__notesWrapper .main__note .main__dateCategory--wrapper {
   width: 300px;
@@ -294,7 +308,7 @@ body .main__buttonBox .main__createButton:hover {
 body .main__form, body .main__editForm {
   position: absolute;
   height: 650px;
-  width: 365px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -320,6 +334,9 @@ body .main__form .main__formText, body .main__form .main__editForm .main__editTe
   border: none;
   outline: none;
 }
+body .main__form .emptyInput, body .main__editForm .emptyInput {
+  box-shadow: #9A1212 0 0 15px 1px;
+}
 body .main__form .main__tagBox, body .main__editForm .main__tagBox {
   display: flex;
   justify-content: space-between;
@@ -328,10 +345,11 @@ body .main__form .main__tagBox, body .main__editForm .main__tagBox {
 body .main__form .main__tagBox .tagButton, body .main__editForm .main__tagBox .tagButton {
   width: 55px;
   height: 25px;
+  margin: 4px;
   border: none;
   border-radius: 15px;
 }
-body .main__form .main__tagBox .tagButton:hover, body .main__editForm .main__tagBox .tagButton:hover {
+body .main__form .main__tagBox .choosenTag, body .main__editForm .main__tagBox .choosenTag {
   color: rgb(255, 255, 255);
 }
 body .main__form .main__tagBox .healthButton, body .main__editForm .main__tagBox .healthButton {
@@ -357,19 +375,18 @@ body .main__editForm {
 }
 body .deleteMessageWrapper {
   height: 100%;
-  width: 365px;
+  width: 100%;
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
   display: flex;
   margin: auto;
-  background: url(./images/deleteBG.png);
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
   z-index: 3;
   border-radius: 14px;
   display: none;
 }
 body .deleteMessageWrapper .deleteMessage {
+  position: absolute;
   height: 236px;
   width: 330px;
   display: flex;
@@ -525,11 +542,20 @@ body[data-theme=light] .main__emptyContent .main__paragraph {
 body[data-theme=light] .main__notFoundContent .main__paragraphNotFound {
   color: rgb(37, 37, 37);
 }
+body[data-theme=light] .main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__noteHeadline {
+  color: rgb(255, 255, 255);
+}
+body[data-theme=light] .main__notesWrapper .main__note .main__dateCategory--wrapper .main__noteDate {
+  color: rgb(255, 255, 255);
+}
+body[data-theme=light] .main__notesWrapper .main__note .main__dateCategory--wrapper .main__noteCategory {
+  color: rgb(255, 255, 255);
+}
 body[data-theme=light] .main__form, body[data-theme=light] .main__editForm {
   background-color: rgb(250, 250, 211);
 }
 body[data-theme=light] .main__form .main__formTitle, body[data-theme=light] .main__editForm .main__formTitle, body[data-theme=light] .main__editForm .main__editTitle {
-  color: rgb(37, 37, 37);
+  color: rgb(59, 59, 59);
 }
 body[data-theme=light] .main__form .main__formTitle::-moz-placeholder, body[data-theme=light] .main__editForm .main__formTitle::-moz-placeholder, body[data-theme=light] .main__editForm .main__editTitle::-moz-placeholder {
   color: rgba(249, 225, 116, 0.99);
@@ -538,7 +564,7 @@ body[data-theme=light] .main__form .main__formTitle::placeholder, body[data-them
   color: rgba(249, 225, 116, 0.99);
 }
 body[data-theme=light] .main__form .main__formText, body[data-theme=light] .main__editForm .main__formText, body[data-theme=light] .main__editForm .main__editText {
-  color: rgb(37, 37, 37);
+  color: rgb(59, 59, 59);
 }
 body[data-theme=light] .main__form .main__formText::-moz-placeholder, body[data-theme=light] .main__editForm .main__formText::-moz-placeholder, body[data-theme=light] .main__editForm .main__editText::-moz-placeholder {
   color: rgba(249, 225, 116, 0.99);

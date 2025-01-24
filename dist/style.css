@@ -6,84 +6,101 @@
 
 body {
   position: relative;
-  background-color: #252525;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
-
-.header {
-  position: relative;
+body .header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 370px;
+  height: 106px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 128px;
+  margin: 0 auto 0 auto;
+  background-color: inherit;
+}
+body .header__wrapper {
   width: 365px;
   display: flex;
   align-items: center;
-  gap: 128px;
-  margin: 47px auto 40px auto;
+  justify-content: center;
+  gap: 126px;
+  margin-top: 10px;
 }
-.header__wrapper {
-  width: 365px;
-  display: flex;
-  gap: 128px;
-}
-.header__wrapper .header__headline {
+body .header__wrapper .header__headline {
   font-size: 43px;
   font-weight: 600;
   line-height: 58.65px;
   text-align: left;
-  color: white;
 }
-.header__wrapper .header__buttonsBox {
+body .header__wrapper .header__buttonsBox {
   display: flex;
   gap: 21px;
 }
-.header__wrapper .header__buttonsBox .header__searchButton, .header__wrapper .header__buttonsBox .header__infoButton {
+body .header__wrapper .header__buttonsBox .header__searchButton, body .header__wrapper .header__buttonsBox .header__themeButton {
   height: 50px;
   width: 50px;
   border-radius: 15px;
-  background: #3b3b3b url(./images/search.svg) no-repeat center;
   border: none;
   transition: 0.3s;
 }
-.header__wrapper .header__buttonsBox .header__searchButton:hover, .header__wrapper .header__buttonsBox .header__infoButton:hover {
+body .header__wrapper .header__buttonsBox .header__searchButton:hover, body .header__wrapper .header__buttonsBox .header__themeButton:hover {
   transform: scale(1.2);
 }
-.header__wrapper .header__buttonsBox .header__infoButton {
-  background: #3b3b3b url(./images/visibility.svg) no-repeat center;
+body .header__wrapper .header__buttonsBox .header__themeButton {
+  background-size: 30px 30px;
 }
-.header__wrapper .header__buttonsBox .header__infoButton:hover {
+body .header__wrapper .header__buttonsBox .header__themeButton:hover {
   transform: scale(1.2);
 }
-.header__searchBarBox {
-  display: none;
+body .header__searchBarBox {
   position: absolute;
   right: 1px;
+  top: 33px;
+  background-color: #252525;
+  display: none;
 }
-.header__searchBarBox .header__searchBar {
+body .header__searchBarBox::-webkit-search-cancel-button {
+  display: none;
+}
+body .header__searchBarBox::-ms-clear {
+  display: none;
+}
+body .header__searchBarBox .header__searchBar {
   height: 50px;
-  width: 360px;
+  width: 365px;
   border: none;
   border-radius: 30px;
-  background-color: #3b3b3b;
   padding: 11px 28px;
   font-weight: 300;
   font-size: 20px;
   line-height: 27.28px;
-  color: white;
   outline: none;
 }
-.header__searchBarBox .header__searchBar::placeholder {
+body .header__searchBarBox .header__searchBar::-webkit-search-cancel-button {
+  display: none;
+}
+body .header__searchBarBox .header__searchBar::-ms-clear {
+  display: none;
+}
+body .header__searchBarBox .header__searchBar::placeholder {
   font-weight: 300;
   font-size: 20px;
   line-height: 27.28px;
-  color: white;
 }
-.header__searchBarBox .header__closeButton {
+body .header__searchBarBox .header__closeButton {
   position: absolute;
-  right: 15px;
+  right: 20px;
   top: 14px;
   height: 24px;
   width: 24px;
-  background: url(./images/close.svg) center;
   border: none;
 }
-.header__searchBarBox .header__searchBarButton {
+body .header__searchBarBox .header__searchBarButton {
   position: absolute;
   top: 14px;
   right: 45px;
@@ -92,104 +109,113 @@ body {
   background: url(./images/search.svg) center;
   border: none;
 }
-.header__editorButtonBox, .header__rewriteEditor {
+body .header__editorButtonBox, body .header__rewriteEditor {
   position: absolute;
   height: 60px;
   width: 365px;
   display: flex;
-  gap: 197px;
+  justify-content: space-between;
   align-items: center;
-  background-color: #252525;
   display: none;
 }
-.header__editorButtonBox .header__backButton, .header__editorButtonBox .header__rewriteEditor .header__rewriteBackButton, .header__editorButtonBox .header__rewriteEditor .header__rewriteSaveButton, .header__rewriteEditor .header__editorButtonBox .header__rewriteBackButton, .header__rewriteEditor .header__editorButtonBox .header__rewriteSaveButton, .header__rewriteEditor .header__backButton, .header__rewriteEditor .header__rewriteBackButton, .header__rewriteEditor .header__rewriteSaveButton, .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton, .header__editorButtonBox .header__buttonsWrapper .header__saveButton, .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
-  height: 48px;
-  width: 48px;
+body .header__editorButtonBox .header__backButton, body .header__editorButtonBox .header__rewriteEditor .header__rewriteBackButton, body .header__editorButtonBox .header__rewriteEditor .header__rewriteSaveButton, body .header__rewriteEditor .header__editorButtonBox .header__rewriteBackButton, body .header__rewriteEditor .header__editorButtonBox .header__rewriteSaveButton, body .header__rewriteEditor .header__backButton, body .header__rewriteEditor .header__rewriteBackButton, body .header__rewriteEditor .header__rewriteSaveButton, body .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton, body .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton, body .header__editorButtonBox .header__buttonsWrapper .header__saveButton, body .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
+  height: 50px;
+  width: 50px;
   background: #3b3b3b url(./images/back.svg) no-repeat center;
   border: none;
   border-radius: 15px;
   transition: 0.3s;
 }
-.header__editorButtonBox .header__backButton:hover, .header__rewriteEditor .header__backButton:hover, .header__rewriteEditor .header__rewriteBackButton:hover, .header__rewriteEditor .header__rewriteSaveButton:hover, .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton:hover, .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
+body .header__editorButtonBox .header__backButton:hover, body .header__rewriteEditor .header__backButton:hover, body .header__rewriteEditor .header__rewriteBackButton:hover, body .header__rewriteEditor .header__rewriteSaveButton:hover, body .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton:hover, body .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton:hover, body .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, body .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
   transform: scale(1.2);
 }
-.header__editorButtonBox .header__buttonsWrapper, .header__rewriteEditor .header__buttonsWrapper {
+body .header__editorButtonBox .header__buttonsWrapper, body .header__rewriteEditor .header__buttonsWrapper {
   display: flex;
   gap: 21px;
 }
-.header__editorButtonBox .header__buttonsWrapper .header__visibilityButton, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton, .header__editorButtonBox .header__buttonsWrapper .header__saveButton, .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
+body .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton, body .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton, body .header__editorButtonBox .header__buttonsWrapper .header__saveButton, body .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
   background: #3b3b3b url(./images/visibility.svg) no-repeat center;
   transition: 0.3s;
+  height: 50px;
+  width: 50px;
 }
-.header__editorButtonBox .header__buttonsWrapper .header__visibilityButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton:hover, .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
+body .header__editorButtonBox .header__buttonsWrapper .header__visibilityButton:hover, body .header__rewriteEditor .header__buttonsWrapper .header__visibilityButton:hover, body .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, body .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
   transform: scale(1.2);
 }
-.header__editorButtonBox .header__buttonsWrapper .header__saveButton, .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
+body .header__editorButtonBox .header__buttonsWrapper .header__saveButton, body .header__rewriteEditor .header__buttonsWrapper .header__saveButton {
   background: #3b3b3b url(./images/save.svg) no-repeat center;
   transition: 0.3s;
+  height: 50px;
+  width: 50px;
 }
-.header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
+body .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover, body .header__rewriteEditor .header__buttonsWrapper .header__saveButton:hover {
   transform: scale(1.2);
 }
-.header__rewriteEditor {
+body .header__rewriteEditor {
   justify-content: space-between;
 }
-.header__rewriteEditor .header__rewriteSaveButton {
-  background: #3b3b3b url(./images/save.svg) no-repeat center;
+body .header__rewriteEditor .header__rewriteBackButton, body .header__rewriteEditor .header__rewriteSaveButton {
+  height: 50px;
+  width: 50px;
 }
-
-.main {
+body .header__rewriteEditor .header__rewriteSaveButton {
+  background: #3b3b3b url(./images/save.svg) no-repeat center;
+  height: 50px;
+  width: 50px;
+}
+body .main {
   position: relative;
-  height: 100%;
-  width: 365px;
+  min-height: 520px;
+  width: 370px;
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 174px;
   margin: 0 auto 49px auto;
 }
-.main__emptyContent {
+body .main__emptyContent {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6.27px;
 }
-.main__emptyContent .main__emptyPageImg {
+body .main__emptyContent .main__emptyPageImg {
   height: 250px;
   width: 350px;
   background: url(./images/emptyPageImg.png) no-repeat center top;
   background-size: 300px 289.75px;
 }
-.main__emptyContent .main__paragraph {
+body .main__emptyContent .main__paragraph {
   font-size: 20px;
   font-weight: 300;
   line-height: 27.28px;
   text-align: left;
-  color: white;
 }
-.main__notesWrapper {
+body .main__notesWrapper {
   min-height: 260px;
   display: flex;
   flex-direction: column;
   gap: 25px;
   display: none;
+  padding-top: 2px;
 }
-.main__notesWrapper .main__note {
+body .main__notesWrapper .main__note {
   height: 150px;
-  width: 365px;
+  width: 364px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   border-radius: 10px;
-  background-color: #eb9513;
+  background-color: #b3b8bc;
 }
-.main__notesWrapper .main__note .main__headlineAndButtonWrapper {
+body .main__notesWrapper .main__note .main__headlineAndButtonWrapper {
   display: flex;
   width: 300px;
   align-items: center;
+  justify-content: space-between;
 }
-.main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__noteHeadline {
+body .main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__noteHeadline {
   width: 270px;
   font-size: 25px;
   font-weight: 400;
@@ -197,32 +223,53 @@ body {
   text-align: left;
   color: black;
 }
-.main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__deleteButton {
+body .main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__deleteButton {
   height: 30px;
   width: 30px;
   border: none;
   background: url(./images/delete.svg) no-repeat center;
   background-size: 30px 30px;
   mix-blend-mode: soft-light;
+  padding: 10px 0 50px 50px;
 }
-.main__notesWrapper .main__note .main__dateCategory--wrapper {
+body .main__notesWrapper .main__note .main__dateCategory--wrapper {
   width: 300px;
   display: flex;
   justify-content: space-between;
 }
-.main__notFoundContent {
-  top: 150px;
+body .main__notesWrapper .health {
+  background-color: #b0d47c;
+}
+body .main__notesWrapper .money {
+  background-color: #eb9513;
+}
+body .main__notesWrapper .plans {
+  background-color: #5095cf;
+}
+body .main__notesWrapper .hobby {
+  background-color: #c14c9c;
+}
+body .main__notesWrapper .goals {
+  background-color: #f8e473;
+}
+body .main__notesWrapper .work {
+  background-color: #d56151;
+}
+body .main__notFoundContent {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
   left: 5px;
   width: 370px;
 }
-.main__notFoundContent .main__notFoundImg {
+body .main__notFoundContent .main__notFoundImg {
   width: 370px;
   height: 239.1px;
-  background-image: url(./images/not-found-pic.png);
+  background: url(./images/not-found-pic.png) no-repeat;
   background-size: 370px;
-  background-repeat: no-repeat;
 }
-.main__notFoundContent .main__paragraphNotFound {
+body .main__notFoundContent .main__paragraphNotFound {
   font-size: 20px;
   font-weight: 300;
   line-height: 27.28px;
@@ -230,14 +277,15 @@ body {
   color: white;
   margin-top: 20px;
 }
-.main__buttonBox {
-  position: relative;
+body .main__buttonBox {
+  position: fixed;
   height: 70px;
-  width: 100%;
+  width: 360px;
+  top: 535px;
   display: flex;
   justify-content: end;
 }
-.main__buttonBox .main__createButton {
+body .main__buttonBox .main__createButton {
   position: absolute;
   right: 0;
   top: 0;
@@ -249,106 +297,90 @@ body {
   box-shadow: -5px 0px 10px 0px rgba(0, 0, 0, 0.4);
   transition: 0.3s;
 }
-.main__buttonBox .main__createButton:hover {
+body .main__buttonBox .main__createButton:hover {
   transform: scale(1.2);
 }
-.main__form, .main__editForm {
+body .main__form, body .main__editForm {
   position: absolute;
   height: 650px;
-  width: 365px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 40px;
   height: 100%;
-  background-color: #252525;
   display: none;
 }
-.main__form .main__formTitle, .main__editForm .main__formTitle, .main__editForm .main__editTitle {
+body .main__form .main__formTitle, body .main__form .main__editForm .main__editTitle, body .main__editForm .main__form .main__editTitle, body .main__editForm .main__formTitle, body .main__editForm .main__editTitle {
   font-weight: 400;
   font-size: 48px;
   line-height: 65.47px;
-  color: white;
   background-color: inherit;
   border: none;
   outline: none;
 }
-.main__form .main__formTitle::placeholder, .main__editForm .main__formTitle::placeholder, .main__editForm .main__editTitle::placeholder {
-  color: #3b3b3b;
-}
-.main__form .main__formText, .main__editForm .main__formText, .main__editForm .main__editText {
+body .main__form .main__formText, body .main__form .main__editForm .main__editText, body .main__editForm .main__form .main__editText, body .main__editForm .main__formText, body .main__editForm .main__editText {
   resize: vertical;
   min-height: 500px;
   font-size: 23px;
   font-weight: 400;
   line-height: 31.37px;
   text-align: left;
-  color: white;
   background-color: inherit;
   border: none;
   outline: none;
 }
-.main__form .main__formText::placeholder, .main__editForm .main__formText::placeholder, .main__editForm .main__editText::placeholder {
-  color: #3b3b3b;
+body .main__form .emptyInput, body .main__editForm .emptyInput {
+  box-shadow: #9A1212 0 0 15px 1px;
 }
-.main__form .main__tagBox, .main__editForm .main__tagBox {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.main__form .main__tagBox .main__tagParagraph, .main__editForm .main__tagBox .main__tagParagraph {
-  color: #3b3b3b;
-  font-size: 16px;
-}
-.main__form .main__tagBox .main__buttonBox, .main__editForm .main__tagBox .main__buttonBox {
+body .main__form .main__tagBox, body .main__editForm .main__tagBox {
   display: flex;
   justify-content: space-between;
   height: 25px;
 }
-.main__form .main__tagBox .main__buttonBox .tagButton, .main__editForm .main__tagBox .main__buttonBox .tagButton {
+body .main__form .main__tagBox .tagButton, body .main__editForm .main__tagBox .tagButton {
   width: 55px;
   height: 25px;
+  margin: 4px;
   border: none;
   border-radius: 15px;
 }
-.main__form .main__tagBox .main__buttonBox .tagButton:hover, .main__editForm .main__tagBox .main__buttonBox .tagButton:hover {
+body .main__form .main__tagBox .choosenTag, body .main__editForm .main__tagBox .choosenTag {
   color: white;
 }
-.main__form .main__tagBox .main__buttonBox .healthButton, .main__editForm .main__tagBox .main__buttonBox .healthButton {
+body .main__form .main__tagBox .healthButton, body .main__editForm .main__tagBox .healthButton {
   background-color: #b0d47c;
 }
-.main__form .main__tagBox .main__buttonBox .moneyButton, .main__editForm .main__tagBox .main__buttonBox .moneyButton {
+body .main__form .main__tagBox .moneyButton, body .main__editForm .main__tagBox .moneyButton {
   background-color: #eb9513;
 }
-.main__form .main__tagBox .main__buttonBox .plansButton, .main__editForm .main__tagBox .main__buttonBox .plansButton {
+body .main__form .main__tagBox .plansButton, body .main__editForm .main__tagBox .plansButton {
   background-color: #5095cf;
 }
-.main__form .main__tagBox .main__buttonBox .hobbyButton, .main__editForm .main__tagBox .main__buttonBox .hobbyButton {
+body .main__form .main__tagBox .hobbyButton, body .main__editForm .main__tagBox .hobbyButton {
   background-color: #c14c9c;
 }
-.main__form .main__tagBox .main__buttonBox .goalsButton, .main__editForm .main__tagBox .main__buttonBox .goalsButton {
+body .main__form .main__tagBox .goalsButton, body .main__editForm .main__tagBox .goalsButton {
   background-color: #f8e473;
 }
-.main__form .main__tagBox .main__buttonBox .workButton, .main__editForm .main__tagBox .main__buttonBox .workButton {
+body .main__form .main__tagBox .workButton, body .main__editForm .main__tagBox .workButton {
   background-color: #d56151;
 }
-.main__editForm {
+body .main__editForm {
   z-index: 3;
 }
-.deleteMessageWrapper {
+body .deleteMessageWrapper {
   height: 100%;
-  width: 365px;
+  width: 100%;
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
   display: flex;
   margin: auto;
-  background: url(./images/deleteBG.png);
+  backdrop-filter: blur(2px);
   z-index: 3;
   border-radius: 14px;
   display: none;
 }
-.deleteMessageWrapper .deleteMessage {
+body .deleteMessageWrapper .deleteMessage {
+  position: absolute;
   height: 236px;
   width: 330px;
   display: flex;
@@ -357,27 +389,25 @@ body {
   align-items: center;
   gap: 15px;
   margin: auto;
-  background-color: #252525;
   border-radius: 20px;
 }
-.deleteMessageWrapper .deleteMessage .deleteInfoIcon {
+body .deleteMessageWrapper .deleteMessage .deleteInfoIcon {
   height: 36px;
   width: 36px;
 }
-.deleteMessageWrapper .deleteMessage .deleteMessageP {
+body .deleteMessageWrapper .deleteMessage .deleteMessageP {
   width: 252px;
   font-size: 23px;
   font-weight: 400;
   line-height: 31.37px;
   text-align: center;
-  color: white;
 }
-.deleteMessageWrapper .deleteMessage .buttonWrapper {
+body .deleteMessageWrapper .deleteMessage .buttonWrapper {
   display: flex;
   width: 262px;
   justify-content: space-between;
 }
-.deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage {
+body .deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage {
   width: 112px;
   height: 39px;
   border: none;
@@ -386,15 +416,144 @@ body {
   font-weight: 400;
   line-height: 24.55px;
   text-align: center;
-  color: white;
   transition: 0.3s;
 }
-.deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage:hover {
+body .deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage:hover {
   transform: scale(1.2);
 }
-.deleteMessageWrapper .deleteMessage .buttonWrapper .deleteButton {
+body .deleteMessageWrapper .deleteMessage .buttonWrapper .deleteButton {
   background-color: #ff0000;
 }
-.deleteMessageWrapper .deleteMessage .buttonWrapper .cancelButton {
+body .deleteMessageWrapper .deleteMessage .buttonWrapper .cancelButton {
   background-color: #30be71;
+}
+
+body[data-theme=dark] {
+  background-color: #252525;
+}
+body[data-theme=dark] .header__wrapper .header__headline {
+  color: white;
+}
+body[data-theme=dark] .header__wrapper .header__buttonsBox .header__searchButton, body[data-theme=dark] .header__wrapper .header__buttonsBox .header__themeButton {
+  background: #3b3b3b url(./images/search.svg) no-repeat center;
+}
+body[data-theme=dark] .header__wrapper .header__buttonsBox .header__themeButton {
+  background-color: #3b3b3b;
+  background-image: url(./images/lightThemeSun.svg);
+  background-size: 25px 25px;
+}
+body[data-theme=dark] .header__searchBarBox {
+  background-color: #252525;
+}
+body[data-theme=dark] .header__searchBarBox .header__searchBar {
+  background-color: #3b3b3b;
+  color: white;
+}
+body[data-theme=dark] .header__searchBarBox .header__searchBar::placeholder {
+  color: white;
+}
+body[data-theme=dark] .header__searchBarBox .header__closeButton {
+  background: url(./images/close.svg) center;
+}
+body[data-theme=dark] .header__editorButtonBox, body[data-theme=dark] .header__rewriteEditor {
+  background-color: #252525;
+}
+body[data-theme=dark] .main__emptyContent .main__paragraph {
+  color: white;
+}
+body[data-theme=dark] .main__notFoundContent .main__paragraphNotFound {
+  color: white;
+}
+body[data-theme=dark] .main__form, body[data-theme=dark] .main__editForm {
+  background-color: #252525;
+}
+body[data-theme=dark] .main__form .main__formTitle, body[data-theme=dark] .main__editForm .main__formTitle, body[data-theme=dark] .main__editForm .main__editTitle {
+  color: white;
+}
+body[data-theme=dark] .main__form .main__formTitle::placeholder, body[data-theme=dark] .main__editForm .main__formTitle::placeholder, body[data-theme=dark] .main__editForm .main__editTitle::placeholder {
+  color: #3b3b3b;
+}
+body[data-theme=dark] .main__form .main__formText, body[data-theme=dark] .main__editForm .main__formText, body[data-theme=dark] .main__editForm .main__editText {
+  color: white;
+}
+body[data-theme=dark] .main__form .main__formText::placeholder, body[data-theme=dark] .main__editForm .main__formText::placeholder, body[data-theme=dark] .main__editForm .main__editText::placeholder {
+  color: #3b3b3b;
+}
+body[data-theme=dark] .deleteMessageWrapper .deleteMessage {
+  background-color: #252525;
+}
+body[data-theme=dark] .deleteMessageWrapper .deleteMessage .deleteMessageP {
+  color: white;
+}
+body[data-theme=dark] .deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage {
+  color: white;
+}
+
+body[data-theme=light] {
+  background-color: #fafad3;
+}
+body[data-theme=light] .header__wrapper .header__headline {
+  color: #252525;
+}
+body[data-theme=light] .header__wrapper .header__buttonsBox .header__searchButton, body[data-theme=light] .header__wrapper .header__buttonsBox .header__themeButton {
+  background: #252525 url(./images/search.svg) no-repeat center;
+}
+body[data-theme=light] .header__wrapper .header__buttonsBox .header__themeButton {
+  background: rgba(249, 225, 116, 0.99) url(./images/darkThemeMoon.svg) no-repeat center;
+  background-size: 45px 45px;
+}
+body[data-theme=light] .header__searchBarBox {
+  background-color: #fafad3;
+}
+body[data-theme=light] .header__searchBarBox .header__searchBar {
+  background-color: rgba(249, 225, 116, 0.99);
+  color: #252525;
+}
+body[data-theme=light] .header__searchBarBox .header__searchBar::placeholder {
+  color: #3b3b3b;
+}
+body[data-theme=light] .header__searchBarBox .header__closeButton {
+  background: url(./images/searchCloseBlack.svg) center no-repeat;
+}
+body[data-theme=light] .header__editorButtonBox, body[data-theme=light] .header__rewriteEditor {
+  background-color: #fafad3;
+}
+body[data-theme=light] .main__emptyContent .main__paragraph {
+  color: #252525;
+}
+body[data-theme=light] .main__notFoundContent .main__paragraphNotFound {
+  color: #252525;
+}
+body[data-theme=light] .main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__noteHeadline {
+  color: white;
+}
+body[data-theme=light] .main__notesWrapper .main__note .main__dateCategory--wrapper .main__noteDate {
+  color: white;
+}
+body[data-theme=light] .main__notesWrapper .main__note .main__dateCategory--wrapper .main__noteCategory {
+  color: white;
+}
+body[data-theme=light] .main__form, body[data-theme=light] .main__editForm {
+  background-color: #fafad3;
+}
+body[data-theme=light] .main__form .main__formTitle, body[data-theme=light] .main__editForm .main__formTitle, body[data-theme=light] .main__editForm .main__editTitle {
+  color: #3b3b3b;
+}
+body[data-theme=light] .main__form .main__formTitle::placeholder, body[data-theme=light] .main__editForm .main__formTitle::placeholder, body[data-theme=light] .main__editForm .main__editTitle::placeholder {
+  color: rgba(249, 225, 116, 0.99);
+}
+body[data-theme=light] .main__form .main__formText, body[data-theme=light] .main__editForm .main__formText, body[data-theme=light] .main__editForm .main__editText {
+  color: #3b3b3b;
+}
+body[data-theme=light] .main__form .main__formText::placeholder, body[data-theme=light] .main__editForm .main__formText::placeholder, body[data-theme=light] .main__editForm .main__editText::placeholder {
+  color: rgba(249, 225, 116, 0.99);
+}
+body[data-theme=light] .deleteMessageWrapper .deleteMessage {
+  background-color: #fafad3;
+}
+body[data-theme=light] .deleteMessageWrapper .deleteMessage .deleteMessageP {
+  color: #252525;
+}
+body[data-theme=light] .deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage {
+  color: #fafad3;
 }

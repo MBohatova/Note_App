@@ -2,11 +2,10 @@
 
 // Кнопки
 var searchBtn = document.querySelector('.header__searchButton');
-var infoBtn = document.querySelector('.header__infoButton');
+var themeButton = document.querySelector('.header__themeButton');
 var createBtn = document.querySelector('.main__createButton');
 var saveButton = document.querySelector('.header__saveButton');
 var backButton = document.querySelector('.header__backButton');
-var visibilityButton = document.querySelector('.header__visibilityButton');
 var tagButton = document.querySelectorAll('.tagButton');
 var mainButton = document.querySelector('.main__buttonBox');
 var editBackButton = document.querySelector('.header__rewriteBackButton');
@@ -14,10 +13,11 @@ var editSaveButton = document.querySelector('.header__rewriteSaveButton');
 var deleteButton = document.querySelector('.deleteButton');
 var cancelButton = document.querySelector('.cancelButton');
 var main__deleteButton;
-var searchCloseButton = document.querySelector('.header__closeButton');
-var searchBarButton = document.querySelector('.header__searchBarButton'); // Контейнери
+var searchCloseButton = document.querySelector('.header__closeButton'); // Контейнери
 
+var body = document.querySelector('body');
 var startPageContent = document.querySelector('.main__emptyContent');
+var notFoundContent = document.querySelector('.main__notFoundContent');
 var headerWrapper = document.querySelector('.header__wrapper');
 var header = document.querySelector('.header');
 var main = document.querySelector('.main');
@@ -29,15 +29,20 @@ var editForm = document.querySelector('.main__editForm');
 var editHeader = document.querySelector('.header__rewriteEditor');
 var deleteButtonWrapper = document.querySelector('.main__deleteButtonWrapper');
 var deleteMessageWrapper = document.querySelector('.deleteMessageWrapper');
-var searchBarWrapper = document.querySelector('.header__searchBarBox'); // Масиви, об'єкти
-
-var noteObj = {};
-var notesArr = [];
-var colors = ['health', 'money', 'plans', 'hobby', 'goals', 'work']; // Інпути та інші елементи сторінки
+var deleteMessage = document.querySelector('.deleteMessage');
+var searchBarWrapper = document.querySelector('.header__searchBarBox'); // Інпути та інші елементи сторінки
 
 var noteTitle = document.querySelector('.main__formTitle');
 var noteText = document.querySelector('.main__formText');
 var searchText = document.querySelector('.header__searchBar');
+var headerHeadline = document.querySelector('.header__headline');
+var editTitle = document.querySelector('.main__editTitle');
+var editTextArea = document.querySelector('.main__editText');
+var emptyParagraph = document.querySelector('.main__paragraph');
+var notFoundParagraph = document.querySelector('.main__paragraphNotFound'); // Масиви, об'єкти
+
+var noteObj = {};
+var notesArr = [];
 var notesFromStorage = localStorage.getItem('notesArr');
 
 if (notesFromStorage) {
@@ -46,9 +51,10 @@ if (notesFromStorage) {
   startPageContent.style.display = 'inherit';
 }
 
-createBtn.addEventListener('click', function () {
-  editorHeader.style.display = 'inherit';
-  noteForm.style.display = 'inherit';
+var lastClickedButton = null;
+
+function chooseTag() {
+  var activeTag = null;
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
   var _iteratorError = undefined;
@@ -58,7 +64,15 @@ createBtn.addEventListener('click', function () {
       var tag = _step.value;
       tag.addEventListener('click', function () {
         noteObj.tag = tag.textContent;
+
+        if (activeTag) {
+          activeTag.classList.remove('choosenTag');
+        }
+
+        tag.classList.add('choosenTag');
+        activeTag = tag;
       });
+      tag.classList.remove('choosenTag');
       noteObj.tag = 'Without tag';
     };
 
@@ -79,21 +93,46 @@ createBtn.addEventListener('click', function () {
       }
     }
   }
+}
 
+createBtn.addEventListener('click', function () {
+  editorHeader.style.display = 'inherit';
+  noteForm.style.display = 'inherit';
+  searchText.style.display = 'none';
+  searchCloseButton.style.display = 'none';
+  notFoundContent.style.display = 'none';
+  searchText.value = '';
+  scrollTo(0, 0);
+  chooseTag();
   saveButton.addEventListener('click', onSaveButtonHandler);
   backButton.addEventListener('click', onBackButtonHandler);
 
   function onBackButtonHandler() {
     hideBtns();
+    generateNote();
+    noteTitle.classList.remove('emptyInput');
+    noteText.classList.remove('emptyInput');
+    searchText.style.display = 'none';
+    searchCloseButton.style.display = 'none';
+    searchBtn.style.display = 'inherit';
+    searchText.value = '';
     saveButton.removeEventListener('click', onBackButtonHandler);
   }
 });
 
 function onSaveButtonHandler() {
-  createNote();
-  saveNotesInLocalStorage();
-  generateNote();
-  clearTextArea();
+  if (noteTitle.value && noteText.value !== '') {
+    createNote();
+    saveNotesInLocalStorage();
+    generateNote();
+    clearTextArea();
+    editNote();
+    noteTitle.classList.remove('emptyInput');
+    noteText.classList.remove('emptyInput');
+  } else {
+    noteTitle.classList.add('emptyInput');
+    noteText.classList.add('emptyInput');
+  }
 }
 
 function createNote() {
@@ -130,17 +169,15 @@ function generateNote() {
   }
 
   notesList.forEach(function (note) {
-    notesWrapper.insertAdjacentHTML('afterbegin', "<div id=\"".concat(note.id, "\" class=\"main__note\">\n        <div class=\"main__headlineAndButtonWrapper\">\n          <h2 class=\"main__noteHeadline\">").concat(note.title, "</h2>\n          <button class=\"main__deleteButton\"></button>\n        </div>\n        <div class=\"main__dateCategory--wrapper\">\n          <p class=\"main__noteDate\">").concat(note.date, "</p>\n          <p class=\"main__noteCategory\">").concat(note.tag, "</p>\n        </div>\n      </div>"));
+    var colorTag = note.tag.toLowerCase();
+    notesWrapper.insertAdjacentHTML('afterbegin', "<div id=\"".concat(note.id, "\" class=\"main__note ").concat(colorTag, "\">\n        <div class=\"main__headlineAndButtonWrapper\">\n          <h2 class=\"main__noteHeadline\">").concat(note.title, "</h2>\n          <button class=\"main__deleteButton\"></button>\n        </div>\n        <div class=\"main__dateCategory--wrapper\">\n          <p class=\"main__noteDate\">").concat(note.date, "</p>\n          <p class=\"main__noteCategory\">").concat(note.tag, "</p>\n        </div>\n      </div>"));
     main__deleteButton = document.querySelectorAll('.main__deleteButton');
     main__deleteButton.forEach(function (button) {
       button.addEventListener('click', function (event) {
-        var noteId = event.target.closest('.main__note').id; // Отримуємо ID нотатки
-
+        var noteId = event.target.closest('.main__note').id;
         deleteNote(event, noteId);
       });
-    }); // deleteButton.addEventListener('click', function(event) {
-    //   deleteNote(event, note.id);
-    // });
+    });
   });
 }
 
@@ -158,95 +195,68 @@ editNote();
 
 function editNote() {
   var notesFromLocalSt = JSON.parse(localStorage.getItem('notesArr'));
-  var notesFromHTML = document.querySelectorAll('.main__note'); // !! Переробити на метод find()
 
-  var _iteratorNormalCompletion2 = true;
-  var _didIteratorError2 = false;
-  var _iteratorError2 = undefined;
+  function attachEventListeners() {
+    var notesFromHTML = document.querySelectorAll('.main__note');
+    notesFromHTML.forEach(function (note) {
+      var noteObject = notesFromLocalSt.find(function (item) {
+        return item.id.toString() === note.id;
+      });
 
-  try {
-    for (var _iterator2 = notesFromHTML[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-      var note = _step2.value;
-      var _iteratorNormalCompletion3 = true;
-      var _didIteratorError3 = false;
-      var _iteratorError3 = undefined;
+      if (noteObject) {
+        var openEditForm = function openEditForm() {
+          scrollTo(0, 0);
+          editHeader.style.display = 'inherit';
+          editForm.style.display = 'inherit';
+          editForm.innerHTML = "\n            <input \n                type=\"text\"\n                class=\"main__editTitle\"\n                id=\"editTitle\"\n                value=\"".concat(noteObject.title, "\"\n            >\n            <textarea id=\"editText\" class=\"main__editText\" placeholder=\"Type something...\">").concat(noteObject.text, "</textarea>\n          ");
+          var editTitle = document.getElementById('editTitle');
+          var editText = document.getElementById('editText');
+          editBackButton.removeEventListener('click', closeEditForm);
+          editBackButton.addEventListener('click', closeEditForm);
+          editSaveButton.removeEventListener('click', saveEditedNote);
+          editSaveButton.addEventListener('click', saveEditedNote);
 
-      try {
-        var _loop2 = function _loop2() {
-          var noteObject = _step3.value;
+          function saveEditedNote() {
+            if (editTitle.value && editText.value !== '') {
+              noteObject.title = editTitle.value;
+              noteObject.text = editText.value;
+              noteObject.time = new Date().toLocaleTimeString('uk-UA');
+              noteObject.date = new Date().toLocaleDateString('uk-UA');
+              var noteIndex = notesFromLocalSt.findIndex(function (item) {
+                return item.id === noteObject.id;
+              });
 
-          if (note.id === noteObject.id.toString()) {
-            note.addEventListener('click', function () {
-              editHeader.style.display = 'inherit';
-              editBackButton.addEventListener('click', onEditBackButtonHandler);
-              editForm.innerHTML = '';
-              editForm.style.display = 'inherit';
-              editForm.insertAdjacentHTML('beforeend', "<input \n                type=\"text\"\n                class=\"main__editTitle\"\n                value=\"".concat(noteObject.title, "\"\n              >\n              <textarea class=\"main__editText\" placeholder=\"Type something...\">").concat(noteObject.text, "</textarea>"));
-              var editTitle = document.querySelector('.main__editTitle');
-              var editText = document.querySelector('.main__editText');
-              editSaveButton.addEventListener('click', onEditSaveButtonHandler);
-
-              function onEditSaveButtonHandler() {
-                editNoteObj();
-                changeNoteVersion();
-                editHeader.style.display = 'none';
-                editForm.style.display = 'none';
+              if (noteIndex !== -1) {
+                notesFromLocalSt[noteIndex] = noteObject;
               }
 
-              function editNoteObj() {
-                noteObject.title = editTitle.value;
-                noteObject.text = editText.value;
-                noteObject.time = new Date().toLocaleTimeString('uk-UA');
-                noteObject.date = new Date().toLocaleDateString('uk-UA');
-              }
+              localStorage.setItem('notesArr', JSON.stringify(notesFromLocalSt));
+              generateNote();
+              attachEventListeners();
+              closeEditForm();
+              editTitle.classList.remove('emptyInput');
+              editText.classList.remove('emptyInput');
+            } else {
+              editTitle.classList.add('emptyInput');
+              editText.classList.add('emptyInput');
+            }
+          }
 
-              function changeNoteVersion() {
-                var noteIndex = notesFromLocalSt.findIndex(function (note) {
-                  return note.id === noteObject.id;
-                });
-
-                if (noteIndex !== -1) {
-                  notesFromLocalSt[noteIndex] = noteObject;
-                }
-
-                localStorage.setItem('notesArr', JSON.stringify(notesFromLocalSt));
-              }
-            });
+          function closeEditForm() {
+            editHeader.style.display = 'none';
+            editForm.style.display = 'none';
+            editBackButton.removeEventListener('click', closeEditForm);
+            editSaveButton.removeEventListener('click', saveEditedNote);
           }
         };
 
-        for (var _iterator3 = notesFromLocalSt[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-          _loop2();
-        }
-      } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-            _iterator3["return"]();
-          }
-        } finally {
-          if (_didIteratorError3) {
-            throw _iteratorError3;
-          }
-        }
+        note.removeEventListener('click', openEditForm);
+        note.addEventListener('click', openEditForm);
       }
-    }
-  } catch (err) {
-    _didIteratorError2 = true;
-    _iteratorError2 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-        _iterator2["return"]();
-      }
-    } finally {
-      if (_didIteratorError2) {
-        throw _iteratorError2;
-      }
-    }
+    });
   }
+
+  attachEventListeners();
 }
 
 function onEditBackButtonHandler() {
@@ -255,12 +265,24 @@ function onEditBackButtonHandler() {
   editBackButton.removeEventListener('click', onEditBackButtonHandler);
 }
 
+function centerDeleteMessage() {
+  var windowWidth = window.innerWidth;
+  var messageWidth = deleteMessage.offsetWidth;
+  var windowHeight = window.innerHeight;
+  var messageHeight = deleteMessage.offsetHeight;
+  deleteMessage.style.left = "".concat((windowWidth - messageWidth) / 2, "px");
+  deleteMessage.style.top = "".concat((windowHeight - messageHeight) / 2, "px");
+  deleteMessage.scrollIntoView({
+    block: "center",
+    behavior: "smooth"
+  });
+}
+
 function deleteNote(event, noteId) {
   event.stopPropagation();
   deleteMessageWrapper.style.display = 'flex';
-  var noteElement = document.getElementById(noteId); // let notesFromHTML = document.querySelector('.main__note');
-  // let note = document.querySelector('.main__note');
-
+  centerDeleteMessage();
+  var noteElement = document.getElementById(noteId);
   deleteButton.removeEventListener('click', onDeleteButtonHandler);
   cancelButton.removeEventListener('click', onCancelButtonHandler);
   deleteButton.addEventListener('click', onDeleteButtonHandler);
@@ -279,12 +301,34 @@ function deleteNote(event, noteId) {
     }
 
     noteElement.remove();
-    notesFromHTML = document.querySelectorAll('.main__note');
+    var searchWord = searchText.value.toLowerCase();
+    var foundNotes = storageArr.filter(function (note) {
+      return note.title.toLowerCase().includes(searchWord);
+    });
 
-    if (notesFromHTML.length === 0) {
+    if (storageArr.length === 0) {
       startPageContent.style.display = 'inherit';
+      notFoundContent.style.display = 'none';
+      notesWrapper.style.display = 'none';
+    } else if (foundNotes.length === 0) {
+      startPageContent.style.display = 'none';
+      notFoundContent.style.display = 'flex';
+      notesWrapper.style.display = 'none';
     } else {
       startPageContent.style.display = 'none';
+      notFoundContent.style.display = 'none';
+      notesWrapper.style.display = 'flex';
+      notesWrapper.innerHTML = '';
+      foundNotes.forEach(function (note) {
+        var colorTag = note.tag.toLowerCase();
+        notesWrapper.insertAdjacentHTML('beforeend', "<div id=\"".concat(note.id, "\" class=\"main__note ").concat(colorTag, "\">\n            <div class=\"main__headlineAndButtonWrapper\">\n              <h2 class=\"main__noteHeadline\">").concat(note.title, "</h2>\n              <button class=\"main__deleteButton\"></button>\n            </div>\n            <div class=\"main__dateCategory--wrapper\">\n              <p class=\"main__noteDate\">").concat(note.date, "</p>\n              <p class=\"main__noteCategory\">").concat(note.tag, "</p>\n            </div>\n          </div>"));
+      });
+      editNote();
+      foundNotes.forEach(function (note) {
+        document.getElementById(note.id).querySelector('.main__deleteButton').addEventListener('click', function (event) {
+          return deleteNote(event, note.id);
+        });
+      });
     }
 
     deleteMessageWrapper.style.display = 'none';
@@ -292,58 +336,99 @@ function deleteNote(event, noteId) {
 
   function onCancelButtonHandler() {
     deleteMessageWrapper.style.display = 'none';
-    generateNote();
   }
 }
 
 searchBtn.addEventListener('click', searching);
 
 function searching() {
-  notesWrapper.innerHTML = '';
-  headerWrapper.style.display = 'none';
-  searchBarWrapper.style.display = 'inherit';
+  searchBtn.style.display = 'none';
+  searchBarWrapper.style.display = 'flex';
+  searchText.style.display = 'inherit';
+  searchCloseButton.style.display = 'inherit';
   searchCloseButton.addEventListener('click', function () {
-    if (searchText.value === 'Search by the keyword...') {
-      headerWrapper.style.display = 'inherit';
-      searchBarWrapper.style.display = 'none';
-      generateNote();
-    }
-
-    searchText.value = 'Search by the keyword...';
+    searchBarWrapper.style.display = 'none';
+    notFoundContent.style.display = 'none';
+    searchBtn.style.display = 'inherit';
+    searchText.value = '';
+    notesWrapper.innerHTML = '';
+    generateNote();
   });
-  searchBarButton.addEventListener('click', function () {
+  searchText.addEventListener('input', searchingByBar);
+
+  function searchingByBar() {
     var searchWord = searchText.value.toLowerCase();
-    var noteList = JSON.parse(localStorage.getItem('notesArr'));
-    var foundNote = null;
-    var _iteratorNormalCompletion4 = true;
-    var _didIteratorError4 = false;
-    var _iteratorError4 = undefined;
+    var noteList = JSON.parse(localStorage.getItem('notesArr')) || [];
+    notesWrapper.innerHTML = '';
+    var foundNotes = noteList.filter(function (note) {
+      return note.title.toLowerCase().includes(searchWord);
+    });
 
-    try {
-      for (var _iterator4 = noteList[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-        var note = _step4.value;
-        var headline = note.title.toLowerCase();
-
-        if (headline.includes(searchWord)) {
-          foundNote = note;
-          break;
-        }
-      }
-    } catch (err) {
-      _didIteratorError4 = true;
-      _iteratorError4 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-          _iterator4["return"]();
-        }
-      } finally {
-        if (_didIteratorError4) {
-          throw _iteratorError4;
-        }
-      }
+    if (searchWord === '') {
+      notFoundContent.style.display = 'none';
+      notesWrapper.innerHTML = '';
+      searchBtn.style.display = 'inherit';
+      generateNote();
+      editNote();
+      return;
     }
 
-    notesWrapper.insertAdjacentHTML('afterbegin', "<div id=\"".concat(foundNote.id, "\" class=\"main__note\">\n        <div class=\"main__headlineAndButtonWrapper\">\n          <h2 class=\"main__noteHeadline\">").concat(foundNote.title, "</h2>\n          <button class=\"main__deleteButton\"></button>\n        </div>\n        <div class=\"main__dateCategory--wrapper\">\n          <p class=\"main__noteDate\">").concat(foundNote.date, "</p>\n          <p class=\"main__noteCategory\">").concat(foundNote.tag, "</p>\n        </div>\n      </div>"));
-  });
+    if (noteList.length === 0) {
+      startPageContent.style.display = 'inherit';
+      notFoundContent.style.display = 'none';
+      notesWrapper.style.display = 'none';
+      searchBtn.style.display = 'inherit';
+      return;
+    }
+
+    if (foundNotes.length === 0) {
+      notFoundContent.style.display = 'flex';
+      startPageContent.style.display = 'none';
+      notesWrapper.style.display = 'none';
+      searchBtn.style.display = 'inherit';
+      return;
+    }
+
+    notFoundContent.style.display = 'none';
+    startPageContent.style.display = 'none';
+    notesWrapper.style.display = 'flex';
+    searchBtn.style.display = 'inherit';
+    foundNotes.forEach(function (note) {
+      var colorTag = note.tag.toLowerCase();
+      notesWrapper.insertAdjacentHTML('beforeend', "<div id=\"".concat(note.id, "\" class=\"main__note ").concat(colorTag, "\">\n          <div class=\"main__headlineAndButtonWrapper\">\n            <h2 class=\"main__noteHeadline\">").concat(note.title, "</h2>\n            <button class=\"main__deleteButton\"></button>\n          </div>\n          <div class=\"main__dateCategory--wrapper\">\n            <p class=\"main__noteDate\">").concat(note.date, "</p>\n            <p class=\"main__noteCategory\">").concat(note.tag, "</p>\n          </div>\n        </div>"));
+    });
+    editNote();
+    foundNotes.forEach(function (note) {
+      document.getElementById(note.id).querySelector('.main__deleteButton').addEventListener('click', function (event) {
+        return deleteNote(event, note.id);
+      });
+    });
+  }
 }
+
+function setTheme(theme) {
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  var savedTheme = localStorage.getItem('theme');
+
+  if (!savedTheme) {
+    savedTheme = 'dark';
+  }
+
+  setTheme(savedTheme);
+});
+themeButton.addEventListener('click', function () {
+  var currentTheme = document.body.getAttribute('data-theme');
+  var newTheme;
+
+  if (currentTheme === 'dark') {
+    newTheme = 'light';
+  } else {
+    newTheme = 'dark';
+  }
+
+  setTheme(newTheme);
+});

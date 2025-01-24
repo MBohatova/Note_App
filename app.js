@@ -38,6 +38,7 @@ let editTitle = document.querySelector('.main__editTitle');
 let editTextArea = document.querySelector('.main__editText');
 let emptyParagraph = document.querySelector('.main__paragraph');
 let notFoundParagraph = document.querySelector('.main__paragraphNotFound');
+
 // Масиви, об'єкти
 let noteObj = {};
 let notesArr = [];
@@ -49,35 +50,67 @@ if(notesFromStorage) {
   startPageContent.style.display = 'inherit';
 }
 
+let lastClickedButton = null;
+
+function chooseTag() {
+  let activeTag = null;
+
+  for (let tag of tagButton) {
+    tag.addEventListener('click', function() {
+      noteObj.tag = tag.textContent;
+
+      if(activeTag) {
+        activeTag.classList.remove('choosenTag');
+      }
+
+      tag.classList.add('choosenTag');
+      activeTag = tag;
+    });
+    tag.classList.remove('choosenTag');
+    noteObj.tag = 'Without tag';
+  }
+}
+
 createBtn.addEventListener('click', function() {
   editorHeader.style.display = 'inherit';
   noteForm.style.display = 'inherit';
   searchText.style.display = 'none';
   searchCloseButton.style.display = 'none';
+  notFoundContent.style.display = 'none';
+  searchText.value = '';
+  scrollTo(0, 0);
 
-  for (let tag of tagButton) {
-    tag.addEventListener('click', function() {
-      noteObj.tag = tag.textContent;
-    });
-    noteObj.tag = 'Without tag';
-  }
+  chooseTag();
+
   saveButton.addEventListener('click', onSaveButtonHandler);
   backButton.addEventListener('click', onBackButtonHandler);
 
   function onBackButtonHandler() {
     hideBtns();
-    searchText.style.display = 'inherit';
-    searchCloseButton.style.display = 'inherit';
+    generateNote();
+    noteTitle.classList.remove('emptyInput');
+    noteText.classList.remove('emptyInput');
+    searchText.style.display = 'none';
+    searchCloseButton.style.display = 'none';
+    searchBtn.style.display = 'inherit';
+    searchText.value = '';
     saveButton.removeEventListener('click', onBackButtonHandler);
   }
 })
 
 function onSaveButtonHandler() {
-  createNote();
-  saveNotesInLocalStorage();
-  generateNote();
-  clearTextArea();
-  editNote();
+  if(noteTitle.value && noteText.value !== '') {
+    createNote();
+    saveNotesInLocalStorage();
+    generateNote();
+    clearTextArea();
+    editNote();
+    noteTitle.classList.remove('emptyInput');
+    noteText.classList.remove('emptyInput');
+  } else {
+    noteTitle.classList.add('emptyInput');
+    noteText.classList.add('emptyInput');
+  }
 }
 
 function createNote() {
@@ -165,6 +198,7 @@ function editNote() {
         note.addEventListener('click', openEditForm);
 
         function openEditForm() {
+          scrollTo(0, 0);
           editHeader.style.display = 'inherit';
           editForm.style.display = 'inherit';
           editForm.innerHTML = `
@@ -187,22 +221,29 @@ function editNote() {
           editSaveButton.addEventListener('click', saveEditedNote);
 
           function saveEditedNote() {
-            noteObject.title = editTitle.value;
-            noteObject.text = editText.value;
-            noteObject.time = new Date().toLocaleTimeString('uk-UA');
-            noteObject.date = new Date().toLocaleDateString('uk-UA');
+            if(editTitle.value && editText.value !== '') {
+              noteObject.title = editTitle.value;
+              noteObject.text = editText.value;
+              noteObject.time = new Date().toLocaleTimeString('uk-UA');
+              noteObject.date = new Date().toLocaleDateString('uk-UA');
+  
+              let noteIndex = notesFromLocalSt.findIndex(item => item.id === noteObject.id);
+              if (noteIndex !== -1) {
+                notesFromLocalSt[noteIndex] = noteObject;
+              }
 
-            let noteIndex = notesFromLocalSt.findIndex(item => item.id === noteObject.id);
-            if (noteIndex !== -1) {
-              notesFromLocalSt[noteIndex] = noteObject;
+              localStorage.setItem('notesArr', JSON.stringify(notesFromLocalSt));
+
+              generateNote();
+              attachEventListeners();
+              closeEditForm();
+
+              editTitle.classList.remove('emptyInput');
+              editText.classList.remove('emptyInput');
+            } else {
+              editTitle.classList.add('emptyInput');
+              editText.classList.add('emptyInput');
             }
-            localStorage.setItem('notesArr', JSON.stringify(notesFromLocalSt));
-
-            generateNote();
-
-            attachEventListeners();
-
-            closeEditForm();
           }
 
           function closeEditForm() {
@@ -226,10 +267,23 @@ function onEditBackButtonHandler() {
   editBackButton.removeEventListener('click', onEditBackButtonHandler);
 }
 
+function centerDeleteMessage() {
+  let windowWidth = window.innerWidth;
+  let messageWidth = deleteMessage.offsetWidth;
+  let windowHeight = window.innerHeight;
+  let messageHeight = deleteMessage.offsetHeight;
+
+  deleteMessage.style.left = `${(windowWidth - messageWidth) / 2}px`;
+    deleteMessage.style.top = `${(windowHeight - messageHeight) / 2}px`
+
+  deleteMessage.scrollIntoView({block: "center", behavior: "smooth"});
+}
+
 function deleteNote(event, noteId) {
   event.stopPropagation();
 
   deleteMessageWrapper.style.display = 'flex';
+  centerDeleteMessage();
 
   let noteElement = document.getElementById(noteId);
 
@@ -239,9 +293,7 @@ function deleteNote(event, noteId) {
   deleteButton.addEventListener('click', onDeleteButtonHandler);
   cancelButton.addEventListener('click', onCancelButtonHandler);
 
-
   function onDeleteButtonHandler() {
-
     let notesFromStorage = localStorage.getItem('notesArr');
     let storageArr = JSON.parse(notesFromStorage);
     let noteI = storageArr.findIndex(storedNote => storedNote.id === parseInt(noteElement.id));
@@ -252,7 +304,7 @@ function deleteNote(event, noteId) {
     }
     noteElement.remove();
 
-    const searchWord = searchText.value.toLowerCase();
+    let searchWord = searchText.value.toLowerCase();
     let foundNotes = storageArr.filter(note =>
       note.title.toLowerCase().includes(searchWord)
     );
@@ -303,14 +355,13 @@ function deleteNote(event, noteId) {
 
   function onCancelButtonHandler() {
     deleteMessageWrapper.style.display = 'none';
-    generateNote();
   }
 }
 
 searchBtn.addEventListener('click', searching);
 
 function searching() {
-  notesWrapper.innerHTML = '';
+  searchBtn.style.display = 'none';
   searchBarWrapper.style.display = 'flex';
   searchText.style.display = 'inherit';
   searchCloseButton.style.display = 'inherit';
@@ -318,6 +369,7 @@ function searching() {
   searchCloseButton.addEventListener('click', function() {
     searchBarWrapper.style.display = 'none';
     notFoundContent.style.display = 'none';
+    searchBtn.style.display = 'inherit';
     searchText.value = '';
     notesWrapper.innerHTML = '';
     generateNote();
@@ -338,6 +390,7 @@ function searching() {
     if (searchWord === '') {
       notFoundContent.style.display = 'none';
       notesWrapper.innerHTML = '';
+      searchBtn.style.display = 'inherit';
       generateNote();
       editNote();
       return;
@@ -347,6 +400,7 @@ function searching() {
       startPageContent.style.display = 'inherit';
       notFoundContent.style.display = 'none';
       notesWrapper.style.display = 'none';
+      searchBtn.style.display = 'inherit';
       return;
     }
 
@@ -354,12 +408,14 @@ function searching() {
       notFoundContent.style.display = 'flex';
       startPageContent.style.display = 'none';
       notesWrapper.style.display = 'none';
+      searchBtn.style.display = 'inherit';
       return;
     }
 
     notFoundContent.style.display = 'none';
     startPageContent.style.display = 'none';
     notesWrapper.style.display = 'flex';
+    searchBtn.style.display = 'inherit';
 
     foundNotes.forEach(note => {
       let colorTag = note.tag.toLowerCase();
