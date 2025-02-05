@@ -13,7 +13,8 @@ var editSaveButton = document.querySelector('.header__rewriteSaveButton');
 var deleteButton = document.querySelector('.deleteButton');
 var cancelButton = document.querySelector('.cancelButton');
 var main__deleteButton;
-var searchCloseButton = document.querySelector('.header__closeButton'); // Контейнери
+var searchCloseButton = document.querySelector('.header__closeButton');
+var prevClickedTagButton = null; // Контейнери
 
 var body = document.querySelector('body');
 var startPageContent = document.querySelector('.main__emptyContent');
@@ -30,7 +31,9 @@ var editHeader = document.querySelector('.header__rewriteEditor');
 var deleteButtonWrapper = document.querySelector('.main__deleteButtonWrapper');
 var deleteMessageWrapper = document.querySelector('.deleteMessageWrapper');
 var deleteMessage = document.querySelector('.deleteMessage');
-var searchBarWrapper = document.querySelector('.header__searchBarBox'); // Інпути та інші елементи сторінки
+var searchBarWrapper = document.querySelector('.header__searchBarBox');
+var formContainer = document.querySelector('.formContainer');
+var editFormContainer = document.querySelector('.editFormContainer'); // Інпути та інші елементи сторінки
 
 var noteTitle = document.querySelector('.main__formTitle');
 var noteText = document.querySelector('.main__formText');
@@ -43,6 +46,8 @@ var notFoundParagraph = document.querySelector('.main__paragraphNotFound'); // �
 
 var noteObj = {};
 var notesArr = [];
+var formInputsArr = [noteTitle, noteText];
+var editFormInputs = [editTitle, editTextArea];
 var notesFromStorage = localStorage.getItem('notesArr');
 
 if (notesFromStorage) {
@@ -51,93 +56,67 @@ if (notesFromStorage) {
   startPageContent.style.display = 'inherit';
 }
 
-var lastClickedButton = null;
+var clearCategoryButtonsColorStyle = function clearCategoryButtonsColorStyle() {
+  tagButton.forEach(function (tag_button) {
+    return tag_button.style.color = 'black';
+  });
+};
 
-function chooseTag() {
-  var activeTag = null;
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    var _loop = function _loop() {
-      var tag = _step.value;
-      tag.addEventListener('click', function () {
-        noteObj.tag = tag.textContent;
-
-        if (activeTag) {
-          activeTag.classList.remove('choosenTag');
-        }
-
-        tag.classList.add('choosenTag');
-        activeTag = tag;
-      });
-      tag.classList.remove('choosenTag');
-      noteObj.tag = 'Without tag';
-    };
-
-    for (var _iterator = tagButton[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      _loop();
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-        _iterator["return"]();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
-  }
-}
-
+tagsBox.addEventListener('click', function (e) {
+  if (prevClickedTagButton) prevClickedTagButton.style.color = 'black';
+  e.target.style.color = 'white';
+  prevClickedTagButton = e.target;
+  noteObj.tag = e.target.textContent;
+});
+noteObj.tag = 'Without tag';
 createBtn.addEventListener('click', function () {
-  editorHeader.style.display = 'inherit';
-  noteForm.style.display = 'inherit';
-  searchText.style.display = 'none';
-  searchCloseButton.style.display = 'none';
+  formContainer.style.display = 'flex';
   notFoundContent.style.display = 'none';
   searchText.value = '';
   scrollTo(0, 0);
-  chooseTag();
+  clearCategoryButtonsColorStyle();
   saveButton.addEventListener('click', onSaveButtonHandler);
   backButton.addEventListener('click', onBackButtonHandler);
 
   function onBackButtonHandler() {
-    hideBtns();
-    generateNote();
+    formContainer.style.display = 'none';
     noteTitle.classList.remove('emptyInput');
     noteText.classList.remove('emptyInput');
-    searchText.style.display = 'none';
-    searchCloseButton.style.display = 'none';
-    searchBtn.style.display = 'inherit';
     searchText.value = '';
     saveButton.removeEventListener('click', onBackButtonHandler);
   }
 });
 
+function formValidation(form, inputsArr) {
+  form.addEventListener('input', function () {
+    inputsArr.forEach(function (input) {
+      return input.classList.remove('emptyInput');
+    });
+  });
+}
+
+formValidation(noteForm, formInputsArr);
+
 function onSaveButtonHandler() {
-  if (noteTitle.value && noteText.value !== '') {
+  if (noteTitle.value.trim() && noteText.value.trim() !== '') {
     createNote();
     saveNotesInLocalStorage();
     generateNote();
     clearTextArea();
     editNote();
-    noteTitle.classList.remove('emptyInput');
-    noteText.classList.remove('emptyInput');
+    formContainer.style.display = 'none';
   } else {
-    noteTitle.classList.add('emptyInput');
-    noteText.classList.add('emptyInput');
+    formInputsArr.forEach(function (input) {
+      if (input.value.trim() === '') {
+        input.classList.add('emptyInput');
+      }
+    });
   }
 }
 
 function createNote() {
-  noteObj.title = noteTitle.value;
-  noteObj.text = noteText.value;
+  noteObj.title = noteTitle.value.trim();
+  noteObj.description = noteText.value.trim();
   noteObj.id = new Date().getTime();
   noteObj.time = new Date().toLocaleTimeString('uk-UA');
   noteObj.date = new Date().toLocaleDateString('uk-UA');
@@ -158,7 +137,6 @@ function saveNotesInLocalStorage() {
 
 function generateNote() {
   startPageContent.style.display = 'none';
-  hideBtns();
   notesWrapper.style.display = 'flex';
   notesWrapper.innerHTML = '';
   var notesList = JSON.parse(localStorage.getItem('notesArr'));
@@ -181,11 +159,6 @@ function generateNote() {
   });
 }
 
-function hideBtns() {
-  editorHeader.style.display = 'none';
-  noteForm.style.display = 'none';
-}
-
 function clearTextArea() {
   noteTitle.value = '';
   noteText.value = '';
@@ -206,20 +179,22 @@ function editNote() {
       if (noteObject) {
         var openEditForm = function openEditForm() {
           scrollTo(0, 0);
-          editHeader.style.display = 'inherit';
-          editForm.style.display = 'inherit';
-          editForm.innerHTML = "\n            <input \n                type=\"text\"\n                class=\"main__editTitle\"\n                id=\"editTitle\"\n                value=\"".concat(noteObject.title, "\"\n            >\n            <textarea id=\"editText\" class=\"main__editText\" placeholder=\"Type something...\">").concat(noteObject.text, "</textarea>\n          ");
           var editTitle = document.getElementById('editTitle');
           var editText = document.getElementById('editText');
+          var editForm = document.getElementById('editForm');
+          editFormContainer.style.display = 'flex';
+          editTitle.value = noteObject.title;
+          editText.value = noteObject.description;
+          formValidation(editForm, editFormInputs);
           editBackButton.removeEventListener('click', closeEditForm);
           editBackButton.addEventListener('click', closeEditForm);
           editSaveButton.removeEventListener('click', saveEditedNote);
           editSaveButton.addEventListener('click', saveEditedNote);
 
           function saveEditedNote() {
-            if (editTitle.value && editText.value !== '') {
-              noteObject.title = editTitle.value;
-              noteObject.text = editText.value;
+            if (editTitle.value.trim() && editText.value.trim() !== '') {
+              noteObject.title = editTitle.value.trim();
+              noteObject.description = editText.value.trim();
               noteObject.time = new Date().toLocaleTimeString('uk-UA');
               noteObject.date = new Date().toLocaleDateString('uk-UA');
               var noteIndex = notesFromLocalSt.findIndex(function (item) {
@@ -234,17 +209,17 @@ function editNote() {
               generateNote();
               attachEventListeners();
               closeEditForm();
-              editTitle.classList.remove('emptyInput');
-              editText.classList.remove('emptyInput');
             } else {
-              editTitle.classList.add('emptyInput');
-              editText.classList.add('emptyInput');
+              editFormInputs.forEach(function (input) {
+                if (input.value.trim() === '') {
+                  input.classList.add('emptyInput');
+                }
+              });
             }
           }
 
           function closeEditForm() {
-            editHeader.style.display = 'none';
-            editForm.style.display = 'none';
+            editFormContainer.style.display = 'none';
             editBackButton.removeEventListener('click', closeEditForm);
             editSaveButton.removeEventListener('click', saveEditedNote);
           }
@@ -344,15 +319,14 @@ searchBtn.addEventListener('click', searching);
 function searching() {
   searchBtn.style.display = 'none';
   searchBarWrapper.style.display = 'flex';
-  searchText.style.display = 'inherit';
-  searchCloseButton.style.display = 'inherit';
+  searchText.style.display = 'flex';
+  searchCloseButton.style.display = 'block';
   searchCloseButton.addEventListener('click', function () {
     searchBarWrapper.style.display = 'none';
     notFoundContent.style.display = 'none';
-    searchBtn.style.display = 'inherit';
-    searchText.value = '';
-    notesWrapper.innerHTML = '';
-    generateNote();
+    searchBtn.style.display = 'block';
+    searchText.value = ''; // notesWrapper.innerHTML = '';
+    // generateNote();
   });
   searchText.addEventListener('input', searchingByBar);
 
@@ -367,7 +341,7 @@ function searching() {
     if (searchWord === '') {
       notFoundContent.style.display = 'none';
       notesWrapper.innerHTML = '';
-      searchBtn.style.display = 'inherit';
+      searchBtn.style.display = 'block';
       generateNote();
       editNote();
       return;

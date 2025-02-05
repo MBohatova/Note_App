@@ -23,12 +23,12 @@
     </div>
 
     <!--Кнопки для редагування (разом із текстовою формою)-->
-    <div class="header__editorButtonBox">
+    <!-- <div class="header__editorButtonBox">
       <button type="button" class="header__backButton"></button>
       <div class="header__buttonsWrapper">
         <button type="button" class="header__saveButton"></button>
       </div>
-    </div>
+    </div> -->
 
     <!--Пошуковий рядок до сторінки пошуку-->
     <div class="header__searchBarBox">
@@ -42,10 +42,10 @@
     </div>
 
     <!-- Хедер для перечитування та редагування нотатки -->
-    <div class="header__rewriteEditor">
+    <!-- <div class="header__rewriteEditor">
       <button type="button" class="header__rewriteBackButton"></button>
       <button type="button" class="header__rewriteSaveButton"></button>
-    </div>
+    </div> -->
   </header>
 
   <main class="main">
@@ -84,7 +84,7 @@
     </div>
 
     <!--Текстова форма для нотатки-->
-    <form class="main__form">
+    <!-- <form class="main__form">
       <div class="main__tagBox">
           <button type="button" id="health" class="tagButton healthButton">Health</button>
           <button type="button" id="money" class="tagButton moneyButton">Money</button>
@@ -100,11 +100,58 @@
         placeholder="Title"
       >
       <textarea class="main__formText" placeholder="Type something..."></textarea>
-    </form>
+    </form> -->
 
     <!-- Форма для читання та редагування нотатки -->
     <form class="main__editForm"></form>
   </main>
+
+  <div class="formContainer">
+        <!--Кнопки для редагування (разом із текстовою формою)-->
+        <div class="header__editorButtonBox">
+          <button type="button" class="header__backButton"></button>
+          <div class="header__buttonsWrapper">
+            <button type="button" class="header__saveButton"></button>
+          </div>
+        </div>
+        <!--Текстова форма для нотатки-->
+        <form class="main__form">
+          <div class="main__tagBox">
+              <button type="button" id="health" class="tagButton healthButton">Health</button>
+              <button type="button" id="money" class="tagButton moneyButton">Money</button>
+              <button type="button" id="plans" class="tagButton plansButton">Plans</button>
+              <button type="button" id="hobby" class="tagButton hobbyButton">Hobby</button>
+              <button type="button" id="goals" class="tagButton goalsButton">Goals</button>
+              <button type="button" id="work" class="tagButton workButton">Work</button>
+          </div>
+    
+          <input 
+            type="text" 
+            class="main__formTitle"
+            placeholder="Title"
+          >
+          <textarea class="main__formText" placeholder="Type something..."></textarea>
+        </form>
+  </div>
+
+  <div class="editFormContainer">
+    <!-- Хедер для перечитування та редагування нотатки -->
+    <div class="header__rewriteEditor">
+      <button type="button" class="header__rewriteBackButton"></button>
+      <button type="button" class="header__rewriteSaveButton"></button>
+    </div>
+
+    <form id="editForm" class="main__editForm">
+      <input 
+        type="text"
+        class="main__editTitle"
+        id="editTitle"
+        placeholder="Title"
+      >
+      <textarea id="editText" class="main__editText" placeholder="Type something..."></textarea>
+    </form>
+
+  </div>
 
   <div class="deleteMessageWrapper">
     <div class="deleteMessage">

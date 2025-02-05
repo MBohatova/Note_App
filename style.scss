@@ -134,78 +134,7 @@ body {
         right: 45px;
         height: 24px;
         width: 24px;
-        background: url(./images/search.svg) center;
         border: none;
-      }
-    }
-  
-    &__editorButtonBox {
-      position: absolute;
-      height: 60px;
-      width: 365px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      display: none;
-  
-      .header__backButton {
-        height: 50px;
-        width: 50px;
-        background: $buttonsGrey url(./images/back.svg) no-repeat center;
-        border: none;
-        border-radius: 15px;
-        transition: 0.3s;
-  
-        &:hover {
-          transform: scale(1.2);
-        }
-      }
-  
-      .header__buttonsWrapper {
-        display: flex;
-        gap: 21px;
-  
-        .header__visibilityButton {
-          @extend .header__backButton;
-          background: $buttonsGrey url(./images/visibility.svg) no-repeat center;
-          transition: 0.3s;
-          height: 50px;
-          width: 50px;
-  
-          &:hover {
-            transform: scale(1.2);
-          }
-        }
-  
-        .header__saveButton {
-          @extend .header__visibilityButton;
-          background: $buttonsGrey url(./images/save.svg) no-repeat center;
-          transition: 0.3s;
-          height: 50px;
-          width: 50px;
-  
-          &:hover {
-            transform: scale(1.2);
-          }
-        }
-      }
-    }
-  
-    &__rewriteEditor {
-      @extend .header__editorButtonBox;
-      justify-content: space-between;
-  
-      .header__rewriteBackButton {
-        @extend .header__backButton;
-        height: 50px;
-        width: 50px;
-      }
-  
-      .header__rewriteSaveButton {
-        @extend .header__rewriteBackButton;
-        background: $buttonsGrey url(./images/save.svg) no-repeat center;
-        height: 50px;
-        width: 50px;
       }
     }
   }
@@ -246,7 +175,7 @@ body {
       display: flex;
       flex-direction: column;
       gap: 25px;
-      display: none;
+      // display: none;
       padding-top: 2px;
   
       .main__note {
@@ -343,20 +272,18 @@ body {
     }
   
     &__buttonBox {
-      position: fixed;
-      height: 70px;
+      position: absolute;
+      height: 0;
       width: 360px;
       top: 535px;
       display: flex;
       justify-content: end;
   
       .main__createButton {
-        position: absolute;
-        right: 0;
-        top: 0;
+        position: fixed;
+        bottom: 40px;
         height: 70px;
         width: 70px;
-        background: $backgroundBlack url(./images/add.svg) no-repeat center;
         border-radius: 100%;
         border: none;
         box-shadow: -5px 0px 10px 0px rgba(0, 0, 0, 0.4);
@@ -368,15 +295,76 @@ body {
       }
     }
   
-    &__form {
-      position: absolute;
+    &__editForm {
+      @extend .main__form;
+      z-index: 3;
+  
+      .main__editTitle {
+        @extend .main__formTitle;
+      }
+  
+      .main__editText {
+        @extend .main__formText;
+      }
+    }
+  }
+
+  .formContainer {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    min-height: 520px;
+    z-index: 3;
+    display: none;
+
+    .header__editorButtonBox {
+      height: 60px;
+      width: 365px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+  
+      .header__backButton {
+        height: 50px;
+        width: 50px;
+        border: none;
+        border-radius: 15px;
+        transition: 0.3s;
+  
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+  
+      .header__buttonsWrapper {
+        display: flex;
+        gap: 21px;
+
+        .header__saveButton {
+          transition: 0.3s;
+          height: 50px;
+          width: 50px;
+          border: none;
+          border-radius: 15px;
+  
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+
+    .main__form {
       height: 650px;
-      width: 100%;
+      width: 370px;
       display: flex;
       flex-direction: column;
       gap: 40px;
-      height: 100%;
-      display: none;
   
       .main__formTitle {
         font-weight: 400;
@@ -385,6 +373,7 @@ body {
         background-color: inherit;
         border: none;
         outline: none;
+        border-radius: 10px;
       }
   
       .main__formText {
@@ -397,6 +386,7 @@ body {
         background-color: inherit;
         border: none;
         outline: none;
+        border-radius: 10px;
       }
 
       .emptyInput {
@@ -414,10 +404,6 @@ body {
             margin: 4px;
             border: none;
             border-radius: 15px;
-
-            // &:focus {
-            //   color: $textWhite;
-            // }
           }
 
           .choosenTag {
@@ -449,17 +435,86 @@ body {
           }
       }
     }
+  }
+
+  .editFormContainer {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    min-height: 520px;
+    z-index: 3;
+    display: none;
+
+    .header__rewriteEditor {
+      height: 60px;
+      width: 365px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+
+      .header__rewriteBackButton {
+        height: 50px;
+        width: 50px;
+        border: none;
+        border-radius: 15px;
+        transition: 0.3s;
   
-    &__editForm {
-      @extend .main__form;
-      z-index: 3;
-  
-      .main__editTitle {
-        @extend .main__formTitle;
+        &:hover {
+          transform: scale(1.2);
+        }
       }
   
+      .header__rewriteSaveButton {
+        transition: 0.3s;
+        height: 50px;
+        width: 50px;
+        border: none;
+        border-radius: 15px;
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    .main__editForm {
+      height: 650px;
+      width: 370px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      z-index: 3;
+
+      .main__editTitle {
+        font-weight: 400;
+        font-size: 48px;
+        line-height: 65.47px;
+        background-color: inherit;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+      }
+
       .main__editText {
-        @extend .main__formText;
+        resize: vertical;
+        min-height: 500px;
+        font-size: 23px;
+        font-weight: 400;
+        line-height: 31.37px;
+        text-align: left;
+        background-color: inherit;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+      }
+
+      .emptyInput {
+        box-shadow: #9A1212 0 0 15px 1px;
       }
     }
   }
@@ -568,6 +623,10 @@ body[data-theme="dark"] {
         }
       }
 
+      .header__searchBarButton {
+        background: url(./images/search.svg) center;
+      }
+
       .header__closeButton {
         background: url(./images/close.svg) center;
       }
@@ -575,6 +634,26 @@ body[data-theme="dark"] {
 
     &__editorButtonBox {
       background-color: $backgroundBlack;
+
+      .header__backButton {
+        background: $buttonsGrey url(./images/back.svg) no-repeat center;
+      }
+
+      .header__buttonsWrapper {
+        .header__saveButton {
+          background: $buttonsGrey url(./images/save.svg) no-repeat center;
+          background-size: 25px 25px;
+          background-blend-mode: lighten;
+        }
+      }
+    }
+
+    &__rewriteEditor {
+      .header__rewriteSaveButton {
+        background: $buttonsGrey url(./images/save.svg) no-repeat center;
+        background-size: 25px 25px;
+        background-blend-mode: lighten;
+      }
     }
   }
 
@@ -588,6 +667,12 @@ body[data-theme="dark"] {
     &__notFoundContent {
       .main__paragraphNotFound {
         color: $textWhite;
+      }
+    }
+
+    &__buttonBox {
+      .main__createButton {
+        background: $backgroundBlack url(./images/add.svg) no-repeat center;
       }
     }
 
@@ -605,6 +690,75 @@ body[data-theme="dark"] {
       .main__formText {
         color: $textWhite;
 
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+      }
+    }
+  }
+
+  .formContainer {
+    background-color: $backgroundBlack;
+
+    .header__editorButtonBox {
+      background-color: $backgroundBlack;
+
+      .header__backButton {
+        background: $buttonsGrey url(./images/back.svg) no-repeat center;
+      }
+
+      .header__buttonsWrapper {
+        .header__saveButton {
+          background: $buttonsGrey url(./images/save.svg) no-repeat center;
+          background-size: 25px 25px;
+          background-blend-mode: none;
+        }
+      }
+    }
+
+    .main__form {
+      background-color: $backgroundBlack;
+
+      .main__formTitle {
+        color: $textWhite;
+
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+      }
+
+      .main__formText {
+        color: $textWhite;
+
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+      }
+    }
+  }
+
+  .editFormContainer {
+    background-color: $backgroundBlack;
+
+    .header__rewriteEditor {
+      .header__rewriteBackButton {
+        background: $buttonsGrey url(./images/back.svg) no-repeat center;
+      }
+
+      .header__rewriteSaveButton {
+        background: $buttonsGrey url(./images/save.svg) no-repeat center;
+        background-size: 25px 25px;
+      }
+    }
+
+    .main__editForm {
+      .main__editTitle {
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+      }
+
+      .main__editText {
         &::placeholder {
           color: $buttonsGrey;
         }
@@ -641,12 +795,12 @@ body[data-theme="light"] {
       .header__buttonsBox {
 
         .header__searchButton {
-          background: $backgroundBlack url(./images/search.svg) no-repeat center;
+          background: $buttonsLight url(./images/searchLightTheme.svg) no-repeat center;
         }
 
         .header__themeButton {
-          background: $buttonsLight url(./images/darkThemeMoon.svg) no-repeat center;
-          background-size: 45px 45px;
+          background: $buttonsLight url(./images/LightThemeMoon.png) no-repeat center;
+          background-size: 25px 25px;
         }
       }
     }
@@ -661,15 +815,15 @@ body[data-theme="light"] {
         &::placeholder {
           color: $buttonsGrey;
         }
+
+        .header__searchBarButton {
+          background: url(./images/searchLightTheme.svg) center;
+        }
       }
 
       .header__closeButton {
         background: url(./images/searchCloseBlack.svg) center no-repeat;
       }
-    }
-
-    &__editorButtonBox {
-      background-color: $backgroundLight;
     }
   }
 
@@ -683,6 +837,12 @@ body[data-theme="light"] {
     &__notFoundContent {
       .main__paragraphNotFound {
         color: $backgroundBlack;
+      }
+    }
+
+    &__buttonBox {
+      .main__createButton {
+        background: $buttonsLight url(./images/addLightTheme.svg) no-repeat center;
       }
     }
 
@@ -705,8 +865,28 @@ body[data-theme="light"] {
         }
       }
     }
+  }
 
-    &__form {
+  .formContainer {
+    background-color: $backgroundLight;
+
+    .header__editorButtonBox {
+      background-color: $backgroundLight;
+
+      .header__backButton {
+        background: $buttonsLight url(./images/backLightTheme.svg) no-repeat center;
+      }
+
+      .header__buttonsWrapper {
+        .header__saveButton {
+          background: $buttonsLight url(./images/saveLightTheme.svg) no-repeat center;
+          background-size: 25px 25px;
+          background-blend-mode: none;
+        }
+      }
+    }
+
+    .main__form {
       background-color: $backgroundLight;
 
       .main__formTitle {
@@ -720,6 +900,35 @@ body[data-theme="light"] {
       .main__formText {
         color: $buttonsGrey;
 
+        &::placeholder {
+          color: $buttonsLight;
+        }
+      }
+    }
+  }
+
+  .editFormContainer {
+    background-color: $backgroundLight;
+
+    .header__rewriteEditor {
+      .header__rewriteBackButton {
+        background: $buttonsLight url(./images/backLightTheme.svg) no-repeat center;
+      }
+
+      .header__rewriteSaveButton {
+        background: $buttonsLight url(./images/saveLightTheme.svg) no-repeat center;
+        background-size: 25px 25px;
+      }
+    }
+
+    .main__editForm {
+      .main__editTitle {
+        &::placeholder {
+          color: $buttonsLight;
+        }
+      }
+
+      .main__editText {
         &::placeholder {
           color: $buttonsLight;
         }
