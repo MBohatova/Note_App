@@ -18,3 +18,5 @@
 27.10 - зпрощення процесу пошуку та виправлення різних недоліків
 
 Зробити світлу тему
+
+Посилання на макет: https://www.figma.com/design/xL4kSWBjnE1xPfE2yr9ptn/Notes-App-UI-(Community)?node-id=51-4&t=a1XxhL1hfBFmehGM-0

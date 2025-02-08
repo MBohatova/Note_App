@@ -41,18 +41,22 @@ body .header__wrapper .header__buttonsBox {
   display: flex;
   gap: 21px;
 }
-body .header__wrapper .header__buttonsBox .header__searchButton, body .header__wrapper .header__buttonsBox .header__themeButton {
+body .header__wrapper .header__buttonsBox .header__searchButton {
   height: 50px;
   width: 50px;
   border-radius: 15px;
   border: none;
   transition: 0.3s;
 }
-body .header__wrapper .header__buttonsBox .header__searchButton:hover, body .header__wrapper .header__buttonsBox .header__themeButton:hover {
+body .header__wrapper .header__buttonsBox .header__searchButton:hover {
   transform: scale(1.2);
 }
 body .header__wrapper .header__buttonsBox .header__themeButton {
-  background-size: 30px 30px;
+  height: 50px;
+  width: 50px;
+  border-radius: 15px;
+  border: none;
+  transition: 0.3s;
 }
 body .header__wrapper .header__buttonsBox .header__themeButton:hover {
   transform: scale(1.2);
@@ -497,13 +501,11 @@ body[data-theme=dark] {
 body[data-theme=dark] .header__wrapper .header__headline {
   color: rgb(255, 255, 255);
 }
-body[data-theme=dark] .header__wrapper .header__buttonsBox .header__searchButton, body[data-theme=dark] .header__wrapper .header__buttonsBox .header__themeButton {
+body[data-theme=dark] .header__wrapper .header__buttonsBox .header__searchButton {
   background: rgb(59, 59, 59) url(./images/search.svg) no-repeat center;
 }
 body[data-theme=dark] .header__wrapper .header__buttonsBox .header__themeButton {
-  background-color: rgb(59, 59, 59);
-  background-image: url(./images/lightThemeSun.svg);
-  background-size: 25px 25px;
+  background: rgb(59, 59, 59) url(./images/lightThemeSun.svg) no-repeat center;
 }
 body[data-theme=dark] .header__searchBarBox {
   background-color: rgb(37, 37, 37);
@@ -643,7 +645,7 @@ body[data-theme=light] {
 body[data-theme=light] .header__wrapper .header__headline {
   color: rgb(37, 37, 37);
 }
-body[data-theme=light] .header__wrapper .header__buttonsBox .header__searchButton, body[data-theme=light] .header__wrapper .header__buttonsBox .header__themeButton {
+body[data-theme=light] .header__wrapper .header__buttonsBox .header__searchButton {
   background: rgba(249, 225, 116, 0.99) url(./images/searchLightTheme.svg) no-repeat center;
 }
 body[data-theme=light] .header__wrapper .header__buttonsBox .header__themeButton {

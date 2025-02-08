@@ -70,8 +70,12 @@ body {
         }
     
         .header__themeButton {
-          @extend .header__searchButton;
-          background-size: 30px 30px;
+          height: 50px;
+          width: 50px;
+          border-radius: 15px;
+          border: none;
+          transition: 0.3s;
+          // background-size: 25px 25px;
   
           &:hover {
             transform: scale(1.2);
@@ -604,9 +608,7 @@ body[data-theme="dark"] {
         }
 
         .header__themeButton {
-          background-color: $buttonsGrey;
-          background-image: url(./images/lightThemeSun.svg);
-          background-size: 25px 25px;
+          background: $buttonsGrey url(./images/lightThemeSun.svg) no-repeat center;
         }
       }
     }

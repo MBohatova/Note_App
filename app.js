@@ -5,7 +5,6 @@ let createBtn = document.querySelector('.main__createButton');
 let saveButton = document.querySelector('.header__saveButton');
 let backButton = document.querySelector('.header__backButton');
 let tagButton = document.querySelectorAll('.tagButton');
-// let mainButton = document.querySelector('.main__buttonBox');
 let editBackButton = document.querySelector('.header__rewriteBackButton');
 let editSaveButton = document.querySelector('.header__rewriteSaveButton');
 let deleteButton = document.querySelector('.deleteButton');
@@ -17,16 +16,11 @@ let prevClickedTagButton = null;
 let body = document.querySelector('body');
 let startPageContent = document.querySelector('.main__emptyContent');
 let notFoundContent = document.querySelector('.main__notFoundContent');
-// let headerWrapper = document.querySelector('.header__wrapper');
-// let header = document.querySelector('.header');
-// let main = document.querySelector('.main');
 let tagsBox = document.querySelector('.main__tagBox');
-// let editorHeader = document.querySelector('.header__editorButtonBox');
 let noteForm = document.querySelector('.main__form');
 let notesWrapper = document.querySelector('.main__notesWrapper');
 let editForm = document.querySelector('.main__editForm');
 let editHeader = document.querySelector('.header__rewriteEditor');
-// let deleteButtonWrapper = document.querySelector('.main__deleteButtonWrapper');
 let deleteMessageWrapper = document.querySelector('.deleteMessageWrapper');
 let deleteMessage = document.querySelector('.deleteMessage');
 let searchBarWrapper = document.querySelector('.header__searchBarBox');
@@ -41,13 +35,11 @@ let editTitle = document.querySelector('.main__editTitle');
 let editTextArea = document.querySelector('.main__editText');
 let emptyParagraph = document.querySelector('.main__paragraph');
 let notFoundParagraph = document.querySelector('.main__paragraphNotFound');
-
 // Масиви, об'єкти
 let noteObj = {};
 let notesArr = [];
 let formInputsArr = [noteTitle, noteText];
 let editFormInputs = [editTitle, editTextArea];
-
 // Обробники подій
 let currentDeleteHandler = null;
 let currentCancelHandler = null;
@@ -111,7 +103,7 @@ function onSaveButtonHandler() {
     createNote();
     saveNotesInLocalStorage();
     generateNote();
-    toEditNote();
+    addeventListenersToNotes();
     noteTitle.value = '';
     noteText.value = '';
     formContainer.style.display = 'none';
@@ -223,9 +215,9 @@ function onCancelButtonHandler() {
   deleteMessageWrapper.style.display = 'none';
 }
 
-toEditNote();
+addeventListenersToNotes();
 
-function toEditNote() {
+function addeventListenersToNotes() {
   let notesFromLocalSt = JSON.parse(localStorage.getItem('notesArr'));
 
   let notesFromHTML = document.querySelectorAll('.main__note');
@@ -275,7 +267,7 @@ function saveEditedNote(noteObject, notesFromLocalSt) {
     localStorage.setItem('notesArr', JSON.stringify(notesFromLocalSt));
 
     generateNote();
-    toEditNote()
+    addeventListenersToNotes()
     closeEditForm();
   } else {
     editFormInputs.forEach(function(input) {
@@ -318,6 +310,7 @@ searchCloseButton.addEventListener('click', function() {
   searchText.value = '';
   notesWrapper.innerHTML = '';
   generateNote();
+  addeventListenersToNotes();
 })
 
 searchText.addEventListener('input', searchingByBar);
@@ -336,7 +329,7 @@ function searchingByBar() {
     notFoundContent.style.display = 'none';
     notesWrapper.innerHTML = '';
     generateNote();
-    toEditNote();
+    addeventListenersToNotes();
     return;
   }
 
@@ -374,7 +367,7 @@ function searchingByBar() {
     );
   });
   console.log(foundNotes);
-  toEditNote();
+  addeventListenersToNotes();
   foundNotes.forEach(note => {
     document
       .getElementById(note.id)
