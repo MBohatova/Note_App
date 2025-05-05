@@ -1,0 +1,117 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 370px;
+  height: 106px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 128px;
+  margin: 0 auto 0 auto;
+  background-color: inherit;
+
+  &__wrapper {
+    width: 365px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 126px;
+    margin-top: 10px;
+
+    .header__headline {
+      font-size: 43px;
+      font-weight: 600;
+      line-height: 58.65px;
+      text-align: left;
+    }
+  
+    .header__buttonsBox {
+      display: flex;
+      gap: 21px;
+  
+      .header__searchButton {
+        height: 50px;
+        width: 50px;
+        border-radius: 15px;
+        border: none;
+        transition: 0.3s;
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+  
+      .header__themeButton {
+        height: 50px;
+        width: 50px;
+        border-radius: 15px;
+        border: none;
+        transition: 0.3s;
+        // background-size: 25px 25px;
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+
+  &__searchBarBox {
+    position: absolute;
+    right: 1px;
+    top: 33px;
+    background-color: $backgroundBlack;
+    display: none;
+
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
+    &::-ms-clear {
+      display: none;
+    }
+
+    .header__searchBar {
+      height: 50px;
+      width: 365px;
+      border: none;
+      border-radius: 30px;
+      padding: 11px 28px;
+      font-weight: 300;
+      font-size: 20px;
+      line-height: 27.28px;
+      outline: none;
+
+      &::-webkit-search-cancel-button {
+        display: none;
+      }
+      &::-ms-clear {
+        display: none;
+      }
+  
+      &::placeholder {
+        font-weight: 300;
+        font-size: 20px;
+        line-height: 27.28px;
+      }
+    }
+
+    .header__closeButton {
+      position: absolute;
+      right: 20px;
+      top: 14px;
+      height: 24px;
+      width: 24px;
+      border: none;
+    }
+
+    .header__searchBarButton {
+      position: absolute;
+      top: 14px;
+      right: 45px;
+      height: 24px;
+      width: 24px;
+      border: none;
+    }
+  }
+}

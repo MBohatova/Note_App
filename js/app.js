@@ -1,93 +1,58 @@
+import { refs } from './refs.js';
+
 // Кнопки
-let searchBtn = document.querySelector('.header__searchButton');
-let themeButton = document.querySelector('.header__themeButton');
-let createBtn = document.querySelector('.main__createButton');
-let saveButton = document.querySelector('.header__saveButton');
-let backButton = document.querySelector('.header__backButton');
-let tagButton = document.querySelectorAll('.tagButton');
-let editBackButton = document.querySelector('.header__rewriteBackButton');
-let editSaveButton = document.querySelector('.header__rewriteSaveButton');
-let deleteButton = document.querySelector('.deleteButton');
-let cancelButton = document.querySelector('.cancelButton');
 let main__deleteButton;
-let searchCloseButton = document.querySelector('.header__closeButton');
-let prevClickedTagButton = null;
 // Контейнери
 let body = document.querySelector('body');
-let startPageContent = document.querySelector('.main__emptyContent');
-let notFoundContent = document.querySelector('.main__notFoundContent');
-let tagsBox = document.querySelector('.main__tagBox');
-let noteForm = document.querySelector('.main__form');
-let notesWrapper = document.querySelector('.main__notesWrapper');
-let editForm = document.querySelector('.main__editForm');
-let editHeader = document.querySelector('.header__rewriteEditor');
-let deleteMessageWrapper = document.querySelector('.deleteMessageWrapper');
-let deleteMessage = document.querySelector('.deleteMessage');
-let searchBarWrapper = document.querySelector('.header__searchBarBox');
-let formContainer = document.querySelector('.formContainer');
-let editFormContainer = document.querySelector('.editFormContainer');
-// Інпути та інші елементи сторінки
-let noteTitle = document.querySelector('.main__formTitle');
-let noteText = document.querySelector('.main__formText');
-let searchText = document.querySelector('.header__searchBar');
-let headerHeadline = document.querySelector('.header__headline');
-let editTitle = document.querySelector('.main__editTitle');
-let editTextArea = document.querySelector('.main__editText');
-let emptyParagraph = document.querySelector('.main__paragraph');
-let notFoundParagraph = document.querySelector('.main__paragraphNotFound');
 // Масиви, об'єкти
 let noteObj = {};
 let notesArr = [];
-let formInputsArr = [noteTitle, noteText];
-let editFormInputs = [editTitle, editTextArea];
-// Обробники подій
-let currentDeleteHandler = null;
-let currentCancelHandler = null;
-let currentEditBackHandler = null;
-let currentEditSaveHandler = null;
+let formInputsArr = [refs.formContainer.noteTitle, refs.formContainer.noteText];
+let editFormInputs = [refs.editFormContainer.editTitle, refs.editFormContainer.editTextArea];
 
-let notesFromStorage = localStorage.getItem('notesArr');
+const notesFromStorage = localStorage.getItem('notesArr');
 if(notesFromStorage) {
   generateNote();
 } else {
-  startPageContent.style.display = 'flex';
+  refs.main.startPageContent.style.display = 'flex';
 }
 
 const clearCategoryButtonsColorStyle = () => {
-  tagButton.forEach(tag_button => tag_button.style.color = 'black')
+  console.log(refs.formContainer.tagButton);
+  refs.formContainer.tagButton.forEach(tag_button => tag_button.style.color = 'black')
 }
 
 function chooseTagColors (e) {
-  if(prevClickedTagButton) prevClickedTagButton.style.color = 'black';
+  if(refs.formContainer.prevClickedTagButton) refs.formContainer.prevClickedTagButton.style.color = 'black';
 
   e.target.style.color = 'white';
-  prevClickedTagButton = e.target;
+  refs.formContainer.prevClickedTagButton = e.target;
   noteObj.tag = e.target.textContent;
 }
 
-createBtn.addEventListener('click', function() {
-  formContainer.style.display = 'flex';
-  notFoundContent.style.display = 'none';
-  searchText.value = '';
+refs.main.createBtn.addEventListener('click', function() {
+  refs.formContainer.formContainer.style.display = 'flex';
+  refs.main.notFoundContent.style.display = 'none';
+  refs.header.searchText.value = '';
   scrollTo(0, 0);
 
-  tagsBox.removeEventListener('click', chooseTagColors);
-  tagsBox.addEventListener('click', chooseTagColors);
+  refs.formContainer.tagsBox.removeEventListener('click', chooseTagColors);
+  refs.formContainer.tagsBox.addEventListener('click', chooseTagColors);
 
   noteObj.tag = 'Without tag';
 
   clearCategoryButtonsColorStyle();
 
-  saveButton.addEventListener('click', onSaveButtonHandler);
-  backButton.addEventListener('click', onBackButtonHandler);
+  refs.formContainer.saveButton.addEventListener('click', onSaveButtonHandler);
+  refs.formContainer.backButton.addEventListener('click', onBackButtonHandler);
 })
 
 function onBackButtonHandler() {
-  formContainer.style.display = 'none';
-  noteTitle.classList.remove('emptyInput');
-  noteText.classList.remove('emptyInput');
-  searchText.value = '';
-  saveButton.removeEventListener('click', onBackButtonHandler);
+  refs.formContainer.formContainer.style.display = 'none';
+  refs.formContainer.noteTitle.classList.remove('emptyInput');
+  refs.formContainer.noteText.classList.remove('emptyInput');
+  refs.header.searchText.value = '';
+  refs.formContainer.saveButton.removeEventListener('click', onBackButtonHandler);
 }
 
 function formValidation(form, inputsArr) {
@@ -96,17 +61,17 @@ function formValidation(form, inputsArr) {
   });
 }
 
-formValidation(noteForm, formInputsArr);
+formValidation(refs.formContainer.noteForm, formInputsArr);
 
 function onSaveButtonHandler() {
-  if(noteTitle.value.trim() && noteText.value.trim() !== '') {
+  if(refs.formContainer.noteTitle.value.trim() && refs.formContainer.noteText.value.trim() !== '') {
     createNote();
     saveNotesInLocalStorage();
     generateNote();
     addeventListenersToNotes();
-    noteTitle.value = '';
-    noteText.value = '';
-    formContainer.style.display = 'none';
+    refs.formContainer.noteTitle.value = '';
+    refs.formContainer.noteText.value = '';
+    refs.formContainer.formContainer.style.display = 'none';
   } else {
     formInputsArr.forEach(function(input) {
       if(input.value.trim() === '') {
@@ -117,8 +82,8 @@ function onSaveButtonHandler() {
 }
 
 function createNote() {
-  noteObj.title = noteTitle.value.trim();
-  noteObj.description = noteText.value.trim();
+  noteObj.title = refs.formContainer.noteTitle.value.trim();
+  noteObj.description = refs.formContainer.noteText.value.trim();
   noteObj.id = new Date().getTime();
   noteObj.time = new Date().toLocaleTimeString('uk-UA');
   noteObj.date = new Date().toLocaleDateString('uk-UA');
@@ -137,22 +102,22 @@ function saveNotesInLocalStorage() {
 }
 
 function generateNote() {
-  startPageContent.style.display = 'none';
-  notesWrapper.style.display = 'flex';
+  refs.main.startPageContent.style.display = 'none';
+  refs.main.notesWrapper.style.display = 'flex';
 
-  notesWrapper.innerHTML = '';
+  refs.main.notesWrapper.innerHTML = '';
 
   let notesList = JSON.parse(localStorage.getItem('notesArr'));
 
   if (!notesList || notesList.length === 0) {
-    startPageContent.style.display = 'flex';
+    refs.main.startPageContent.style.display = 'flex';
     return;
   }
 
   notesList.forEach(note => {
     let colorTag = note.tag.toLowerCase();
 
-    notesWrapper.insertAdjacentHTML('afterbegin', 
+    refs.main.notesWrapper.insertAdjacentHTML('afterbegin', 
       `<div id="${note.id}" class="main__note ${colorTag}">
         <div class="main__headlineAndButtonWrapper">
           <h2 class="main__noteHeadline">${note.title}</h2>
@@ -178,20 +143,20 @@ function addEventListenersToDeleteButtonsOnNotes() {
 
 function addEventListenToDeleteAndCancelBtns(event) {
   event.stopPropagation();
-  deleteMessageWrapper.style.display = 'flex';
+  refs.deleteMessageWrapper.deleteMessageWrapper.style.display = 'flex';
   centerDeleteMessage();
 
   let noteId = event.target.closest('.main__note').id;
   let noteElement = document.getElementById(noteId);
 
-  if(currentDeleteHandler) deleteButton.removeEventListener('click', currentDeleteHandler);
-  if(currentCancelHandler) cancelButton.removeEventListener('click', currentCancelHandler);
+  if(refs.eventHandlers.currentDeleteHandler) refs.deleteMessageWrapper.deleteButton.removeEventListener('click', refs.eventHandlers.currentDeleteHandler);
+  if(refs.eventHandlers.currentCancelHandler) refs.deleteMessageWrapper.cancelButton.removeEventListener('click', refs.eventHandlers.currentCancelHandler);
 
-  currentDeleteHandler = () => onDeleteButtonHandler(noteElement);
-  currentCancelHandler = () => onCancelButtonHandler();
+  refs.eventHandlers.currentDeleteHandler = () => onDeleteButtonHandler(noteElement);
+  refs.eventHandlers.currentCancelHandler = () => onCancelButtonHandler();
 
-  deleteButton.addEventListener('click', currentDeleteHandler);
-  cancelButton.addEventListener('click', currentCancelHandler);
+  refs.deleteMessageWrapper.deleteButton.addEventListener('click', refs.eventHandlers.currentDeleteHandler);
+  refs.deleteMessageWrapper.cancelButton.addEventListener('click', refs.eventHandlers.currentCancelHandler);
 }
 
 function onDeleteButtonHandler(noteElement) {
@@ -204,15 +169,15 @@ function onDeleteButtonHandler(noteElement) {
     localStorage.setItem('notesArr', JSON.stringify(storageArr));
   }
   noteElement.remove();
-  deleteMessageWrapper.style.display = 'none';
+  refs.deleteMessageWrapper.deleteMessageWrapper.style.display = 'none';
 
   if(storageArr.length === 0) {
-    startPageContent.style.display = 'flex';
+    refs.main.startPageContent.style.display = 'flex';
   }
 }
 
 function onCancelButtonHandler() {
-  deleteMessageWrapper.style.display = 'none';
+  refs.deleteMessageWrapper.deleteMessageWrapper.style.display = 'none';
 }
 
 addeventListenersToNotes();
@@ -235,26 +200,26 @@ function addeventListenersToNotes() {
 
 function openEditForm(noteObject, notesFromLocalSt) {
   scrollTo(0, 0);
-  editFormContainer.style.display = 'flex';
-  editTitle.value = noteObject.title;
+  refs.editFormContainer.editFormContainer.style.display = 'flex';
+  refs.editFormContainer.editTitle.value = noteObject.title;
   editText.value = noteObject.description;
 
   let editForm = document.getElementById('editForm');
   formValidation(editForm, editFormInputs);
 
-  if(currentEditBackHandler) editBackButton.removeEventListener('click', currentEditBackHandler);
-  if(currentEditSaveHandler) editSaveButton.removeEventListener('click', currentEditSaveHandler);
+  if(refs.eventHandlers.currentEditBackHandler) refs.editFormContainer.editBackButton.removeEventListener('click', refs.eventHandlers.currentEditBackHandler);
+  if(refs.eventHandlers.currentEditSaveHandler) refs.editFormContainer.editSaveButton.removeEventListener('click', refs.eventHandlers.currentEditSaveHandler);
 
-  currentEditBackHandler = () => closeEditForm();
-  currentEditSaveHandler = () => saveEditedNote(noteObject, notesFromLocalSt);
+  refs.eventHandlers.currentEditBackHandler = () => closeEditForm();
+  refs.eventHandlers.currentEditSaveHandler = () => saveEditedNote(noteObject, notesFromLocalSt);
 
-  editBackButton.addEventListener('click', currentEditBackHandler);
-  editSaveButton.addEventListener('click', currentEditSaveHandler);
+  refs.editFormContainer.editBackButton.addEventListener('click', refs.eventHandlers.currentEditBackHandler);
+  refs.editFormContainer.editSaveButton.addEventListener('click', refs.eventHandlers.currentEditSaveHandler);
 }
 
 function saveEditedNote(noteObject, notesFromLocalSt) {
-  if(editTitle.value.trim() && editText.value.trim() !== '') {
-    noteObject.title = editTitle.value.trim();
+  if(refs.editFormContainer.editTitle.value.trim() && editText.value.trim() !== '') {
+    noteObject.title = refs.editFormContainer.editTitle.value.trim();
     noteObject.description = editText.value.trim();
     noteObject.time = new Date().toLocaleTimeString('uk-UA');
     noteObject.date = new Date().toLocaleDateString('uk-UA');
@@ -279,80 +244,80 @@ function saveEditedNote(noteObject, notesFromLocalSt) {
 }
 
 function closeEditForm() {
-  editFormContainer.style.display = 'none';
-  editBackButton.removeEventListener('click', currentEditBackHandler);
-  editSaveButton.removeEventListener('click', currentEditSaveHandler);
+  refs.editFormContainer.editFormContainer.style.display = 'none';
+  refs.editFormContainer.editBackButton.removeEventListener('click', refs.eventHandlers.currentEditBackHandler);
+  refs.editFormContainer.editSaveButton.removeEventListener('click', refs.eventHandlers.currentEditSaveHandler);
 }
 
 function centerDeleteMessage() {
   let windowWidth = window.innerWidth;
-  let messageWidth = deleteMessage.offsetWidth;
+  let messageWidth = refs.deleteMessageWrapper.deleteMessage.offsetWidth;
   let windowHeight = window.innerHeight;
-  let messageHeight = deleteMessage.offsetHeight;
+  let messageHeight = refs.deleteMessageWrapper.deleteMessage.offsetHeight;
 
-  deleteMessage.style.left = `${(windowWidth - messageWidth) / 2}px`;
-    deleteMessage.style.top = `${(windowHeight - messageHeight) / 2}px`
+  refs.deleteMessageWrapper.deleteMessage.style.left = `${(windowWidth - messageWidth) / 2}px`;
+    refs.deleteMessageWrapper.deleteMessage.style.top = `${(windowHeight - messageHeight) / 2}px`
 
-  deleteMessage.scrollIntoView({block: "center", behavior: "smooth"});
+  refs.deleteMessageWrapper.deleteMessage.scrollIntoView({block: "center", behavior: "smooth"});
 }
 
-searchBtn.addEventListener('click', showSearchingTools);
+refs.header.searchBtn.addEventListener('click', showSearchingTools);
 
 function showSearchingTools() {
-  searchBtn.style.display = 'none';
-  searchBarWrapper.style.display = 'flex';
+  refs.header.searchBtn.style.display = 'none';
+  refs.header.searchBarWrapper.style.display = 'flex';
 }
 
-searchCloseButton.addEventListener('click', function() {
-  searchBarWrapper.style.display = 'none';
-  notFoundContent.style.display = 'none';
-  searchBtn.style.display = 'block';
-  searchText.value = '';
-  notesWrapper.innerHTML = '';
+refs.header.searchCloseButton.addEventListener('click', function() {
+  refs.header.searchBarWrapper.style.display = 'none';
+  refs.main.notFoundContent.style.display = 'none';
+  refs.header.searchBtn.style.display = 'block';
+  refs.header.searchText.value = '';
+  refs.main.notesWrapper.innerHTML = '';
   generateNote();
   addeventListenersToNotes();
 })
 
-searchText.addEventListener('input', searchingByBar);
+refs.header.searchText.addEventListener('input', searchingByBar);
 
 function searchingByBar() {
-  let searchWord = searchText.value.toLowerCase();
+  let searchWord = refs.header.searchText.value.toLowerCase();
   let noteList = JSON.parse(localStorage.getItem('notesArr')) || [];
 
-  notesWrapper.innerHTML = '';
+  refs.main.notesWrapper.innerHTML = '';
 
   let foundNotes = noteList.filter(note => 
     note.title.toLowerCase().includes(searchWord)
   );
 
   if (searchWord === '') {
-    notFoundContent.style.display = 'none';
-    notesWrapper.innerHTML = '';
+    refs.main.notFoundContent.style.display = 'none';
+    refs.main.notesWrapper.innerHTML = '';
     generateNote();
     addeventListenersToNotes();
     return;
   }
 
   if (noteList.length === 0) {
-    startPageContent.style.display = 'flex';
-    notFoundContent.style.display = 'none';
+    refs.main.startPageContent.style.display = 'flex';
+    refs.main.notFoundContent.style.display = 'none';
     return;
   }
 
   if (foundNotes.length === 0) {
-    notFoundContent.style.display = 'flex';
-    startPageContent.style.display = 'none';
-    searchBtn.style.display = 'block';
+    refs.main.notFoundContent.style.display = 'flex';
+    refs.main.startPageContent.style.display = 'none';
+    refs.header.searchBtn.style.display = 'block';
     return;
   }
 
-  notFoundContent.style.display = 'none';
-  startPageContent.style.display = 'none';
-  notesWrapper.style.display = 'flex';
+  refs.main.notFoundContent.style.display = 'none';
+  refs.main.startPageContent.style.display = 'none';
+  refs.main.notesWrapper.style.display = 'flex';
 
   foundNotes.forEach(note => {
     let colorTag = note.tag.toLowerCase();
-    notesWrapper.insertAdjacentHTML(
+    refs.main.notesWrapper.insertAdjacentHTML(
       'beforeend',
       `<div id="${note.id}" class="main__note ${colorTag}">
         <div class="main__headlineAndButtonWrapper">
@@ -391,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
   setTheme(savedTheme);
 });
 
-themeButton.addEventListener('click', function() {
+refs.header.themeButton.addEventListener('click', function() {
   let currentTheme = document.body.getAttribute('data-theme');
 
   let newTheme;

@@ -1,0 +1,361 @@
+body[data-theme="dark"] {
+  background-color: $backgroundBlack;
+
+  .header {
+    &__wrapper {
+      .header__headline {
+        color: $textWhite;
+      }
+
+      .header__buttonsBox {
+        .header__searchButton {
+          background: $buttonsGrey url(../images/search.svg) no-repeat center;
+        }
+
+        .header__themeButton {
+          background: $buttonsGrey url(../images/lightThemeSun.svg) no-repeat center;
+        }
+      }
+    }
+
+    &__searchBarBox {
+      background-color: $backgroundBlack;
+
+      .header__searchBar {
+        background-color: $buttonsGrey;
+        color: $textWhite;
+
+        &::placeholder {
+          color: $textWhite;
+        }
+      }
+
+      .header__searchBarButton {
+        background: url(../images/search.svg) center;
+      }
+
+      .header__closeButton {
+        background: url(../images/close.svg) center;
+      }
+    }
+
+    &__editorButtonBox {
+      background-color: $backgroundBlack;
+
+      .header__backButton {
+        background: $buttonsGrey url(../images/back.svg) no-repeat center;
+      }
+
+      .header__buttonsWrapper {
+        .header__saveButton {
+          background: $buttonsGrey url(../images/save.svg) no-repeat center;
+          background-size: 25px 25px;
+          background-blend-mode: lighten;
+        }
+      }
+    }
+
+    &__rewriteEditor {
+      .header__rewriteSaveButton {
+        background: $buttonsGrey url(../images/save.svg) no-repeat center;
+        background-size: 25px 25px;
+        background-blend-mode: lighten;
+      }
+    }
+  }
+
+  .main {
+    &__emptyContent {
+      .main__paragraph {
+        color: $textWhite;
+      }
+    }
+
+    &__notFoundContent {
+      .main__paragraphNotFound {
+        color: $textWhite;
+      }
+    }
+
+    &__buttonBox {
+      .main__createButton {
+        background: $backgroundBlack url(../images/add.svg) no-repeat center;
+      }
+    }
+
+    &__form {
+      background-color: $backgroundBlack;
+
+      .main__formTitle {
+        color: $textWhite;
+
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+      }
+
+      .main__formText {
+        color: $textWhite;
+
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+      }
+    }
+  }
+
+  .formContainer {
+    background-color: $backgroundBlack;
+
+    .header__editorButtonBox {
+      background-color: $backgroundBlack;
+
+      .header__backButton {
+        background: $buttonsGrey url(../images/back.svg) no-repeat center;
+      }
+
+      .header__buttonsWrapper {
+        .header__saveButton {
+          background: $buttonsGrey url(../images/save.svg) no-repeat center;
+          background-size: 25px 25px;
+          background-blend-mode: none;
+        }
+      }
+    }
+
+    .main__form {
+      background-color: $backgroundBlack;
+
+      .main__formTitle {
+        color: $textWhite;
+
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+      }
+
+      .main__formText {
+        color: $textWhite;
+
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+      }
+    }
+  }
+
+  .editFormContainer {
+    background-color: $backgroundBlack;
+
+    .header__rewriteEditor {
+      .header__rewriteBackButton {
+        background: $buttonsGrey url(../images/back.svg) no-repeat center;
+      }
+
+      .header__rewriteSaveButton {
+        background: $buttonsGrey url(../images/save.svg) no-repeat center;
+        background-size: 25px 25px;
+      }
+    }
+
+    .main__editForm {
+      .main__editTitle {
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+      }
+
+      .main__editText {
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+      }
+    }
+  }
+
+  .deleteMessageWrapper {
+    .deleteMessage {
+      background-color: $backgroundBlack;
+
+      .deleteMessageP {
+        color: $textWhite;
+      }
+
+      .buttonWrapper {
+        .buttonFromDelMessage {
+          color: $textWhite;
+        }
+      }
+    }
+  }
+}
+
+body[data-theme="light"] {
+  background-color: $backgroundLight;
+
+  .header {
+    &__wrapper {
+      .header__headline {
+        color: $backgroundBlack;
+      }
+
+      .header__buttonsBox {
+
+        .header__searchButton {
+          background: $buttonsLight url(../images/searchLightTheme.svg) no-repeat center;
+        }
+
+        .header__themeButton {
+          background: $buttonsLight url(../images/LightThemeMoon.png) no-repeat center;
+          background-size: 25px 25px;
+        }
+      }
+    }
+
+    &__searchBarBox {
+      background-color: $backgroundLight;
+
+      .header__searchBar {
+        background-color: $buttonsLight;
+        color: $backgroundBlack;
+
+        &::placeholder {
+          color: $buttonsGrey;
+        }
+
+        .header__searchBarButton {
+          background: url(../images/searchLightTheme.svg) center;
+        }
+      }
+
+      .header__closeButton {
+        background: url(../images/searchCloseBlack.svg) center no-repeat;
+      }
+    }
+  }
+
+  .main {
+    &__emptyContent {
+      .main__paragraph {
+        color: $backgroundBlack;
+      }
+    }
+
+    &__notFoundContent {
+      .main__paragraphNotFound {
+        color: $backgroundBlack;
+      }
+    }
+
+    &__buttonBox {
+      .main__createButton {
+        background: $buttonsLight url(../images/addLightTheme.svg) no-repeat center;
+      }
+    }
+
+    &__notesWrapper {
+      .main__note {
+        .main__headlineAndButtonWrapper {
+          .main__noteHeadline {
+            color: $textWhite;
+          }
+        }
+
+        .main__dateCategory--wrapper {
+          .main__noteDate {
+            color: $textWhite;
+          }
+
+          .main__noteCategory {
+            color: $textWhite;
+          }
+        }
+      }
+    }
+  }
+
+  .formContainer {
+    background-color: $backgroundLight;
+
+    .header__editorButtonBox {
+      background-color: $backgroundLight;
+
+      .header__backButton {
+        background: $buttonsLight url(../images/backLightTheme.svg) no-repeat center;
+      }
+
+      .header__buttonsWrapper {
+        .header__saveButton {
+          background: $buttonsLight url(../images/saveLightTheme.svg) no-repeat center;
+          background-size: 25px 25px;
+          background-blend-mode: none;
+        }
+      }
+    }
+
+    .main__form {
+      background-color: $backgroundLight;
+
+      .main__formTitle {
+        color: $buttonsGrey;
+
+        &::placeholder {
+          color: $buttonsLight;
+        }
+      }
+
+      .main__formText {
+        color: $buttonsGrey;
+
+        &::placeholder {
+          color: $buttonsLight;
+        }
+      }
+    }
+  }
+
+  .editFormContainer {
+    background-color: $backgroundLight;
+
+    .header__rewriteEditor {
+      .header__rewriteBackButton {
+        background: $buttonsLight url(../images/backLightTheme.svg) no-repeat center;
+      }
+
+      .header__rewriteSaveButton {
+        background: $buttonsLight url(../images/saveLightTheme.svg) no-repeat center;
+        background-size: 25px 25px;
+      }
+    }
+
+    .main__editForm {
+      .main__editTitle {
+        &::placeholder {
+          color: $buttonsLight;
+        }
+      }
+
+      .main__editText {
+        &::placeholder {
+          color: $buttonsLight;
+        }
+      }
+    }
+  }
+
+  .deleteMessageWrapper {
+    .deleteMessage {
+      background-color: $backgroundLight;
+
+      .deleteMessageP {
+        color: $backgroundBlack;
+      }
+
+      .buttonWrapper {
+        .buttonFromDelMessage {
+          color: $backgroundLight;
+        }
+      }
+    }
+  }
+}
