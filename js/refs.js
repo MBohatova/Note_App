@@ -48,6 +48,17 @@ export const refs = {
     currentCancelHandler: null,
     currentEditBackHandler: null,
     currentEditSaveHandler: null,
-  }
+  },
+  objectAndArray: {
+    noteObj: {},
+    notesArr: []
+  },
+  main__deleteButton: null,
+  body: getElement('body'),
 };
+
+export const elemArrays = {
+    formInputsArr: [refs.formContainer.noteTitle, refs.formContainer.noteText],
+    editFormInputs: [refs.editFormContainer.editTitle, refs.editFormContainer.editTextArea]
+}
 

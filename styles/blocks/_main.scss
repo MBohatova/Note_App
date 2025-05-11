@@ -1,0 +1,169 @@
+.main {
+  position: relative;
+  min-height: 520px;
+  width: 370px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 174px;
+  margin: 0 auto 49px auto;
+
+  &__emptyContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6.27px;
+
+    .main__emptyPageImg {
+      height: 250px;
+      width: 350px;
+      background: url(../images/emptyPageImg.png) no-repeat center top;
+      background-size: 300px 289.75px;
+    }
+
+    .main__paragraph {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 27.28px;
+      text-align: left;
+    }
+  }
+
+  &__notesWrapper {
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    // display: none;
+    padding-top: 2px;
+
+    .main__note {
+      height: 150px;
+      width: 364px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      border-radius: 10px;
+      background-color: $withoutTag;
+
+      .main__headlineAndButtonWrapper {
+        display: flex;
+        width: 300px;
+        align-items: center;
+        justify-content: space-between;
+
+        .main__noteHeadline {
+          width: 270px;
+          font-size: 25px;
+          font-weight: 400;
+          line-height: 34.1px;
+          text-align: left;
+          color: black;
+        }
+
+        .main__deleteButton {
+          height: 30px;
+          width: 30px;
+          border: none;
+          background: url(../images/delete.svg) no-repeat center;
+          background-size: 30px 30px;
+          mix-blend-mode: soft-light;
+          padding: 10px 0 50px 50px;
+        }
+      }
+  
+      .main__dateCategory--wrapper {
+        width: 300px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .health {
+      background-color: $health;
+    }
+
+    .money {
+      background-color: $money;
+    }
+
+    .plans {
+      background-color: $plans;
+    }
+
+    .hobby {
+      background-color: $hobby;
+    }
+
+    .goals {
+      background-color: $goals;
+    }
+
+    .work {
+      background-color: $work;
+    }
+  }
+
+  &__notFoundContent {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 5px;
+    width: 370px;
+
+    .main__notFoundImg {
+      width: 370px;
+      height: 239.1px;
+      background: url(../images/not-found-pic.png) no-repeat;
+      background-size: 370px;
+    }
+
+    .main__paragraphNotFound {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 27.28px;
+      text-align: center;
+      color: $textWhite;
+      margin-top: 20px;
+    }
+  }
+
+  &__buttonBox {
+    position: absolute;
+    height: 0;
+    width: 360px;
+    top: 535px;
+    display: flex;
+    justify-content: end;
+
+    .main__createButton {
+      position: fixed;
+      bottom: 40px;
+      height: 70px;
+      width: 70px;
+      border-radius: 100%;
+      border: none;
+      box-shadow: -5px 0px 10px 0px rgba(0, 0, 0, 0.4);
+      transition: 0.3s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  &__editForm {
+    @extend .main__form;
+    z-index: 3;
+
+    .main__editTitle {
+      @extend .main__formTitle;
+    }
+
+    .main__editText {
+      @extend .main__formText;
+    }
+  }
+}

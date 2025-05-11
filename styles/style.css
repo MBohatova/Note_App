@@ -57,22 +57,22 @@ body[data-theme=dark] .main__buttonBox .main__createButton {
 body[data-theme=dark] .main__form, body[data-theme=dark] .main__editForm {
   background-color: rgb(37, 37, 37);
 }
-body[data-theme=dark] .main__form .main__formTitle, body[data-theme=dark] .main__editForm .main__formTitle, body[data-theme=dark] .main__editForm .main__editTitle {
+body[data-theme=dark] .main__form .main__formTitle, .main__editForm body[data-theme=dark] .main__form .main__editTitle, body[data-theme=dark] .main__editForm .main__formTitle, body[data-theme=dark] .main__editForm .main__editTitle {
   color: rgb(255, 255, 255);
 }
-body[data-theme=dark] .main__form .main__formTitle::-moz-placeholder, body[data-theme=dark] .main__editForm .main__formTitle::-moz-placeholder, body[data-theme=dark] .main__editForm .main__editTitle::-moz-placeholder {
+body[data-theme=dark] .main__form .main__formTitle::-moz-placeholder, .main__editForm body[data-theme=dark] .main__form .main__editTitle::-moz-placeholder, body[data-theme=dark] .main__editForm .main__formTitle::-moz-placeholder, body[data-theme=dark] .main__editForm .main__editTitle::-moz-placeholder {
   color: rgb(59, 59, 59);
 }
-body[data-theme=dark] .main__form .main__formTitle::placeholder, body[data-theme=dark] .main__editForm .main__formTitle::placeholder, body[data-theme=dark] .main__editForm .main__editTitle::placeholder {
+body[data-theme=dark] .main__form .main__formTitle::placeholder, .main__editForm body[data-theme=dark] .main__form .main__editTitle::placeholder, body[data-theme=dark] .main__editForm .main__formTitle::placeholder, body[data-theme=dark] .main__editForm .main__editTitle::placeholder {
   color: rgb(59, 59, 59);
 }
-body[data-theme=dark] .main__form .main__formText, body[data-theme=dark] .main__editForm .main__formText, body[data-theme=dark] .main__editForm .main__editText {
+body[data-theme=dark] .main__form .main__formText, .main__editForm body[data-theme=dark] .main__form .main__editText, body[data-theme=dark] .main__editForm .main__formText, body[data-theme=dark] .main__editForm .main__editText {
   color: rgb(255, 255, 255);
 }
-body[data-theme=dark] .main__form .main__formText::-moz-placeholder, body[data-theme=dark] .main__editForm .main__formText::-moz-placeholder, body[data-theme=dark] .main__editForm .main__editText::-moz-placeholder {
+body[data-theme=dark] .main__form .main__formText::-moz-placeholder, .main__editForm body[data-theme=dark] .main__form .main__editText::-moz-placeholder, body[data-theme=dark] .main__editForm .main__formText::-moz-placeholder, body[data-theme=dark] .main__editForm .main__editText::-moz-placeholder {
   color: rgb(59, 59, 59);
 }
-body[data-theme=dark] .main__form .main__formText::placeholder, body[data-theme=dark] .main__editForm .main__formText::placeholder, body[data-theme=dark] .main__editForm .main__editText::placeholder {
+body[data-theme=dark] .main__form .main__formText::placeholder, .main__editForm body[data-theme=dark] .main__form .main__editText::placeholder, body[data-theme=dark] .main__editForm .main__formText::placeholder, body[data-theme=dark] .main__editForm .main__editText::placeholder {
   color: rgb(59, 59, 59);
 }
 body[data-theme=dark] .formContainer {
@@ -92,22 +92,22 @@ body[data-theme=dark] .formContainer .header__editorButtonBox .header__buttonsWr
 body[data-theme=dark] .formContainer .main__form, body[data-theme=dark] .formContainer .main__editForm {
   background-color: rgb(37, 37, 37);
 }
-body[data-theme=dark] .formContainer .main__form .main__formTitle, body[data-theme=dark] .main__editForm .formContainer .main__form .main__editTitle, body[data-theme=dark] .formContainer .main__editForm .main__formTitle, body[data-theme=dark] .formContainer .main__editForm .main__editTitle {
+body[data-theme=dark] .formContainer .main__form .main__formTitle, .main__editForm body[data-theme=dark] .formContainer .main__form .main__editTitle, body[data-theme=dark] .formContainer .main__editForm .main__formTitle, body[data-theme=dark] .formContainer .main__editForm .main__editTitle {
   color: rgb(255, 255, 255);
 }
-body[data-theme=dark] .formContainer .main__form .main__formTitle::-moz-placeholder, body[data-theme=dark] .main__editForm .formContainer .main__form .main__editTitle::-moz-placeholder, body[data-theme=dark] .formContainer .main__editForm .main__formTitle::-moz-placeholder, body[data-theme=dark] .formContainer .main__editForm .main__editTitle::-moz-placeholder {
+body[data-theme=dark] .formContainer .main__form .main__formTitle::-moz-placeholder, .main__editForm body[data-theme=dark] .formContainer .main__form .main__editTitle::-moz-placeholder, body[data-theme=dark] .formContainer .main__editForm .main__formTitle::-moz-placeholder, body[data-theme=dark] .formContainer .main__editForm .main__editTitle::-moz-placeholder {
   color: rgb(59, 59, 59);
 }
-body[data-theme=dark] .formContainer .main__form .main__formTitle::placeholder, body[data-theme=dark] .main__editForm .formContainer .main__form .main__editTitle::placeholder, body[data-theme=dark] .formContainer .main__editForm .main__formTitle::placeholder, body[data-theme=dark] .formContainer .main__editForm .main__editTitle::placeholder {
+body[data-theme=dark] .formContainer .main__form .main__formTitle::placeholder, .main__editForm body[data-theme=dark] .formContainer .main__form .main__editTitle::placeholder, body[data-theme=dark] .formContainer .main__editForm .main__formTitle::placeholder, body[data-theme=dark] .formContainer .main__editForm .main__editTitle::placeholder {
   color: rgb(59, 59, 59);
 }
-body[data-theme=dark] .formContainer .main__form .main__formText, body[data-theme=dark] .main__editForm .formContainer .main__form .main__editText, body[data-theme=dark] .formContainer .main__editForm .main__formText, body[data-theme=dark] .formContainer .main__editForm .main__editText {
+body[data-theme=dark] .formContainer .main__form .main__formText, .main__editForm body[data-theme=dark] .formContainer .main__form .main__editText, body[data-theme=dark] .formContainer .main__editForm .main__formText, body[data-theme=dark] .formContainer .main__editForm .main__editText {
   color: rgb(255, 255, 255);
 }
-body[data-theme=dark] .formContainer .main__form .main__formText::-moz-placeholder, body[data-theme=dark] .main__editForm .formContainer .main__form .main__editText::-moz-placeholder, body[data-theme=dark] .formContainer .main__editForm .main__formText::-moz-placeholder, body[data-theme=dark] .formContainer .main__editForm .main__editText::-moz-placeholder {
+body[data-theme=dark] .formContainer .main__form .main__formText::-moz-placeholder, .main__editForm body[data-theme=dark] .formContainer .main__form .main__editText::-moz-placeholder, body[data-theme=dark] .formContainer .main__editForm .main__formText::-moz-placeholder, body[data-theme=dark] .formContainer .main__editForm .main__editText::-moz-placeholder {
   color: rgb(59, 59, 59);
 }
-body[data-theme=dark] .formContainer .main__form .main__formText::placeholder, body[data-theme=dark] .main__editForm .formContainer .main__form .main__editText::placeholder, body[data-theme=dark] .formContainer .main__editForm .main__formText::placeholder, body[data-theme=dark] .formContainer .main__editForm .main__editText::placeholder {
+body[data-theme=dark] .formContainer .main__form .main__formText::placeholder, .main__editForm body[data-theme=dark] .formContainer .main__form .main__editText::placeholder, body[data-theme=dark] .formContainer .main__editForm .main__formText::placeholder, body[data-theme=dark] .formContainer .main__editForm .main__editText::placeholder {
   color: rgb(59, 59, 59);
 }
 body[data-theme=dark] .editFormContainer {
@@ -209,22 +209,22 @@ body[data-theme=light] .formContainer .header__editorButtonBox .header__buttonsW
 body[data-theme=light] .formContainer .main__form, body[data-theme=light] .formContainer .main__editForm {
   background-color: rgb(250, 250, 211);
 }
-body[data-theme=light] .formContainer .main__form .main__formTitle, body[data-theme=light] .main__editForm .formContainer .main__form .main__editTitle, body[data-theme=light] .formContainer .main__editForm .main__formTitle, body[data-theme=light] .formContainer .main__editForm .main__editTitle {
+body[data-theme=light] .formContainer .main__form .main__formTitle, .main__editForm body[data-theme=light] .formContainer .main__form .main__editTitle, body[data-theme=light] .formContainer .main__editForm .main__formTitle, body[data-theme=light] .formContainer .main__editForm .main__editTitle {
   color: rgb(59, 59, 59);
 }
-body[data-theme=light] .formContainer .main__form .main__formTitle::-moz-placeholder, body[data-theme=light] .main__editForm .formContainer .main__form .main__editTitle::-moz-placeholder, body[data-theme=light] .formContainer .main__editForm .main__formTitle::-moz-placeholder, body[data-theme=light] .formContainer .main__editForm .main__editTitle::-moz-placeholder {
+body[data-theme=light] .formContainer .main__form .main__formTitle::-moz-placeholder, .main__editForm body[data-theme=light] .formContainer .main__form .main__editTitle::-moz-placeholder, body[data-theme=light] .formContainer .main__editForm .main__formTitle::-moz-placeholder, body[data-theme=light] .formContainer .main__editForm .main__editTitle::-moz-placeholder {
   color: rgba(249, 225, 116, 0.99);
 }
-body[data-theme=light] .formContainer .main__form .main__formTitle::placeholder, body[data-theme=light] .main__editForm .formContainer .main__form .main__editTitle::placeholder, body[data-theme=light] .formContainer .main__editForm .main__formTitle::placeholder, body[data-theme=light] .formContainer .main__editForm .main__editTitle::placeholder {
+body[data-theme=light] .formContainer .main__form .main__formTitle::placeholder, .main__editForm body[data-theme=light] .formContainer .main__form .main__editTitle::placeholder, body[data-theme=light] .formContainer .main__editForm .main__formTitle::placeholder, body[data-theme=light] .formContainer .main__editForm .main__editTitle::placeholder {
   color: rgba(249, 225, 116, 0.99);
 }
-body[data-theme=light] .formContainer .main__form .main__formText, body[data-theme=light] .main__editForm .formContainer .main__form .main__editText, body[data-theme=light] .formContainer .main__editForm .main__formText, body[data-theme=light] .formContainer .main__editForm .main__editText {
+body[data-theme=light] .formContainer .main__form .main__formText, .main__editForm body[data-theme=light] .formContainer .main__form .main__editText, body[data-theme=light] .formContainer .main__editForm .main__formText, body[data-theme=light] .formContainer .main__editForm .main__editText {
   color: rgb(59, 59, 59);
 }
-body[data-theme=light] .formContainer .main__form .main__formText::-moz-placeholder, body[data-theme=light] .main__editForm .formContainer .main__form .main__editText::-moz-placeholder, body[data-theme=light] .formContainer .main__editForm .main__formText::-moz-placeholder, body[data-theme=light] .formContainer .main__editForm .main__editText::-moz-placeholder {
+body[data-theme=light] .formContainer .main__form .main__formText::-moz-placeholder, .main__editForm body[data-theme=light] .formContainer .main__form .main__editText::-moz-placeholder, body[data-theme=light] .formContainer .main__editForm .main__formText::-moz-placeholder, body[data-theme=light] .formContainer .main__editForm .main__editText::-moz-placeholder {
   color: rgba(249, 225, 116, 0.99);
 }
-body[data-theme=light] .formContainer .main__form .main__formText::placeholder, body[data-theme=light] .main__editForm .formContainer .main__form .main__editText::placeholder, body[data-theme=light] .formContainer .main__editForm .main__formText::placeholder, body[data-theme=light] .formContainer .main__editForm .main__editText::placeholder {
+body[data-theme=light] .formContainer .main__form .main__formText::placeholder, .main__editForm body[data-theme=light] .formContainer .main__form .main__editText::placeholder, body[data-theme=light] .formContainer .main__editForm .main__formText::placeholder, body[data-theme=light] .formContainer .main__editForm .main__editText::placeholder {
   color: rgba(249, 225, 116, 0.99);
 }
 body[data-theme=light] .editFormContainer {
@@ -257,6 +257,19 @@ body[data-theme=light] .deleteMessageWrapper .deleteMessage .deleteMessageP {
 }
 body[data-theme=light] .deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage {
   color: rgb(250, 250, 211);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+}
+
+body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
 .header {
@@ -367,19 +380,7 @@ body[data-theme=light] .deleteMessageWrapper .deleteMessage .buttonWrapper .butt
   border: none;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Nunito", sans-serif;
-}
-
-body {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-body .main {
+.main {
   position: relative;
   min-height: 520px;
   width: 370px;
@@ -389,32 +390,32 @@ body .main {
   gap: 174px;
   margin: 0 auto 49px auto;
 }
-body .main__emptyContent {
+.main__emptyContent {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6.27px;
 }
-body .main__emptyContent .main__emptyPageImg {
+.main__emptyContent .main__emptyPageImg {
   height: 250px;
   width: 350px;
   background: url(../images/emptyPageImg.png) no-repeat center top;
   background-size: 300px 289.75px;
 }
-body .main__emptyContent .main__paragraph {
+.main__emptyContent .main__paragraph {
   font-size: 20px;
   font-weight: 300;
   line-height: 27.28px;
   text-align: left;
 }
-body .main__notesWrapper {
+.main__notesWrapper {
   min-height: 260px;
   display: flex;
   flex-direction: column;
   gap: 25px;
   padding-top: 2px;
 }
-body .main__notesWrapper .main__note {
+.main__notesWrapper .main__note {
   height: 150px;
   width: 364px;
   display: flex;
@@ -424,13 +425,13 @@ body .main__notesWrapper .main__note {
   border-radius: 10px;
   background-color: #b3b8bc;
 }
-body .main__notesWrapper .main__note .main__headlineAndButtonWrapper {
+.main__notesWrapper .main__note .main__headlineAndButtonWrapper {
   display: flex;
   width: 300px;
   align-items: center;
   justify-content: space-between;
 }
-body .main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__noteHeadline {
+.main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__noteHeadline {
   width: 270px;
   font-size: 25px;
   font-weight: 400;
@@ -438,7 +439,7 @@ body .main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__note
   text-align: left;
   color: black;
 }
-body .main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__deleteButton {
+.main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__deleteButton {
   height: 30px;
   width: 30px;
   border: none;
@@ -447,30 +448,30 @@ body .main__notesWrapper .main__note .main__headlineAndButtonWrapper .main__dele
   mix-blend-mode: soft-light;
   padding: 10px 0 50px 50px;
 }
-body .main__notesWrapper .main__note .main__dateCategory--wrapper {
+.main__notesWrapper .main__note .main__dateCategory--wrapper {
   width: 300px;
   display: flex;
   justify-content: space-between;
 }
-body .main__notesWrapper .health {
+.main__notesWrapper .health {
   background-color: #b0d47c;
 }
-body .main__notesWrapper .money {
+.main__notesWrapper .money {
   background-color: #eb9513;
 }
-body .main__notesWrapper .plans {
+.main__notesWrapper .plans {
   background-color: #5095cf;
 }
-body .main__notesWrapper .hobby {
+.main__notesWrapper .hobby {
   background-color: #c14c9c;
 }
-body .main__notesWrapper .goals {
+.main__notesWrapper .goals {
   background-color: #f8e473;
 }
-body .main__notesWrapper .work {
+.main__notesWrapper .work {
   background-color: #d56151;
 }
-body .main__notFoundContent {
+.main__notFoundContent {
   display: none;
   flex-direction: column;
   position: absolute;
@@ -478,13 +479,13 @@ body .main__notFoundContent {
   left: 5px;
   width: 370px;
 }
-body .main__notFoundContent .main__notFoundImg {
+.main__notFoundContent .main__notFoundImg {
   width: 370px;
   height: 239.1px;
   background: url(../images/not-found-pic.png) no-repeat;
   background-size: 370px;
 }
-body .main__notFoundContent .main__paragraphNotFound {
+.main__notFoundContent .main__paragraphNotFound {
   font-size: 20px;
   font-weight: 300;
   line-height: 27.28px;
@@ -492,7 +493,7 @@ body .main__notFoundContent .main__paragraphNotFound {
   color: rgb(255, 255, 255);
   margin-top: 20px;
 }
-body .main__buttonBox {
+.main__buttonBox {
   position: absolute;
   height: 0;
   width: 360px;
@@ -500,7 +501,7 @@ body .main__buttonBox {
   display: flex;
   justify-content: end;
 }
-body .main__buttonBox .main__createButton {
+.main__buttonBox .main__createButton {
   position: fixed;
   bottom: 40px;
   height: 70px;
@@ -510,13 +511,13 @@ body .main__buttonBox .main__createButton {
   box-shadow: -5px 0px 10px 0px rgba(0, 0, 0, 0.4);
   transition: 0.3s;
 }
-body .main__buttonBox .main__createButton:hover {
+.main__buttonBox .main__createButton:hover {
   transform: scale(1.2);
 }
-body .main__editForm {
+.main__editForm {
   z-index: 3;
 }
-body .formContainer {
+.formContainer {
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -528,7 +529,7 @@ body .formContainer {
   z-index: 3;
   display: none;
 }
-body .formContainer .header__editorButtonBox {
+.formContainer .header__editorButtonBox {
   height: 60px;
   width: 365px;
   display: flex;
@@ -536,38 +537,38 @@ body .formContainer .header__editorButtonBox {
   align-items: center;
   margin-top: 30px;
 }
-body .formContainer .header__editorButtonBox .header__backButton {
+.formContainer .header__editorButtonBox .header__backButton {
   height: 50px;
   width: 50px;
   border: none;
   border-radius: 15px;
   transition: 0.3s;
 }
-body .formContainer .header__editorButtonBox .header__backButton:hover {
+.formContainer .header__editorButtonBox .header__backButton:hover {
   transform: scale(1.2);
 }
-body .formContainer .header__editorButtonBox .header__buttonsWrapper {
+.formContainer .header__editorButtonBox .header__buttonsWrapper {
   display: flex;
   gap: 21px;
 }
-body .formContainer .header__editorButtonBox .header__buttonsWrapper .header__saveButton {
+.formContainer .header__editorButtonBox .header__buttonsWrapper .header__saveButton {
   transition: 0.3s;
   height: 50px;
   width: 50px;
   border: none;
   border-radius: 15px;
 }
-body .formContainer .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover {
+.formContainer .header__editorButtonBox .header__buttonsWrapper .header__saveButton:hover {
   transform: scale(1.2);
 }
-body .formContainer .main__form, body .formContainer .main__editForm {
+.formContainer .main__form, .formContainer .main__editForm {
   height: 650px;
   width: 370px;
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
-body .formContainer .main__form .main__formTitle, body .formContainer .main__editForm .main__formTitle, body .main__editForm .formContainer .main__form .main__editTitle, body .formContainer .main__editForm .main__editTitle {
+.formContainer .main__form .main__formTitle, .formContainer .main__editForm .main__formTitle, .main__editForm .formContainer .main__form .main__editTitle, .formContainer .main__editForm .main__editTitle {
   font-weight: 400;
   font-size: 48px;
   line-height: 65.47px;
@@ -576,7 +577,7 @@ body .formContainer .main__form .main__formTitle, body .formContainer .main__edi
   outline: none;
   border-radius: 10px;
 }
-body .formContainer .main__form .main__formText, body .formContainer .main__editForm .main__formText, body .main__editForm .formContainer .main__form .main__editText, body .formContainer .main__editForm .main__editText {
+.formContainer .main__form .main__formText, .formContainer .main__editForm .main__formText, .main__editForm .formContainer .main__form .main__editText, .formContainer .main__editForm .main__editText {
   resize: vertical;
   min-height: 500px;
   font-size: 23px;
@@ -588,43 +589,44 @@ body .formContainer .main__form .main__formText, body .formContainer .main__edit
   outline: none;
   border-radius: 10px;
 }
-body .formContainer .main__form .emptyInput, body .formContainer .main__editForm .emptyInput {
+.formContainer .main__form .emptyInput, .formContainer .main__editForm .emptyInput {
   box-shadow: #9A1212 0 0 15px 1px;
 }
-body .formContainer .main__form .main__tagBox, body .formContainer .main__editForm .main__tagBox {
+.formContainer .main__form .main__tagBox, .formContainer .main__editForm .main__tagBox {
   display: flex;
   justify-content: space-between;
   height: 25px;
 }
-body .formContainer .main__form .main__tagBox .tagButton, body .formContainer .main__editForm .main__tagBox .tagButton {
+.formContainer .main__form .main__tagBox .tagButton, .formContainer .main__editForm .main__tagBox .tagButton {
   width: 55px;
   height: 25px;
   margin: 4px;
   border: none;
   border-radius: 15px;
 }
-body .formContainer .main__form .main__tagBox .choosenTag, body .formContainer .main__editForm .main__tagBox .choosenTag {
+.formContainer .main__form .main__tagBox .choosenTag, .formContainer .main__editForm .main__tagBox .choosenTag {
   color: rgb(255, 255, 255);
 }
-body .formContainer .main__form .main__tagBox .healthButton, body .formContainer .main__editForm .main__tagBox .healthButton {
+.formContainer .main__form .main__tagBox .healthButton, .formContainer .main__editForm .main__tagBox .healthButton {
   background-color: #b0d47c;
 }
-body .formContainer .main__form .main__tagBox .moneyButton, body .formContainer .main__editForm .main__tagBox .moneyButton {
+.formContainer .main__form .main__tagBox .moneyButton, .formContainer .main__editForm .main__tagBox .moneyButton {
   background-color: #eb9513;
 }
-body .formContainer .main__form .main__tagBox .plansButton, body .formContainer .main__editForm .main__tagBox .plansButton {
+.formContainer .main__form .main__tagBox .plansButton, .formContainer .main__editForm .main__tagBox .plansButton {
   background-color: #5095cf;
 }
-body .formContainer .main__form .main__tagBox .hobbyButton, body .formContainer .main__editForm .main__tagBox .hobbyButton {
+.formContainer .main__form .main__tagBox .hobbyButton, .formContainer .main__editForm .main__tagBox .hobbyButton {
   background-color: #c14c9c;
 }
-body .formContainer .main__form .main__tagBox .goalsButton, body .formContainer .main__editForm .main__tagBox .goalsButton {
+.formContainer .main__form .main__tagBox .goalsButton, .formContainer .main__editForm .main__tagBox .goalsButton {
   background-color: #f8e473;
 }
-body .formContainer .main__form .main__tagBox .workButton, body .formContainer .main__editForm .main__tagBox .workButton {
+.formContainer .main__form .main__tagBox .workButton, .formContainer .main__editForm .main__tagBox .workButton {
   background-color: #d56151;
 }
-body .editFormContainer {
+
+.editFormContainer {
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -636,7 +638,7 @@ body .editFormContainer {
   z-index: 3;
   display: none;
 }
-body .editFormContainer .header__rewriteEditor {
+.editFormContainer .header__rewriteEditor {
   height: 60px;
   width: 365px;
   display: flex;
@@ -644,27 +646,27 @@ body .editFormContainer .header__rewriteEditor {
   align-items: center;
   margin-top: 30px;
 }
-body .editFormContainer .header__rewriteEditor .header__rewriteBackButton {
+.editFormContainer .header__rewriteEditor .header__rewriteBackButton {
   height: 50px;
   width: 50px;
   border: none;
   border-radius: 15px;
   transition: 0.3s;
 }
-body .editFormContainer .header__rewriteEditor .header__rewriteBackButton:hover {
+.editFormContainer .header__rewriteEditor .header__rewriteBackButton:hover {
   transform: scale(1.2);
 }
-body .editFormContainer .header__rewriteEditor .header__rewriteSaveButton {
+.editFormContainer .header__rewriteEditor .header__rewriteSaveButton {
   transition: 0.3s;
   height: 50px;
   width: 50px;
   border: none;
   border-radius: 15px;
 }
-body .editFormContainer .header__rewriteEditor .header__rewriteSaveButton:hover {
+.editFormContainer .header__rewriteEditor .header__rewriteSaveButton:hover {
   transform: scale(1.2);
 }
-body .editFormContainer .main__editForm {
+.editFormContainer .main__editForm {
   height: 650px;
   width: 370px;
   display: flex;
@@ -672,7 +674,7 @@ body .editFormContainer .main__editForm {
   gap: 40px;
   z-index: 3;
 }
-body .editFormContainer .main__editForm .main__editTitle {
+.editFormContainer .main__editForm .main__editTitle {
   font-weight: 400;
   font-size: 48px;
   line-height: 65.47px;
@@ -681,7 +683,7 @@ body .editFormContainer .main__editForm .main__editTitle {
   outline: none;
   border-radius: 10px;
 }
-body .editFormContainer .main__editForm .main__editText {
+.editFormContainer .main__editForm .main__editText {
   resize: vertical;
   min-height: 500px;
   font-size: 23px;
@@ -693,10 +695,11 @@ body .editFormContainer .main__editForm .main__editText {
   outline: none;
   border-radius: 10px;
 }
-body .editFormContainer .main__editForm .emptyInput {
+.editFormContainer .main__editForm .emptyInput {
   box-shadow: #9A1212 0 0 15px 1px;
 }
-body .deleteMessageWrapper {
+
+.deleteMessageWrapper {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -708,8 +711,11 @@ body .deleteMessageWrapper {
   border-radius: 14px;
   display: none;
 }
-body .deleteMessageWrapper .deleteMessage {
+.deleteMessageWrapper .deleteMessage {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   height: 236px;
   width: 330px;
   display: flex;
@@ -720,23 +726,23 @@ body .deleteMessageWrapper .deleteMessage {
   margin: auto;
   border-radius: 20px;
 }
-body .deleteMessageWrapper .deleteMessage .deleteInfoIcon {
+.deleteMessageWrapper .deleteMessage .deleteInfoIcon {
   height: 36px;
   width: 36px;
 }
-body .deleteMessageWrapper .deleteMessage .deleteMessageP {
+.deleteMessageWrapper .deleteMessage .deleteMessageP {
   width: 252px;
   font-size: 23px;
   font-weight: 400;
   line-height: 31.37px;
   text-align: center;
 }
-body .deleteMessageWrapper .deleteMessage .buttonWrapper {
+.deleteMessageWrapper .deleteMessage .buttonWrapper {
   display: flex;
   width: 262px;
   justify-content: space-between;
 }
-body .deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage {
+.deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage {
   width: 112px;
   height: 39px;
   border: none;
@@ -747,12 +753,12 @@ body .deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage {
   text-align: center;
   transition: 0.3s;
 }
-body .deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage:hover {
+.deleteMessageWrapper .deleteMessage .buttonWrapper .buttonFromDelMessage:hover {
   transform: scale(1.2);
 }
-body .deleteMessageWrapper .deleteMessage .buttonWrapper .deleteButton {
+.deleteMessageWrapper .deleteMessage .buttonWrapper .deleteButton {
   background-color: #ff0000;
 }
-body .deleteMessageWrapper .deleteMessage .buttonWrapper .cancelButton {
+.deleteMessageWrapper .deleteMessage .buttonWrapper .cancelButton {
   background-color: rgb(48, 190, 113);
 }/*# sourceMappingURL=style.css.map */

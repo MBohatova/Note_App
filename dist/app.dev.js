@@ -87,13 +87,13 @@ createBtn.addEventListener('click', function () {
   }
 });
 
-function formValidation(form, inputsArr) {
-  form.addEventListener('input', function () {
-    inputsArr.forEach(function (input) {
-      return input.classList.remove('emptyInput');
-    });
-  });
-}
+// function formValidation(form, inputsArr) {
+//   form.addEventListener('input', function () {
+//     inputsArr.forEach(function (input) {
+//       return input.classList.remove('emptyInput');
+//     });
+//   });
+// }
 
 formValidation(noteForm, formInputsArr);
 

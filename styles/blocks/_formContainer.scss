@@ -1,0 +1,127 @@
+.formContainer {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  min-height: 520px;
+  z-index: 3;
+  display: none;
+
+  .header__editorButtonBox {
+    height: 60px;
+    width: 365px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+
+    .header__backButton {
+      height: 50px;
+      width: 50px;
+      border: none;
+      border-radius: 15px;
+      transition: 0.3s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
+    .header__buttonsWrapper {
+      display: flex;
+      gap: 21px;
+
+      .header__saveButton {
+        transition: 0.3s;
+        height: 50px;
+        width: 50px;
+        border: none;
+        border-radius: 15px;
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+
+  .main__form {
+    height: 650px;
+    width: 370px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    .main__formTitle {
+      font-weight: 400;
+      font-size: 48px;
+      line-height: 65.47px;
+      background-color: inherit;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+    }
+
+    .main__formText {
+      resize: vertical;
+      min-height: 500px;
+      font-size: 23px;
+      font-weight: 400;
+      line-height: 31.37px;
+      text-align: left;
+      background-color: inherit;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+    }
+
+    .emptyInput {
+      box-shadow: #9A1212 0 0 15px 1px;
+    }
+
+    .main__tagBox {
+      display: flex;
+      justify-content: space-between;
+      height: 25px;
+
+        .tagButton {
+          width: 55px;
+          height: 25px;
+          margin: 4px;
+          border: none;
+          border-radius: 15px;
+        }
+
+        .choosenTag {
+          color: $textWhite;
+        }
+
+        .healthButton {
+          background-color: $health;
+        }
+
+        .moneyButton {
+          background-color: $money;
+        }
+
+        .plansButton {
+          background-color: $plans;
+        }
+
+        .hobbyButton {
+          background-color: $hobby;
+        }
+
+        .goalsButton {
+          background-color: $goals;
+        }
+
+        .workButton {
+          background-color: $work;
+        }
+    }
+  }
+}
