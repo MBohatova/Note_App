@@ -1,4 +1,4 @@
-import { refs, elemArrays } from './refs.js';
+import { refs, elemArrays, BASE_URL } from './refs.js';
 import { formValidation } from './validation.js';
 import { generateNote } from './generateNotes.js';
 import { addEventListenToDeleteAndCancelBtns, 
@@ -39,10 +39,10 @@ export const saveEditedNote = (noteObject, notesFromLocalSt) => {
       currentNotes[noteIndex] = noteObject;
     }
     localStorage.setItem('notesArr', JSON.stringify(currentNotes));
-
     generateNote();
     addeventListenersToNotes()
     closeEditForm();
+    editNoteOnServer(noteObject.id, currentNotes[noteIndex]);
   } else {
     editFormInputs.forEach(function(input) {
       if(input.value.trim() === '') {
@@ -56,4 +56,26 @@ export const closeEditForm = () => {
   refs.editFormContainer.editFormContainer.style.display = 'none';
   refs.editFormContainer.editBackButton.removeEventListener('click', refs.eventHandlers.currentEditBackHandler);
   refs.editFormContainer.editSaveButton.removeEventListener('click', refs.eventHandlers.currentEditSaveHandler);
+}
+
+export const editNoteOnServer = (noteElementId, editedNote) => {
+  fetch(`${BASE_URL}/${noteElementId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(editedNote)
+  })
+  .then((response) => {
+    if(!response.ok) {
+      throw Error('Something went wrong!');
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.log(error);
+  })
 }

@@ -1,5 +1,7 @@
 import { getElement } from './utils.js';
 
+export const BASE_URL = 'https://68177c0a26a599ae7c3a8878.mockapi.io/notes';
+
 export const refs = {
   header: {
     searchBtn: getElement(".header__searchButton"),
@@ -61,4 +63,3 @@ export const elemArrays = {
     formInputsArr: [refs.formContainer.noteTitle, refs.formContainer.noteText],
     editFormInputs: [refs.editFormContainer.editTitle, refs.editFormContainer.editTextArea]
 }
-
