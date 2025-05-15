@@ -1,20 +1,13 @@
 import { BASE_URL, refs } from './refs.js';
 import { addEventListenToDeleteAndCancelBtns } from './eventListeners.js';
+import { checkIfNotesExist } from './generateNotes.js';
 
-export const onDeleteButtonHandler = (noteElement) => {
-  let notesFromStorage = localStorage.getItem('notesArr');
-  let storageArr = JSON.parse(notesFromStorage);
-  let noteI = storageArr.findIndex(storedNote => storedNote.id === noteElement.id);
-
-  if (noteI !== -1) {
-    storageArr.splice(noteI, 1);
-    localStorage.setItem('notesArr', JSON.stringify(storageArr));
-  }
+export const onDeleteButtonHandler = async (noteElement) => {
   deleteNoteOnServer(noteElement.id);
   noteElement.remove();
-  // refs.deleteMessageWrapper.deleteMessageWrapper.style.display = 'none';
 
-  if(storageArr.length === 0) {
+ const notes = await checkIfNotesExist();
+  if (!notes || notes.length === 0) {
     refs.main.startPageContent.style.display = 'flex';
   }
 }
@@ -32,20 +25,18 @@ export const deleteFoundNotes = (foundNotes) => {
   });
 }
 
-export const deleteNoteOnServer = (noteElementId) => {
-  fetch(`${BASE_URL}/${noteElementId}`, {
-      method: 'DELETE'
-    })
-    .then((response) => {
-      if(!response.ok) {
-        throw Error('Something went wrong!')
-      }
-      return response.json();
-    })
-    .then((data) => {
-        refs.deleteMessageWrapper.deleteMessageWrapper.style.display = 'none';
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+export const deleteNoteOnServer = async (noteElementId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/${noteElementId}`, {
+      method: `DELETE`
+    });
+    if(!response.ok) {
+      throw Error('Something went wrong!');
+    }
+    const data = await response.json();
+    refs.deleteMessageWrapper.deleteMessageWrapper.style.display = 'none';
+
+  } catch (error) {
+    console.log(error);
+  }
 }

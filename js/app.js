@@ -1,11 +1,10 @@
-// localStorage.clear()
 import { refs } from './refs.js';
 import { openApp } from './openApp.js';
 import { formValidation } from './validation.js';
 import { setTheme } from './theme.js';
 import { onCreateButtonClickHandler } from './noteCreate.js';
-import { onSaveButtonHandler, saveNotesInLocalStorage, saveNotesOnServer } from './saveNote.js';
-import { generateNote } from './generateNotes.js';
+import { onSaveButtonHandler, saveNotesOnServer } from './saveNote.js';
+import { generateNote, checkIfNotesExist } from './generateNotes.js';
 import { addEventListenToDeleteAndCancelBtns, 
          addEventListenersToDeleteButtonsOnNotes,
          addeventListenersToNotes

@@ -1,13 +1,11 @@
 import { refs, elemArrays, BASE_URL } from './refs.js';
 import { formValidation } from './validation.js';
 import { generateNote } from './generateNotes.js';
-import { addEventListenToDeleteAndCancelBtns, 
-         addEventListenersToDeleteButtonsOnNotes,
-         addeventListenersToNotes
-       } from './eventListeners.js';
+import { addeventListenersToNotes } from './eventListeners.js';
 
-export const openEditForm = (noteObject, notesFromLocalSt) => {
+export const openEditForm = (noteObject, notesFromServer) => {
   scrollTo(0, 0);
+
   refs.editFormContainer.editFormContainer.style.display = 'flex';
   refs.editFormContainer.editTitle.value = noteObject.title;
   editText.value = noteObject.description;
@@ -19,32 +17,22 @@ export const openEditForm = (noteObject, notesFromLocalSt) => {
   if(refs.eventHandlers.currentEditSaveHandler) refs.editFormContainer.editSaveButton.removeEventListener('click', refs.eventHandlers.currentEditSaveHandler);
 
   refs.eventHandlers.currentEditBackHandler = () => closeEditForm();
-  refs.eventHandlers.currentEditSaveHandler = () => saveEditedNote(noteObject, notesFromLocalSt);
+  refs.eventHandlers.currentEditSaveHandler = () => saveEditedNote(noteObject, notesFromServer);
 
   refs.editFormContainer.editBackButton.addEventListener('click', refs.eventHandlers.currentEditBackHandler);
   refs.editFormContainer.editSaveButton.addEventListener('click', refs.eventHandlers.currentEditSaveHandler);
 }
 
-export const saveEditedNote = (noteObject, notesFromLocalSt) => {
-  let currentNotes = JSON.parse(localStorage.getItem('notesArr')) || [];
-
+export const saveEditedNote = (noteObject, notesFromServer) => {
   if(refs.editFormContainer.editTitle.value.trim() && editText.value.trim() !== '') {
     noteObject.title = refs.editFormContainer.editTitle.value.trim();
     noteObject.description = editText.value.trim();
     noteObject.time = new Date().toLocaleTimeString('uk-UA');
     noteObject.date = new Date().toLocaleDateString('uk-UA');
 
-    let noteIndex = currentNotes.findIndex(item => item.id === noteObject.id);
-    if (noteIndex !== -1) {
-      currentNotes[noteIndex] = noteObject;
-    }
-    localStorage.setItem('notesArr', JSON.stringify(currentNotes));
-    generateNote();
-    addeventListenersToNotes()
-    closeEditForm();
-    editNoteOnServer(noteObject.id, currentNotes[noteIndex]);
+    editNoteOnServer(noteObject.id, noteObject);
   } else {
-    editFormInputs.forEach(function(input) {
+    editFormInputs.forEach((input) => {
       if(input.value.trim() === '') {
         input.classList.add('emptyInput');
       }
@@ -58,24 +46,23 @@ export const closeEditForm = () => {
   refs.editFormContainer.editSaveButton.removeEventListener('click', refs.eventHandlers.currentEditSaveHandler);
 }
 
-export const editNoteOnServer = (noteElementId, editedNote) => {
-  fetch(`${BASE_URL}/${noteElementId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(editedNote)
-  })
-  .then((response) => {
+export const editNoteOnServer = async (noteElementId, editedNote) => {
+  try {
+    const response = await fetch(`${BASE_URL}/${noteElementId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(editedNote)
+    });
     if(!response.ok) {
       throw Error('Something went wrong!');
     }
-    return response.json();
-  })
-  .then((data) => {
-    console.log(data);
-  })
-  .catch((error) => {
+    const data = await response.json();
+      generateNote();
+      addeventListenersToNotes();
+      closeEditForm();
+  } catch (error) {
     console.log(error);
-  })
+  }
 }

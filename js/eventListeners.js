@@ -1,6 +1,7 @@
 import { refs } from './refs.js';
 import { onDeleteButtonHandler, onCancelButtonHandler } from './deleteNote.js';
-import { openEditForm, saveEditedNote, closeEditForm } from './editNote.js';
+import { openEditForm } from './editNote.js';
+import { checkIfNotesExist } from './generateNotes.js';
 
 export const addEventListenersToDeleteButtonsOnNotes = () => {
   refs.main__deleteButton = document.querySelectorAll('.main__deleteButton');
@@ -28,16 +29,19 @@ export const addEventListenToDeleteAndCancelBtns = (event) => {
 }
 
 export const addeventListenersToNotes = () => {
-  let notesFromLocalSt = JSON.parse(localStorage.getItem('notesArr'));
   let notesFromHTML = document.querySelectorAll('.main__note');
 
-  notesFromHTML.forEach(note => {
-    let noteObject = notesFromLocalSt.find(item => item.id.toString() === note.id);
+  checkIfNotesExist().then((notesFromServer) => {
+    if(notesFromServer) {
+      notesFromHTML.forEach((note) => {
+      const noteObject = notesFromServer.find(item => item.id.toString() === note.id);
 
-    let openFormToEdit = () => openEditForm(noteObject, notesFromLocalSt);
-    if (noteObject) {
-      note.removeEventListener('click', openFormToEdit);
-      note.addEventListener('click', openFormToEdit);
+        const openFormToEdit = () => openEditForm(noteObject, notesFromServer);
+        if (noteObject) {
+          note.removeEventListener('click', openFormToEdit);
+          note.addEventListener('click', openFormToEdit);
+        }
+      })
     }
-  });
+  })
 }

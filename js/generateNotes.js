@@ -1,40 +1,34 @@
-import { refs } from './refs.js';
-import { 
-        addEventListenersToDeleteButtonsOnNotes,
-        addeventListenersToNotes
-       } from './eventListeners.js';
+import { BASE_URL, refs } from './refs.js';
+import { addEventListenersToDeleteButtonsOnNotes, addeventListenersToNotes } from './eventListeners.js';
 
 export const generateNote = () => {
-  refs.main.startPageContent.style.display = 'none';
-  refs.main.notesWrapper.style.display = 'flex';
-
   refs.main.notesWrapper.innerHTML = '';
 
-  let notesList = JSON.parse(localStorage.getItem('notesArr'));
+  checkIfNotesExist().then(notes => {
+    if(notes && notes.length > 0) {
+      refs.main.startPageContent.style.display = 'none';
+      refs.main.notesWrapper.style.display = 'flex';
 
-  if (!notesList || notesList.length === 0) {
-    refs.main.startPageContent.style.display = 'flex';
-    return;
-  }
-
-  notesList.forEach(note => {
-    let colorTag = note.tag.toLowerCase();
-
-    refs.main.notesWrapper.insertAdjacentHTML('afterbegin', 
-      `<div id="${note.id}" class="main__note ${colorTag}">
-        <div class="main__headlineAndButtonWrapper">
-          <h2 class="main__noteHeadline">${note.title}</h2>
-          <button class="main__deleteButton"></button>
-        </div>
-        <div class="main__dateCategory--wrapper">
-          <p class="main__noteDate">${note.date}</p>
-          <p class="main__noteCategory">${note.tag}</p>
-        </div>
-      </div>`);
-
-      addEventListenersToDeleteButtonsOnNotes();
-      addeventListenersToNotes();
-  });
+     notes.forEach((note) => {
+      let colorTag = note.tag.toLowerCase();
+      refs.main.notesWrapper.insertAdjacentHTML('afterbegin', 
+        `<div id="${note.id}" class="main__note ${colorTag}">
+          <div class="main__headlineAndButtonWrapper">
+            <h2 class="main__noteHeadline">${note.title}</h2>
+            <button class="main__deleteButton"></button>
+          </div>
+          <div class="main__dateCategory--wrapper">
+            <p class="main__noteDate">${note.date}</p>
+            <p class="main__noteCategory">${note.tag}</p>
+          </div>
+        </div>`);
+        addEventListenersToDeleteButtonsOnNotes();
+        addeventListenersToNotes();
+     })
+    } else {
+      refs.main.startPageContent.style.display = 'flex';
+    }
+  })
 }
 
 export const generateFoundNotes = (foundNotes) => {
@@ -57,3 +51,19 @@ export const generateFoundNotes = (foundNotes) => {
 
   addeventListenersToNotes();
 }
+
+export const checkIfNotesExist = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}`);
+
+    if(!response.ok) {
+      throw Error('Something went wrong!');
+    }
+
+    const notes = await response.json();
+    return notes;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
