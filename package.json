@@ -5,7 +5,10 @@
   "main": "./src/index.html",
   "repository": "https://github.com/MBohatova/Note_App.git",
   "scripts": {
-    "start": "parcel ./src/index.html"
+    "start": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "author": "",
   "license": "ISC",

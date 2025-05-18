@@ -1,3 +1,4 @@
 .vscode/settings.json
 history.txt
 /node_modules
+/dist
